@@ -1496,6 +1496,73 @@ const TaxRefundView = () => (
 
     <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm print-break-inside-avoid">
       <h3 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
+        <MapPin className="text-emerald-600" /> FCO 現場必備與動線提醒
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+          <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">必備文件</div>
+          <ul className="text-sm text-emerald-900 space-y-2 font-bold">
+            <li>護照</li>
+            <li>登機證 / 電子機票</li>
+            <li>退稅單 (電子或紙本)</li>
+            <li>商品與發票 (備查)</li>
+            <li>國籍請寫 Taiwan，避免寫成 China</li>
+          </ul>
+        </div>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">現場動線</div>
+          <ul className="text-sm text-slate-700 space-y-2 font-bold">
+            <li>FCO 退稅多集中在 T3 出境大廳</li>
+            <li>找藍色「VAT Refund」指示牌</li>
+            <li>建議至少提前 3–4 小時到機場</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+        <CheckCircle2 className="text-emerald-600" /> 手提 vs 托運 (FCO 實務流程)
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
+          <div className="text-sm font-black text-amber-900 mb-2">商品在托運行李</div>
+          <ol className="list-decimal pl-5 text-xs text-amber-900 space-y-2 font-bold">
+            <li>到航空櫃檯拿登機證 / 行李條</li>
+            <li>不要讓行李上輸送帶 (保持可查驗)</li>
+            <li>先到退稅櫃檯 / 海關辦理</li>
+            <li>完成後再托運</li>
+          </ol>
+        </div>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div className="text-sm font-black text-slate-900 mb-2">商品在手提行李</div>
+          <ol className="list-decimal pl-5 text-xs text-slate-700 space-y-2 font-bold">
+            <li>先完成安檢與出境查驗</li>
+            <li>在管制區內的 VAT Refund 櫃檯辦理</li>
+            <li>若外場先辦被要求查驗，依指示再到海關</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-blue-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-blue-900 mb-4 flex items-center gap-2">
+        <ShieldAlert className="text-blue-500" /> Otello 系統：綠燈 / 紅燈
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+          <div className="text-sm font-black text-emerald-900 mb-2">綠燈 (一般情況)</div>
+          <div className="text-xs text-emerald-800 font-bold">系統顯示通過時，通常免海關查驗，可直接退稅。</div>
+        </div>
+        <div className="bg-rose-50 p-4 rounded-xl border border-rose-200">
+          <div className="text-sm font-black text-rose-900 mb-2">紅燈 / 特殊情況</div>
+          <div className="text-xs text-rose-800 font-bold">若被抽檢或持有非義大利開立的退稅單，需至海關查驗與蓋章。</div>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
         <MapPin className="text-emerald-600" /> 羅馬 FCO 退稅動線 (官方 ADR)
       </h3>
       <ul className="text-sm text-emerald-900 space-y-2 font-bold">
@@ -1529,6 +1596,7 @@ const TaxRefundView = () => (
           </ul>
         </div>
       </div>
+      <div className="text-xs text-slate-500 font-bold mt-3">現場常見自助機 (Kiosk) 與人工櫃檯，可依排隊狀況選擇。</div>
     </div>
 
     <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
