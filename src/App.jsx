@@ -156,6 +156,7 @@ export default function App() {
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
+          <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
           <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
           <TabButton id="todo" label="🛡️ 待辦與防護" active={activeTab} set={setActiveTab} color="rose" />
         </div>
@@ -174,6 +175,10 @@ export default function App() {
 
         <div className={`page-break-before ${activeTab === 'reservation' ? 'block' : 'hidden print-tab-content'}`}>
             <ReservationListView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'venice' ? 'block' : 'hidden print-tab-content'}`}>
+          <VeniceQrView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'shopping' ? 'block' : 'hidden print-tab-content'}`}>
@@ -823,7 +828,110 @@ const TodoGuideView = () => (
 );
 
 // ==========================================
-// Tab 5: Shopping Guide (完美回歸：深度油醋戰略)
+// Tab 5: Venice Access Fee QR Code
+// ==========================================
+const VeniceQrView = () => {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const buildImageUrl = (filename) => `${baseUrl}${filename}`;
+  const qrItems = [
+    {
+      id: 'kl',
+      fullName: 'KUOWIE LEE',
+      code: 'YERNEAAI',
+      people: 1,
+      validFrom: '14/06/2026',
+      validTo: '17/06/2026',
+      image: 'KUOWIE_LEE.png',
+    },
+    {
+      id: 'hl',
+      fullName: 'HSINGLUNG LI',
+      code: 'HEQWCKRB',
+      people: 1,
+      validFrom: '14/06/2026',
+      validTo: '17/06/2026',
+      image: 'HSINGLUNG_LI.png',
+    },
+    {
+      id: 'hy',
+      fullName: 'HSIUHUA YEH',
+      code: 'MHQIDHMK',
+      people: 1,
+      validFrom: '14/06/2026',
+      validTo: '17/06/2026',
+      image: 'HSIUHUA_YEH.png',
+    },
+  ];
+
+  return (
+    <div className="p-4 md:p-8 space-y-6 bg-slate-50 print-break-inside-avoid">
+      <div className="text-center pb-2 border-b border-amber-200">
+        <h1 className="text-3xl font-black text-amber-900 mb-2">🔳 威尼斯入城費豁免 QR Code</h1>
+        <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Access Fee Exemption</p>
+      </div>
+
+      <div className="max-w-4xl mx-auto bg-amber-50/60 border border-amber-200 rounded-2xl p-5 text-amber-900 text-sm font-bold flex items-start gap-3 print-break-inside-avoid">
+        <QrCode className="text-amber-600 shrink-0" size={20} />
+        <div>
+          入城費已豁免，但遇到抽查時需出示 QR Code。請保留手機截圖，或列印一份放隨身包。
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {qrItems.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col gap-4 print-break-inside-avoid"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Your Code</div>
+                <div className="text-lg font-black text-slate-800 mt-1">{item.fullName}</div>
+              </div>
+              <div className="text-right">
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Access Fee</div>
+                <div className="text-xs font-bold text-slate-600">cda.ve.it</div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-4 items-center">
+              <div className="space-y-2">
+                <div className="text-xs font-black text-slate-400 uppercase">Code</div>
+                <div className="text-lg font-black text-slate-900 tracking-wider">{item.code}</div>
+
+                <div className="flex gap-4 text-xs font-bold text-slate-600">
+                  <div className="flex items-center gap-1">
+                    <Users size={14} className="text-emerald-600" /> {item.people} 人
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock size={14} className="text-amber-600" /> {item.validFrom} - {item.validTo}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-center sm:justify-end">
+                <img
+                  src={buildImageUrl(item.image)}
+                  alt={`Venice access QR ${item.fullName}`}
+                  className="w-40 h-40 object-contain border border-slate-200 rounded-xl p-2 bg-white"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="max-w-4xl mx-auto bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
+        <Info size={16} className="text-blue-300" />
+        若網站或入口詢問，直接出示對應 QR Code 即可。
+      </div>
+    </div>
+  );
+};
+
+// ==========================================
+// Tab 6: Shopping Guide (完美回歸：深度油醋戰略)
 // ==========================================
 const ShoppingGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-[#FFFBF0] print-break-inside-avoid">
