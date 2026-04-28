@@ -5,7 +5,8 @@ import {
   Bed, Utensils, Clock, Ticket, Info, ShoppingCart, Users, Wallet, DollarSign, Calculator, 
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
   AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
-  Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee
+  Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee,
+  Languages, Volume2, Droplets, MapPinned
 } from 'lucide-react';
 
 export default function App() {
@@ -137,7 +138,7 @@ export default function App() {
             <div className="flex flex-wrap gap-2 mt-2">
                 <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] uppercase rounded font-black border border-emerald-200 tracking-wider">完美排版列印</span>
                 <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase rounded font-black border border-blue-200 tracking-wider">體力調節優化</span>
-                <span className="px-2 py-0.5 bg-rose-100 text-rose-800 text-[10px] uppercase rounded font-black border border-rose-200 tracking-wider">細節滿血回歸</span>
+                <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] uppercase rounded font-black border border-purple-200 tracking-wider">長輩防護升級</span>
             </div>
           </div>
           <div className="flex gap-3">
@@ -151,9 +152,10 @@ export default function App() {
           </div>
         </div>
         
-        {/* Navigation Tabs (列印時隱藏) */}
+        {/* Navigation Tabs */}
         <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+          <TabButton id="survival" label="🗣️ 語言與求救" active={activeTab} set={setActiveTab} color="purple" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
@@ -167,6 +169,10 @@ export default function App() {
         
         <div className={activeTab === 'itinerary' ? 'block' : 'hidden print-tab-content'}>
             <ItineraryView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'survival' ? 'block' : 'hidden print-tab-content'}`}>
+            <SurvivalGuideView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'budget' ? 'block' : 'hidden print-tab-content'}`}>
@@ -195,7 +201,124 @@ export default function App() {
 }
 
 // ==========================================
-// Tab 1: Budget View (完美回歸：單人切換與精算)
+// Tab: 語言與求救 View (長輩專用)
+// ==========================================
+const SurvivalGuideView = () => {
+    const [selectedCity, setSelectedCity] = useState('roma');
+
+    const hotels = {
+        milano: { city: "米蘭", name: "Hotel Midway", address: "Via Luigi Settembrini, 41, 20124 Milano MI" },
+        venezia: { city: "威尼斯", name: "Hotel Principe", address: "Lista di Spagna, 146, 30121 Venezia VE" },
+        firenze: { city: "佛羅倫斯", name: "Plus Florence", address: "Via Santa Caterina d'Alessandria, 15/17, 50129 Firenze FI" },
+        roma: { city: "羅馬", name: "Hotel Milani", address: "Via Magenta, 12, 00185 Roma RM" },
+    };
+
+    const phrases = [
+        { tw: "廁所在哪裡？", it: "Dov'è la toilette?", sound: "多-吠 拉 托雷特", icon: "🚽" },
+        { tw: "可以結帳嗎？", it: "Il conto, per favore.", sound: "伊 康偷，沛 罰波雷", icon: "💳" },
+        { tw: "無氣泡水", it: "Acqua naturale.", sound: "阿誇 納圖拉雷", icon: "💧" },
+        { tw: "請給我熱水", it: "Acqua calda, per favore.", sound: "阿誇 卡達，沛 罰波雷", icon: "🍵" },
+        { tw: "謝謝！", it: "Grazie!", sound: "葛拉-記-耶", icon: "🙏" },
+        { tw: "救命 / 幫幫我", it: "Aiuto!", sound: "阿-優-偷", icon: "🆘" }
+    ];
+
+    return (
+        <div className="p-4 md:p-8 space-y-8 bg-purple-50 print-break-inside-avoid">
+            
+            {/* 防走失計程車卡 */}
+            <div className="bg-white rounded-2xl shadow-lg border-t-8 border-purple-600 overflow-hidden print-break-inside-avoid">
+                <div className="p-6 md:p-8">
+                    <h2 className="text-2xl font-black text-purple-900 mb-2 flex items-center gap-2">
+                        <MapPinned className="text-purple-600"/> 防走失「帶我回飯店」卡
+                    </h2>
+                    <p className="text-purple-700 text-sm font-bold mb-6">
+                        遇到迷路或與家人走散時，請保持冷靜，點選您目前所在的城市，並將手機螢幕出示給計程車司機或警察看。
+                    </p>
+
+                    {/* 城市切換按鈕 */}
+                    <div className="flex flex-wrap gap-2 mb-6 no-print">
+                        {Object.keys(hotels).map(key => (
+                            <button 
+                                key={key}
+                                onClick={() => setSelectedCity(key)}
+                                className={`px-4 py-2 rounded-xl text-sm font-black transition-all ${selectedCity === key ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+                            >
+                                {hotels[key].city}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* 給司機看的大字卡 */}
+                    <div className="bg-yellow-50 border-4 border-yellow-400 p-6 md:p-10 rounded-2xl text-center shadow-inner">
+                        <div className="text-sm md:text-base font-black text-slate-500 mb-4 uppercase tracking-widest">Show this to a taxi driver / Mostra questo al tassista</div>
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">
+                            Per favore, portami a questo hotel:
+                            <span className="block text-lg font-bold text-slate-600 mt-2">(請帶我回這個飯店：)</span>
+                        </h3>
+                        <div className="bg-white py-6 px-4 rounded-xl border border-yellow-200 shadow-sm inline-block w-full">
+                            <div className="text-xl md:text-2xl font-black text-purple-700 mb-2">{hotels[selectedCity].name}</div>
+                            <div className="text-lg md:text-xl font-bold text-slate-800 leading-snug">{hotels[selectedCity].address}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 手指義大利語 */}
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 print-break-inside-avoid">
+                <h3 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2 border-b pb-3">
+                    <Languages className="text-blue-500"/> 手指義大利語 (點餐/如廁必備)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {phrases.map((p, idx) => (
+                        <div key={idx} className="flex gap-4 items-center bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <div className="text-3xl shrink-0">{p.icon}</div>
+                            <div>
+                                <div className="font-black text-slate-800 text-lg">{p.tw}</div>
+                                <div className="font-bold text-blue-600 text-lg mt-1">{p.it}</div>
+                                <div className="text-xs font-bold text-slate-500 mt-1 flex items-center gap-1">
+                                    <Volume2 size={12}/> 中文發音：{p.sound}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* 文化防雷包 */}
+            <div className="bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg text-white print-break-inside-avoid">
+                <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2 border-b border-slate-600 pb-3">
+                    <AlertTriangle className="text-amber-500"/> 文化衝擊防雷包 (長輩請先看)
+                </h3>
+                <div className="space-y-4">
+                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
+                        <Droplets className="text-blue-300 shrink-0 mt-0.5" />
+                        <div>
+                            <div className="font-black text-white text-base">馬桶旁邊的「矮水槽」是洗屁股的！</div>
+                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">義大利飯店浴室通常有兩個類似馬桶的東西。沒有蓋子、有水龍頭的叫做 Bidet (洗下身盆)。<strong className="text-rose-300">千萬不要拿來洗臉或洗水果喔！</strong></div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
+                        <Coffee className="text-amber-300 shrink-0 mt-0.5" />
+                        <div>
+                            <div className="font-black text-white text-base">餐廳沒有「免費熱水」</div>
+                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">義大利人沒有喝熱水的習慣。餐廳的水都是一瓶瓶賣的。如果需要吃藥或習慣喝熱水，<strong className="text-amber-300">請每天早上用飯店的快煮壺裝滿保溫瓶帶出門</strong>。</div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
+                        <Banknote className="text-emerald-300 shrink-0 mt-0.5" />
+                        <div>
+                            <div className="font-black text-white text-base">不用給小費，帳單已含「桌費」</div>
+                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">坐下來吃飯時，帳單通常會多收一筆「Coperto (桌費/麵包費)」，大約每人 2-4 歐元。這是正常的，因此吃完後<strong className="text-emerald-300">不用另外留小費在桌上</strong>。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// ==========================================
+// Tab: Budget View
 // ==========================================
 const BudgetView = ({ rate, items, isPer, setIsPer }) => {
     const totalPaidTwd = items.prepaid.filter(i => i.status === 'paid').reduce((sum, item) => sum + item.twd, 0);
@@ -205,7 +328,6 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
     const totalPayLaterTwd = Math.round(totalPayLaterEur * rate);
     const grandTotalTwd = totalPrepaidTwd + totalPayLaterTwd;
 
-    // 依據是否開啟「單人均分」計算除數
     const divisor = isPer ? 3 : 1;
     
     const dispPaid = Math.round(totalPaidTwd / divisor);
@@ -216,7 +338,6 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
 
     return (
         <div className="p-6 md:p-10 space-y-8 bg-slate-50 print-break-inside-avoid">
-            {/* 完美回歸的切換按鈕區 */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-2xl border border-slate-200 shadow-sm gap-4 no-print">
                 <div>
                     <h2 className="text-2xl font-black text-slate-800 flex items-center gap-2">
@@ -226,7 +347,6 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                         核心花費已鎖定，精確區分「已付款」與「待預訂」。
                     </p>
                 </div>
-                {/* 這是最關鍵的單人/總計切換鈕 */}
                 <div className="flex bg-slate-100 rounded-xl p-1 border border-slate-200 w-full md:w-auto">
                     <button onClick={() => setIsPer(false)} className={`px-6 py-2 text-xs rounded-lg font-black transition-all ${!isPer ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500'}`}>👪 家族總計 (3人)</button>
                     <button onClick={() => setIsPer(true)} className={`px-6 py-2 text-xs rounded-lg font-black transition-all ${isPer ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500'}`}>👤 單人均分</button>
@@ -348,12 +468,11 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
 };
 
 // ==========================================
-// Tab 2: Reservation List View (完美回歸：高鐵注意事項)
+// Tab: Reservation List View 
 // ==========================================
 const ReservationListView = () => (
     <div className="p-6 md:p-10 space-y-8 bg-indigo-50 print-break-inside-avoid">
         
-        {/* 全新優化：高鐵搭乘戰略 */}
         <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl border-2 border-indigo-200 shadow-sm print-break-inside-avoid">
             <h3 className="text-lg font-black text-indigo-900 flex items-center gap-2 mb-3">
                 <AlertTriangle className="text-amber-500" /> 🚨 義大利高鐵搭乘 3 大鐵則
@@ -463,7 +582,7 @@ const ReservationListView = () => (
 );
 
 // ==========================================
-// Tab 3: Detailed Itinerary View (完美回歸：15天全展開卡片設計 + 住宿每日標示)
+// Tab: Detailed Itinerary View 
 // ==========================================
 const ItineraryView = () => {
     const [expandedDays, setExpandedDays] = useState([1, 2, 3]); 
@@ -473,7 +592,6 @@ const ItineraryView = () => {
         );
     };
     
-    // 一鍵展開全部 / 收合全部 (完美回歸)
     const expandAll = () => setExpandedDays(ItineraryData.map(d => d.day));
     const collapseAll = () => setExpandedDays([]);
 
@@ -640,7 +758,6 @@ const ItineraryView = () => {
               <h1 className="text-3xl font-black mb-2">義大利 15 天家族壯遊</h1>
               <p className="text-slate-200 text-sm font-bold">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
               
-              {/* 完美回歸：一鍵展開與隱藏按鈕 */}
               <div className="absolute top-6 right-6 flex gap-2 no-print">
                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Maximize2 size={14}/> 展開全部</button>
                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Minimize2 size={14}/> 摺疊全部</button>
@@ -653,7 +770,6 @@ const ItineraryView = () => {
                 return (
                 <div key={d.day} className={`bg-white rounded-2xl transition-all duration-300 overflow-hidden border print-break-inside-avoid ${isExpanded ? 'border-blue-400 shadow-md' : 'border-slate-200 hover:border-slate-300'}`}>
                   
-                  {/* 可點擊的卡片標題 */}
                   <button onClick={() => toggleDay(d.day)} className="w-full px-6 py-5 flex items-center justify-between text-left print:pointer-events-none">
                     <div className="flex items-center gap-5 w-full">
                       <div className={`w-14 h-14 rounded-xl flex flex-col items-center justify-center font-black transition-colors shrink-0 ${isExpanded ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500'}`}>
@@ -664,7 +780,6 @@ const ItineraryView = () => {
                         <h3 className="font-black text-slate-800 text-base">{d.city}</h3>
                         <div className="flex flex-wrap items-center gap-2 mt-1">
                           <p className="text-[11px] text-slate-400 font-black uppercase tracking-wider">{d.date}</p>
-                          {/* 完美回歸：每天專屬的住宿地點標籤 */}
                           {d.hotel && (
                             <span className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-bold border ${isExpanded ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
                               <Hotel size={10}/> {d.hotel}
@@ -673,18 +788,15 @@ const ItineraryView = () => {
                         </div>
                       </div>
                     </div>
-                    {/* 右側箭頭 */}
                     {isExpanded ? <ChevronUp size={24} className="text-blue-500 shrink-0 print-hide-icon"/> : <ChevronDown size={24} className="text-slate-300 shrink-0 print-hide-icon"/>}
                   </button>
                   
-                  {/* 展開後的詳細行程 */}
                   <div className={`${isExpanded ? 'block' : 'hidden print-expand'} px-6 pb-8 pt-2 bg-slate-50/50 border-t border-slate-100`}>
                     <div className="mb-6 px-2">
                       <p className="text-sm text-blue-600 font-black flex items-center gap-2 mb-3">
                         <Compass size={18}/> {d.title}
                       </p>
                       
-                      {/* 完美回歸：展開後顯示大大的住宿提醒框 */}
                       {d.hotel && (
                         <div className="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm mb-4 print-break-inside-avoid">
                           <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
@@ -739,7 +851,7 @@ const ItineraryView = () => {
 };
 
 // ==========================================
-// Tab 4: 待辦與戰略 View (全新增加威尼斯免稅申請)
+// Tab: 待辦與戰略 View 
 // ==========================================
 const TodoGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-white print-break-inside-avoid">
@@ -753,25 +865,6 @@ const TodoGuideView = () => (
       </p>
     </div>
 
-    {/* 深度優化：緊急聯絡卡 */}
-    <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg text-white print-break-inside-avoid">
-        <h3 className="text-lg font-black text-white mb-4 flex items-center gap-2 border-b border-slate-600 pb-3">
-            <PhoneCall className="text-rose-400"/> 🆘 義大利緊急求助小卡
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="bg-slate-700/50 p-3 rounded-lg">
-                <div className="text-slate-400 text-xs font-bold mb-1">全歐盟通用緊急報案電話 (警察/救護車)</div>
-                <div className="text-2xl font-black text-rose-400 font-mono">112</div>
-            </div>
-            <div className="bg-slate-700/50 p-3 rounded-lg">
-                <div className="text-slate-400 text-xs font-bold mb-1">駐義大利台北代表處 (護照遺失/急難)</div>
-                <div className="font-bold text-blue-300">上班時間：+39-06-9826-2800</div>
-                <div className="font-bold text-rose-300">緊急專線：+39-366-8066-434</div>
-            </div>
-        </div>
-    </div>
-
-    {/* 全新增加：必辦行政文件 */}
     <section className="print-break-inside-avoid">
         <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
             <FileText className="text-blue-500"/> 出發前必備行政文件
@@ -819,8 +912,8 @@ const TodoGuideView = () => (
         </h4>
         <ul className="list-decimal pl-5 mt-2 text-sm text-emerald-800 space-y-2 font-bold">
             <li><strong>全面棄用地鐵：</strong> 羅馬地鐵扒手極多且無電梯。下載 <strong className="text-emerald-900">FreeNow APP</strong>，市區移動搭計程車，三人分攤極划算。</li>
-            <li><strong>Espresso 廁所法：</strong> 義大利公廁少且收費。找街邊咖啡吧花 €1.5 買濃縮咖啡，全家免費上廁所兼吹冷氣休息 15 分鐘。</li>
             <li><strong>高鐵防盜密碼鎖：</strong> 準備 1公尺自行車鋼絲鎖，將大行李鎖在高鐵行李架上，位子上安心睡覺。</li>
+            <li><strong>結伴行動：</strong> 在車站、觀光景點人潮擁擠處，請長輩務必走在您的視線範圍內前方，不要殿後。</li>
         </ul>
       </div>
     </section>
@@ -828,11 +921,10 @@ const TodoGuideView = () => (
 );
 
 // ==========================================
-// Tab 5: Venice Access Fee QR Code
+// Tab: Venice Access Fee QR Code
 // ==========================================
 const VeniceQrView = () => {
-  const baseUrl = import.meta.env.BASE_URL || '/';
-  const buildImageUrl = (filename) => `${baseUrl}${filename}`;
+  const buildImageUrl = (filename) => `./${filename}`;
   const qrItems = [
     {
       id: 'kl',
@@ -931,7 +1023,7 @@ const VeniceQrView = () => {
 };
 
 // ==========================================
-// Tab 6: Shopping Guide (完美回歸：深度油醋戰略)
+// Tab: Shopping Guide 
 // ==========================================
 const ShoppingGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-[#FFFBF0] print-break-inside-avoid">
@@ -989,6 +1081,7 @@ const TabButton = ({ id, label, active, set, color }) => {
     rose: active === id ? 'text-rose-700 border-rose-600 bg-rose-50' : 'text-slate-500 hover:text-rose-600',
     indigo: active === id ? 'text-indigo-700 border-indigo-600 bg-indigo-50' : 'text-slate-500 hover:text-indigo-600',
     yellow: active === id ? 'text-yellow-700 border-yellow-600 bg-yellow-50' : 'text-slate-500 hover:text-yellow-600',
+    purple: active === id ? 'text-purple-700 border-purple-600 bg-purple-50' : 'text-slate-500 hover:text-purple-600',
   };
 
   return (
