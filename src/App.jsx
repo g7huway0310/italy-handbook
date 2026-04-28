@@ -4,18 +4,19 @@ import {
   Navigation, Shield, Ban, Globe, CreditCard, Banknote, 
   Bed, Utensils, Clock, Ticket, Info, ShoppingCart, Users, Wallet, DollarSign, Calculator, 
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
-  AlertTriangle, PhoneCall, HelpCircle, FileText, CheckCircle2, ShoppingBag
+  AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
+  Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee
 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('budget'); 
+  const [activeTab, setActiveTab] = useState('itinerary'); 
   const [copied, setCopied] = useState(false);
   const [isPerPerson, setIsPerPerson] = useState(false); // 完美回歸：單人花費切換狀態
   const [exchangeRate] = useState(35.5);
   const [actionMessage, setActionMessage] = useState(""); 
 
   // ==========================================
-  // 1. 財務底層資料 (嚴格鎖定)
+  // 1. 財務底層資料 (精細拆分城市稅)
   // ==========================================
   const budgetItems = {
     prepaid: [
@@ -33,7 +34,10 @@ export default function App() {
         { id: 'o2', category: '行程', name: 'Klook 比薩＆五漁村', twd: 13638, note: '中文導覽大巴一日遊', status: 'pending' }
     ],
     payLater: [
-        { id: 'c1', category: '住宿', name: '當地城市稅 (City Tax)', eur: 95, note: '4間飯店入住時付現' },
+        { id: 'c1_mi', category: '住宿', name: '城市稅: 米蘭 (1晚)', eur: 15, note: 'Hotel Midway (估 €5/人/晚)' },
+        { id: 'c1_ve', category: '住宿', name: '城市稅: 威尼斯 (3晚)', eur: 45, note: 'Hotel Principe (估 €5/人/晚)' },
+        { id: 'c1_fl', category: '住宿', name: '城市稅: 佛羅倫斯 (4晚)', eur: 84, note: 'Plus Florence (估 €7/人/晚)' },
+        { id: 'c1_ro', category: '住宿', name: '城市稅: 羅馬 (4晚)', eur: 72, note: 'Hotel Milani (估 €6/人/晚)' },
         { id: 'c2', category: '行程', name: '威尼斯貢多拉包船', eur: 90, note: '傍晚包船公定價' },
         { id: 'c3', category: '餐飲', name: '15天日常餐飲與超市', eur: 600, note: '預估額度 (多數可刷卡)' },
         { id: 'c4', category: '交通', name: '羅馬 FreeNow 計程車', eur: 100, note: '強烈建議羅馬全程計程車' },
@@ -107,6 +111,8 @@ export default function App() {
             display: block !important;
           }
           .print-tab-content { display: block !important; }
+          .print-expand { display: block !important; }
+          .print-hide-icon { display: none !important; }
           .page-break-before { page-break-before: always !important; break-before: page !important; }
           .print-break-inside-avoid { break-inside: avoid !important; page-break-inside: avoid !important; }
           * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -147,27 +153,27 @@ export default function App() {
         
         {/* Navigation Tabs (列印時隱藏) */}
         <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
+          <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
-          <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
           <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
           <TabButton id="todo" label="🛡️ 待辦與防護" active={activeTab} set={setActiveTab} color="rose" />
         </div>
       </div>
 
-      {/* Main Content Area - 設定所有分頁在 print 模式時全數呈現(display: block) */}
+      {/* Main Content Area */}
       <div id="printable-content" className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl overflow-visible min-h-[800px] print:shadow-none print:border-none print:bg-transparent">
         
-        <div className={activeTab === 'budget' ? 'block' : 'hidden print-tab-content'}>
+        <div className={activeTab === 'itinerary' ? 'block' : 'hidden print-tab-content'}>
+            <ItineraryView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'budget' ? 'block' : 'hidden print-tab-content'}`}>
             <BudgetView rate={exchangeRate} items={budgetItems} isPer={isPerPerson} setIsPer={setIsPerPerson} />
         </div>
 
         <div className={`page-break-before ${activeTab === 'reservation' ? 'block' : 'hidden print-tab-content'}`}>
             <ReservationListView />
-        </div>
-        
-        <div className={`page-break-before ${activeTab === 'itinerary' ? 'block' : 'hidden print-tab-content'}`}>
-            <ItineraryView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'shopping' ? 'block' : 'hidden print-tab-content'}`}>
@@ -181,7 +187,7 @@ export default function App() {
       </div>
     </div>
   );
-};
+}
 
 // ==========================================
 // Tab 1: Budget View (完美回歸：單人切換與精算)
@@ -328,7 +334,7 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                     </table>
                     <div className="p-4 bg-slate-50 text-xs font-bold text-slate-500 text-center border-t border-slate-100">
                         <Info size={14} className="inline mr-1 -mt-0.5"/>
-                        多數餐廳皆可刷卡，現金無須準備太多。城市稅需付現。
+                        多數餐廳皆可刷卡，現金無須準備太多。當地城市稅需於退房時付現。
                     </div>
                 </div>
             </div>
@@ -452,124 +458,283 @@ const ReservationListView = () => (
 );
 
 // ==========================================
-// Tab 3: Detailed Itinerary View (保持最穩定的直列式渲染)
+// Tab 3: Detailed Itinerary View (完美回歸：15天全展開卡片設計 + 住宿每日標示)
 // ==========================================
-const ItineraryView = () => (
-  <>
-    <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 md:p-8">
-      <div className="flex justify-between items-end">
-        <div>
-          <div className="text-slate-300 text-xs font-bold tracking-wider mb-1">ITALY GRAND TOUR</div>
-          <h1 className="text-2xl md:text-3xl font-extrabold mb-2">義大利 15 天家族壯遊</h1>
-          <p className="text-slate-100 text-sm">2026.06.12 - 06.26 · 五漁村破解版 · 尊榮護膝安排</p>
-        </div>
-      </div>
-    </div>
+const ItineraryView = () => {
+    const [expandedDays, setExpandedDays] = useState([1, 2, 3]); 
+    const toggleDay = (day) => {
+        setExpandedDays(prev => 
+            prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
+        );
+    };
     
-    <div className="p-4 md:p-8 space-y-8 bg-[#F8FAFC]">
-      
-      <DaySection day="Day 1" date="6/12 (五)" title="壯遊啟動" icon={<Plane />} color="gray">
-        <TimelineItem time="20:30" title="抵達桃園機場 T2" desc="阿聯酋櫃檯報到、托運行李" />
-        <TimelineItem time="21:30" title="過安檢，免稅店閒逛或使用貴賓室吃點熱食" desc="" />
-        <TimelineItem time="23:50" title="EK367 起飛" desc="阿聯酋 A380 雙層客機，開啟睡眠模式" />
-      </DaySection>
+    // 一鍵展開全部 / 收合全部 (完美回歸)
+    const expandAll = () => setExpandedDays(ItineraryData.map(d => d.day));
+    const collapseAll = () => setExpandedDays([]);
 
-      <DaySection day="Day 2" date="6/13 (六)" title="米蘭：降落與安頓" icon={<MapPin />} color="orange">
-        <TimelineItem time="14:10" title="抵達米蘭 MXP 機場" desc="下機伸展筋骨，搭乘快線直達市區" />
-        <TimelineItem time="16:40" title="入住 Hotel Midway" desc="中央車站旁，長輩無痛進房躺平" />
-        <HighlightBox color="orange" icon={<Camera size={14}/>} title="市區初探">
-             <div className="text-xs">搭地鐵至艾曼紐二世迴廊拍攝夜間點燈，並前往全球最美星巴克臻選工坊。</div>
-        </HighlightBox>
-      </DaySection>
+    const ItineraryData = [
+      {
+        day: 1, date: "06/12 (五)", city: "台北 ➔ 杜拜", title: "壯遊啟動：旗艦機體驗", hotel: "機上 (阿聯酋航空 A380)",
+        events: [
+          { time: "20:30", icon: <MapPin size={16}/>, desc: "全家抵達桃園機場 T2 阿聯酋櫃檯報到、托運行李", type: "info" },
+          { time: "21:30", icon: <Coffee size={16}/>, desc: "過安檢，免稅店閒逛或使用貴賓室吃點熱食", type: "leisure" },
+          { time: "23:50", icon: <Plane size={16}/>, desc: "EK367 準時起飛 (A380)，開啟兩段式睡眠模式", type: "highlight" }
+        ]
+      },
+      {
+        day: 2, date: "06/13 (六)", city: "米蘭", title: "降落與無痛安頓", hotel: "米蘭: Hotel Midway (中央車站旁)",
+        events: [
+          { time: "14:10", icon: <Plane size={16}/>, desc: "抵達米蘭 MXP 機場 (T1)，下機伸展筋骨", type: "info" },
+          { time: "15:30", icon: <Train size={16}/>, desc: "搭乘 Malpensa Express 機場快線直達市區", type: "transit" },
+          { time: "16:40", icon: <Bed size={16}/>, desc: "【無痛入住】步行抵達 Hotel Midway，長輩進房躺平", type: "highlight" },
+          { time: "18:00", icon: <Camera size={16}/>, desc: "搭地鐵至艾曼紐二世迴廊 (Galleria) 拍攝夜間點燈", type: "leisure" },
+          { time: "19:00", icon: <Coffee size={16}/>, desc: "全球最美星巴克臻選工坊 (看青銅烘豆機運作)", type: "leisure" },
+          { time: "20:00", icon: <Utensils size={16}/>, desc: "米蘭首夜：找間道地餐館享用米蘭燉飯", type: "leisure" }
+        ]
+      },
+      {
+        day: 3, date: "06/14 (日)", city: "米蘭 ➔ 威尼斯", title: "大教堂登頂與水都", hotel: "威尼斯: Hotel Principe (露台套房)",
+        events: [
+          { time: "07:30", icon: <Coffee size={16}/>, desc: "飯店享用早餐，退房，行李寄放櫃台", type: "info" },
+          { time: "08:30", icon: <Train size={16}/>, desc: "搭乘 M3 (黃線) 地鐵直達 Duomo 站", type: "transit" },
+          { time: "09:30", icon: <Ticket size={16}/>, desc: "【高光】搭電梯登頂大教堂，穿梭於尖塔間", type: "highlight" },
+          { time: "11:30", icon: <Utensils size={16}/>, desc: "大教堂周邊享用午餐與義式濃縮咖啡", type: "leisure" },
+          { time: "13:15", icon: <Bed size={16}/>, desc: "回 Hotel Midway 取行李，步行進入中央車站", type: "info" },
+          { time: "14:15", icon: <Train size={16}/>, desc: "搭乘高鐵 FR 9733 前往威尼斯 (Coach 2)", type: "highlight" },
+          { time: "16:42", icon: <MapPin size={16}/>, desc: "抵達 Venezia S. Lucia 車站，出站即是絕美運河", type: "info" },
+          { time: "17:10", icon: <Bed size={16}/>, desc: "【無痛入住】步行直達 Hotel Principe 露台套房", type: "highlight" },
+          { time: "18:30", icon: <Utensils size={16}/>, desc: "運河畔景觀餐廳享用威尼斯墨魚麵與白酒", type: "leisure" }
+        ]
+      },
+      {
+        day: 4, date: "06/15 (一)", city: "威尼斯", title: "水都慢活與黃金日落", hotel: "威尼斯: Hotel Principe (露台套房)",
+        events: [
+          { time: "08:30", icon: <Coffee size={16}/>, desc: "在露台套房悠閒享用早餐", type: "leisure" },
+          { time: "09:30", icon: <Camera size={16}/>, desc: "步行前往聖馬可廣場，沿途穿越水巷與小橋", type: "info" },
+          { time: "11:30", icon: <Compass size={16}/>, desc: "【深度】探訪沉水書店 (Libreria Acqua Alta)", type: "leisure" },
+          { time: "15:00", icon: <Ticket size={16}/>, desc: "【預約制】德國商館 (T Fondaco) 頂樓俯瞰大運河", type: "highlight" },
+          { time: "17:30", icon: <Anchor size={16}/>, desc: "【極致浪漫】於聖馬可後方小巷包下貢多拉，享受日落", type: "highlight" },
+          { time: "19:00", icon: <Utensils size={16}/>, desc: "晚餐：威尼斯小點 (Cicchetti) 配 Spritz", type: "leisure" }
+        ]
+      },
+      {
+        day: 5, date: "06/16 (二)", city: "威尼斯", title: "彩色島童話攝影", hotel: "威尼斯: Hotel Principe (露台套房)",
+        events: [
+          { time: "09:00", icon: <Navigation size={16}/>, desc: "前往 F.te Nove 碼頭搭乘 12 號水上巴士", type: "transit" },
+          { time: "10:30", icon: <Camera size={16}/>, desc: "抵達布拉諾島 (Burano)，拍攝彩色房屋", type: "highlight" },
+          { time: "13:00", icon: <Utensils size={16}/>, desc: "島上享用著名炸海鮮拼盤當午餐", type: "leisure" },
+          { time: "16:30", icon: <ShoppingBag size={16}/>, desc: "里亞托橋 (Rialto) 周邊自由採買紀念品", type: "leisure" }
+        ]
+      },
+      {
+        day: 6, date: "06/17 (三)", city: "威尼斯 ➔ 佛羅倫斯", title: "睡飽再出發的文藝復興", hotel: "佛羅倫斯: Plus Florence",
+        events: [
+          { time: "09:30", icon: <Coffee size={16}/>, desc: "【戰略休整】睡到自然醒，享用最後的水都早餐", type: "highlight" },
+          { time: "11:30", icon: <Bed size={16}/>, desc: "優雅退房，散步至火車站月台", type: "info" },
+          { time: "14:26", icon: <Train size={16}/>, desc: "搭乘高鐵 FR 9425 前往佛羅倫斯", type: "transit" },
+          { time: "16:39", icon: <MapPin size={16}/>, desc: "抵達 Firenze S. M. Novella 車站", type: "info" },
+          { time: "17:00", icon: <Bed size={16}/>, desc: "入住 Plus Florence，長輩午休充電", type: "highlight" },
+          { time: "18:00", icon: <Camera size={16}/>, desc: "市區初探：散步至老橋與百花大教堂", type: "leisure" },
+          { time: "19:30", icon: <Utensils size={16}/>, desc: "巷弄托斯卡尼餐館品酒吃肉", type: "leisure" }
+        ]
+      },
+      {
+        day: 7, date: "06/18 (四)", city: "佛羅倫斯 (市區)", title: "大師傑作與慢活", hotel: "佛羅倫斯: Plus Florence",
+        events: [
+          { time: "09:00", icon: <Ticket size={16}/>, desc: "進入烏菲茲美術館，看《維納斯的誕生》", type: "highlight" },
+          { time: "12:00", icon: <Utensils size={16}/>, desc: "午餐：中央市場 2F 牛肚包與松露麵", type: "leisure" },
+          { time: "14:00", icon: <Bed size={16}/>, desc: "【體力調節】走回飯店吹冷氣午休，避開午後烈日", type: "info" },
+          { time: "16:30", icon: <MapPin size={16}/>, desc: "市區慢漫步，若有體力可追加學院美術館看大衛像", type: "leisure" },
+          { time: "19:00", icon: <Utensils size={16}/>, desc: "領主廣場周邊晚餐", type: "leisure" }
+        ]
+      },
+      {
+        day: 8, date: "06/19 (五)", city: "佛羅倫斯郊區", title: "奇蹟與海岸：大巴遊", hotel: "佛羅倫斯: Plus Florence",
+        events: [
+          { time: "07:30", icon: <Bus size={16}/>, desc: "【大巴接送】集合出發前往比薩，車上睡覺回血", type: "transit" },
+          { time: "09:30", icon: <Camera size={16}/>, desc: "抵達奇蹟廣場，拍攝推比薩斜塔借位照", type: "leisure" },
+          { time: "12:30", icon: <MapPin size={16}/>, desc: "【海岸絕景】抵達五漁村 (Cinque Terre)，跟著中文導遊探索", type: "highlight" },
+          { time: "13:30", icon: <Train size={16}/>, desc: "搭乘村際火車或遊船，穿梭於彩色懸崖村落間", type: "leisure" },
+          { time: "18:00", icon: <MapPin size={16}/>, desc: "結束五漁村行程，搭乘大巴返回佛羅倫斯市區", type: "info" },
+          { time: "20:00", icon: <Bed size={16}/>, desc: "抵達市區，自由晚餐後回飯店休息", type: "info" }
+        ]
+      },
+      {
+        day: 9, date: "06/20 (六)", city: "佛羅倫斯", title: "品味、夕陽與終極牛排", hotel: "佛羅倫斯: Plus Florence",
+        events: [
+          { time: "09:30", icon: <ShoppingBag size={16}/>, desc: "百年修道院藥妝店，採買頂級香氛 / 中央市場買油醋", type: "leisure" },
+          { time: "15:00", icon: <BookOpen size={16}/>, desc: "【絕美私房】Giunti Odeon 劇院書店喝咖啡", type: "highlight" },
+          { time: "18:00", icon: <Car size={16}/>, desc: "搭乘計程車直上米開朗基羅廣場", type: "transit" },
+          { time: "18:45", icon: <Camera size={16}/>, desc: "俯瞰阿諾河、老橋與百花大教堂的魔幻夕陽", type: "highlight" },
+          { time: "20:00", icon: <Utensils size={16}/>, desc: "【終極饗宴】Trattoria Dall'Oste 1kg 丁骨大牛排", type: "highlight" }
+        ]
+      },
+      {
+        day: 10, date: "06/21 (日)", city: "佛羅倫斯 ➔ 羅馬", title: "法拉利高鐵與羅馬初夜", hotel: "羅馬: Hotel Milani",
+        events: [
+          { time: "10:28", icon: <Train size={16}/>, desc: "搭乘法拉利高鐵 Italo 8905 (Prima 商務艙)", type: "highlight" },
+          { time: "12:10", icon: <MapPin size={16}/>, desc: "抵達 Roma Termini 羅馬中央車站", type: "info" },
+          { time: "14:30", icon: <Bed size={16}/>, desc: "入住 Hotel Milani，長輩進房午休躲烈日", type: "highlight" },
+          { time: "16:30", icon: <MapPin size={16}/>, desc: "西班牙階梯 ➔ 許願池投幣", type: "leisure" },
+          { time: "18:30", icon: <Coffee size={16}/>, desc: "百年冰淇淋 Giolitti 與 金杯咖啡", type: "leisure" }
+        ]
+      },
+      {
+        day: 11, date: "06/22 (一)", city: "羅馬郊區", title: "天空之城尊榮包車", hotel: "羅馬: Hotel Milani",
+        events: [
+          { time: "08:30", icon: <Car size={16}/>, desc: "【尊榮包車】中文司機開 7 人座至飯店接送 (避開羅馬週一人潮)", type: "highlight" },
+          { time: "10:30", icon: <MapPin size={16}/>, desc: "直達天空之城 (Civita) 橋頭，挑戰高架橋入城", type: "highlight" },
+          { time: "13:30", icon: <MapPin size={16}/>, desc: "驅車前往懸崖中世紀小鎮 Orvieto", type: "transit" },
+          { time: "14:30", icon: <Utensils size={16}/>, desc: "當地享用翁布里亞鄉村野味午餐", type: "leisure" },
+          { time: "18:30", icon: <Car size={16}/>, desc: "【無痛送回】司機專車送回羅馬飯店門口", type: "highlight" }
+        ]
+      },
+      {
+        day: 12, date: "06/23 (二)", city: "羅馬", title: "帝國榮耀與老城煙火氣", hotel: "羅馬: Hotel Milani",
+        events: [
+          { time: "09:00", icon: <Ticket size={16}/>, desc: "進入羅馬競技場 (Colosseum)，感受古羅馬震撼", type: "highlight" },
+          { time: "11:30", icon: <MapPin size={16}/>, desc: "順路步行至古羅馬廣場與威尼斯廣場", type: "info" },
+          { time: "15:00", icon: <Bed size={16}/>, desc: "回飯店沖澡、午休 2 小時", type: "info" },
+          { time: "17:00", icon: <Compass size={16}/>, desc: "【深度】搭車跨越台伯河，抵達 Trastevere 老城", type: "leisure" },
+          { time: "18:30", icon: <Utensils size={16}/>, desc: "藤蔓纏繞的戶外餐桌，享用道地培根蛋麵", type: "highlight" }
+        ]
+      },
+      {
+        day: 13, date: "06/24 (三)", city: "羅馬 (梵蒂岡)", title: "聖地巡禮與創世紀", hotel: "羅馬: Hotel Milani",
+        events: [
+          { time: "07:30", icon: <MapPin size={16}/>, desc: "【神級通關】抵達大教堂，安檢 0 分鐘直接進入！", type: "highlight" },
+          { time: "10:30", icon: <Camera size={16}/>, desc: "沿著協和大道走到聖天使城堡橋上拍照", type: "leisure" },
+          { time: "14:00", icon: <Bed size={16}/>, desc: "強迫長輩回飯店睡午覺，儲備下午電力", type: "info" },
+          { time: "17:00", icon: <Ticket size={16}/>, desc: "【官網進場】梵蒂岡博物館，精華動線直搗黃龍", type: "highlight" },
+          { time: "18:45", icon: <Eye size={16}/>, desc: "抵達西斯汀禮拜堂，屏息仰望《創世紀》", type: "highlight" }
+        ]
+      },
+      {
+        day: 14, date: "06/25 (四)", city: "羅馬 ➔ 機場", title: "超市掃貨與賦歸", hotel: "機上 (阿聯酋航空 A380)",
+        events: [
+          { time: "10:30", icon: <Bed size={16}/>, desc: "辦理退房，行李寄放櫃台", type: "info" },
+          { time: "11:00", icon: <ShoppingBag size={16}/>, desc: "【最後衝刺】Termini 車站地下超市大採買", type: "highlight" },
+          { time: "14:00", icon: <Utensils size={16}/>, desc: "在羅馬享用最後一頓義式大餐", type: "leisure" },
+          { time: "18:30", icon: <Train size={16}/>, desc: "從車站搭乘 Leonardo Express 機場快線", type: "transit" },
+          { time: "19:15", icon: <MapPin size={16}/>, desc: "抵達 FCO 羅馬機場，辦理退稅與登機手續", type: "info" },
+          { time: "22:10", icon: <Plane size={16}/>, desc: "阿聯酋起飛 (EK232)，帶著滿滿回憶離開", type: "highlight" }
+        ]
+      },
+      {
+        day: 15, date: "06/26 (五)", city: "台北", title: "平安抵家", hotel: "溫暖的家",
+        events: [
+          { time: "21:20", icon: <CheckCircle2 size={16}/>, desc: "航班順利降落桃園機場 T2，完美落幕！", type: "highlight" }
+        ]
+      }
+    ];
 
-      <DaySection day="Day 3" date="6/14 (日)" title="米蘭 ➔ 威尼斯" icon={<Train />} color="blue">
-        <TimelineItem time="09:30" title="米蘭大教堂 Fast Track" desc="搭電梯登頂，穿梭於哥德式尖塔間" />
-        <TimelineItem time="14:15" title="高鐵 FR 9733" desc="米蘭出發，前往威尼斯 (16:42 抵達)" />
-        <TimelineItem time="17:10" title="入住 Hotel Principe" desc="露台套房，免過橋輕鬆安頓" />
-      </DaySection>
+    return (
+        <div className="p-4 md:p-8 bg-[#F8FAFC]">
+            <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
+              <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
+              <h1 className="text-3xl font-black mb-2">義大利 15 天家族壯遊</h1>
+              <p className="text-slate-200 text-sm font-bold">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
+              
+              {/* 完美回歸：一鍵展開與隱藏按鈕 */}
+              <div className="absolute top-6 right-6 flex gap-2 no-print">
+                 <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Maximize2 size={14}/> 展開全部</button>
+                 <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Minimize2 size={14}/> 摺疊全部</button>
+              </div>
+            </div>
 
-      <DaySection day="Day 4" date="6/15 (一)" title="水都慢活與黃金日落" icon={<Anchor />} color="blue">
-        <TimelineItem time="09:30" title="聖馬可廣場漫步" desc="穿越水巷與小橋，探訪沉水書店" />
-        <TimelineItem time="15:00" title="德國商館 T Fondaco" desc="頂樓觀景台俯瞰大運河 (需提早預約)" />
-        <HighlightBox color="blue" icon={<Sunrise size={14}/>} title="17:30 黃金時刻：貢多拉包船">
-             <div className="text-xs">避開正午烈日，享受夕陽灑在運河上的極致浪漫。</div>
-        </HighlightBox>
-      </DaySection>
+            <div className="space-y-4">
+              {ItineraryData.map((d) => {
+                const isExpanded = expandedDays.includes(d.day);
+                return (
+                <div key={d.day} className={`bg-white rounded-2xl transition-all duration-300 overflow-hidden border print-break-inside-avoid ${isExpanded ? 'border-blue-400 shadow-md' : 'border-slate-200 hover:border-slate-300'}`}>
+                  
+                  {/* 可點擊的卡片標題 */}
+                  <button onClick={() => toggleDay(d.day)} className="w-full px-6 py-5 flex items-center justify-between text-left print:pointer-events-none">
+                    <div className="flex items-center gap-5 w-full">
+                      <div className={`w-14 h-14 rounded-xl flex flex-col items-center justify-center font-black transition-colors shrink-0 ${isExpanded ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500'}`}>
+                        <span className="text-[10px] uppercase leading-none mb-1">Day</span>
+                        <span className="text-2xl leading-none">{d.day}</span>
+                      </div>
+                      <div className="flex-1 pr-4">
+                        <h3 className="font-black text-slate-800 text-base">{d.city}</h3>
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                          <p className="text-[11px] text-slate-400 font-black uppercase tracking-wider">{d.date}</p>
+                          {/* 完美回歸：每天專屬的住宿地點標籤 */}
+                          {d.hotel && (
+                            <span className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-bold border ${isExpanded ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
+                              <Hotel size={10}/> {d.hotel}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {/* 右側箭頭 */}
+                    {isExpanded ? <ChevronUp size={24} className="text-blue-500 shrink-0 print-hide-icon"/> : <ChevronDown size={24} className="text-slate-300 shrink-0 print-hide-icon"/>}
+                  </button>
+                  
+                  {/* 展開後的詳細行程 */}
+                  <div className={`${isExpanded ? 'block' : 'hidden print-expand'} px-6 pb-8 pt-2 bg-slate-50/50 border-t border-slate-100`}>
+                    <div className="mb-6 px-2">
+                      <p className="text-sm text-blue-600 font-black flex items-center gap-2 mb-3">
+                        <Compass size={18}/> {d.title}
+                      </p>
+                      
+                      {/* 完美回歸：展開後顯示大大的住宿提醒框 */}
+                      {d.hotel && (
+                        <div className="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm mb-4 print-break-inside-avoid">
+                          <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
+                             <Bed size={18} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">今日住宿 / Accommodation</p>
+                            <p className="text-sm font-black text-slate-700">{d.hotel}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-6 px-2 relative">
+                      <div className="absolute left-[23px] top-2 bottom-2 w-0.5 bg-slate-200"></div>
+                      
+                      {d.events.map((e, i) => {
+                        let iconBg = "bg-white border-slate-200 text-slate-400";
+                        let textColor = "text-slate-600 font-medium";
+                        if (e.type === 'highlight') {
+                          iconBg = "bg-amber-100 border-amber-300 text-amber-600 shadow-sm z-10";
+                          textColor = "text-slate-900 font-black";
+                        } else if (e.type === 'transit') {
+                          iconBg = "bg-blue-50 border-blue-200 text-blue-500 z-10";
+                          textColor = "text-slate-700 font-bold";
+                        } else if (e.type === 'leisure') {
+                          iconBg = "bg-emerald-50 border-emerald-200 text-emerald-500 z-10";
+                          textColor = "text-slate-700 font-bold";
+                        } else {
+                          iconBg = "bg-white border-slate-200 text-slate-400 z-10";
+                        }
 
-      <DaySection day="Day 5" date="6/16 (二)" title="彩色島童話攝影" icon={<Camera />} color="blue">
-        <TimelineItem time="09:00" title="搭乘 12 號水巴" desc="前往 F.te Nove 碼頭搭船" />
-        <TimelineItem time="10:30" title="布拉諾島 (Burano)" desc="拍攝彩色房屋，中午享用炸海鮮拼盤" />
-      </DaySection>
-
-      <DaySection day="Day 6" date="6/17 (三)" title="威尼斯 ➔ 佛羅倫斯" icon={<Train />} color="emerald">
-        <TimelineItem time="09:30" title="戰略休整" desc="睡到自然醒，享用最後的水都早餐" />
-        <TimelineItem time="11:30" title="退房" desc="優雅退房，散步至火車站月台" />
-        <TimelineItem time="14:26" title="高鐵 FR 9425" desc="前往佛羅倫斯 (16:39 抵達)" />
-        <TimelineItem time="17:00" title="入住 Plus Florence" desc="長輩進房充電休息" />
-      </DaySection>
-
-      <DaySection day="Day 7" date="6/18 (四)" title="大師傑作與慢活" icon={<Camera />} color="emerald">
-        <TimelineItem time="09:00" title="烏菲茲美術館" desc="看《維納斯的誕生》" />
-        <TimelineItem time="12:00" title="中央市場" desc="品嚐牛肚包與松露麵" />
-        <AlertBox type="blue">下午強迫長輩回飯店吹冷氣午休，避開午後烈日！</AlertBox>
-      </DaySection>
-
-      <DaySection day="Day 8" date="6/19 (五)" title="奇蹟與海岸：大巴遊" icon={<Bus />} color="emerald">
-        <HighlightBox color="emerald" icon={<Shield size={14}/>} title="護膝戰略：Klook 一日遊">
-             <div className="text-xs">搭大巴前往比薩斜塔與五漁村。車上睡覺回血，完美取代疲憊的轉車行程。</div>
-        </HighlightBox>
-        <TimelineItem time="07:30" title="集合出發" desc="前往比薩拍攝推塔照" />
-        <TimelineItem time="12:30" title="五漁村 (Cinque Terre)" desc="搭村際火車/遊船穿梭彩色懸崖" />
-      </DaySection>
-
-      <DaySection day="Day 9" date="6/20 (六)" title="品味與終極牛排" icon={<Utensils />} color="emerald">
-        <TimelineItem time="09:30" title="市區採買" desc="百年修道院藥妝、中央市場油醋" />
-        <TimelineItem time="18:45" title="米開朗基羅廣場" desc="搭計程車上山看魔幻夕陽" />
-        <TimelineItem time="20:00" title="Trattoria Dall'Oste" desc="享用 1kg 丁骨大牛排" />
-      </DaySection>
-
-      <div className="print-break"></div>
-
-      <DaySection day="Day 10" date="6/21 (日)" title="佛羅倫斯 ➔ 羅馬" icon={<Train />} color="rose">
-        <TimelineItem time="10:28" title="Italo 8905 (法拉利高鐵)" desc="Prima 商務艙前往羅馬 (12:10 抵達)" />
-        <TimelineItem time="14:30" title="入住 Hotel Milani" desc="長輩進房睡午覺" />
-        <TimelineItem time="16:30" title="市區漫步" desc="西班牙階梯、許願池、金杯咖啡" />
-      </DaySection>
-
-      <DaySection day="Day 11" date="6/22 (一)" title="天空之城尊榮包車" icon={<Car />} color="rose">
-        <HighlightBox color="red" icon={<Ban size={14}/>} title="逃離黑色星期一">
-             <div className="text-xs">週一羅馬市區塞爆，我們包車前往郊區避開人潮。</div>
-        </HighlightBox>
-        <TimelineItem time="08:30" title="專屬中文包車" desc="飯店門口接送，直達天空之城 (Civita)" />
-        <TimelineItem time="14:30" title="Orvieto" desc="懸崖中世紀小鎮享用野味午餐" />
-      </DaySection>
-
-      <DaySection day="Day 12" date="6/23 (二)" title="帝國榮耀與老城" icon={<Camera />} color="rose">
-        <TimelineItem time="09:00" title="羅馬競技場" desc="感受古羅馬震撼 (門票極難搶)" />
-        <TimelineItem time="17:00" title="Trastevere 老城" desc="台伯河畔享用道地培根蛋麵" />
-      </DaySection>
-
-      <DaySection day="Day 13" date="6/24 (三)" title="聖地巡禮與創世紀" icon={<MapPin />} color="rose">
-        <TimelineItem time="07:30" title="聖彼得大教堂" desc="趁早免排隊安檢進入" />
-        <TimelineItem time="17:00" title="梵蒂岡博物館" desc="精華動線直搗黃龍，看西斯汀禮拜堂" />
-      </DaySection>
-
-      <DaySection day="Day 14" date="6/25 (四)" title="超市掃貨與賦歸" icon={<ShoppingBag />} color="gray">
-        <TimelineItem time="11:00" title="Termini 地下超市" desc="最後衝刺伴手禮" />
-        <TimelineItem time="18:30" title="Leonardo Express" desc="前往 FCO 羅馬機場" />
-        <TimelineItem time="22:10" title="EK232 起飛" desc="帶著滿滿回憶離開義大利" />
-      </DaySection>
-
-      <DaySection day="Day 15" date="6/26 (五)" title="平安抵家" icon={<CheckCircle2 />} color="gray">
-        <TimelineItem time="21:20" title="抵達台灣" desc="順利降落桃園機場 T2" />
-      </DaySection>
-
-    </div>
-  </>
-);
+                        return (
+                          <div key={i} className="flex gap-5 relative print-break-inside-avoid">
+                            <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center bg-white ${iconBg}`}>
+                              {React.cloneElement(e.icon, { size: 20 })}
+                            </div>
+                            <div className="flex-1 pt-2 pb-2">
+                              <p className="text-[15px] font-black text-slate-800 font-mono tracking-tight mb-1">{e.time}</p>
+                              <p className={`text-sm leading-relaxed ${textColor}`}>{e.desc}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )})}
+            </div>
+        </div>
+    );
+};
 
 // ==========================================
-// Tab 4: 待辦與戰略 View (完美回歸：深度優化)
+// Tab 4: 待辦與戰略 View (全新增加威尼斯免稅申請)
 // ==========================================
 const TodoGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-white print-break-inside-avoid">
@@ -594,12 +759,29 @@ const TodoGuideView = () => (
                 <div className="text-2xl font-black text-rose-400 font-mono">112</div>
             </div>
             <div className="bg-slate-700/50 p-3 rounded-lg">
-                <div className="text-slate-400 text-xs font-bold mb-1">駐義大利台北代表處 (護照遺失/急難急救)</div>
+                <div className="text-slate-400 text-xs font-bold mb-1">駐義大利台北代表處 (護照遺失/急難)</div>
                 <div className="font-bold text-blue-300">上班時間：+39-06-9826-2800</div>
                 <div className="font-bold text-rose-300">緊急專線：+39-366-8066-434</div>
             </div>
         </div>
     </div>
+
+    {/* 全新增加：必辦行政文件 */}
+    <section className="print-break-inside-avoid">
+        <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
+            <FileText className="text-blue-500"/> 出發前必備行政文件
+        </h3>
+        <div className="bg-blue-50 p-5 rounded-lg border border-blue-200">
+            <div className="text-sm font-black text-blue-900 mb-3 flex items-center gap-2">
+               <QrCode className="text-blue-500" size={18}/> 威尼斯入城費 (Access Fee) 免繳申請
+            </div>
+            <ul className="text-xs text-blue-800 space-y-3 list-none font-bold">
+                <li className="flex gap-2 items-start"><Info className="text-blue-400 shrink-0 mt-0.5" size={14}/> <span>我們住在威尼斯本島，已含城市稅，因此**完全免繳**入城費，但「必須」事先上網申請豁免 QR Code 備查。</span></li>
+                <li className="flex gap-2 items-start"><CheckCircle2 className="text-blue-500 shrink-0 mt-0.5" size={14}/> <span>請至官網 (cda.ve.it/en/) 選擇「I am a guest in an accommodation facility located in the Municipality of Venice」。</span></li>
+                <li className="flex gap-2 items-start"><CheckCircle2 className="text-blue-500 shrink-0 mt-0.5" size={14}/> <span>輸入入住日期與飯店名稱 (Hotel Principe)，取得全家人的免繳 QR Code 截圖存在手機裡。</span></li>
+            </ul>
+        </div>
+    </section>
 
     <section className="print-break-inside-avoid">
         <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
@@ -693,83 +875,21 @@ const ShoppingGuideView = () => (
 
 const TabButton = ({ id, label, active, set, color }) => {
   const colors = {
-    emerald: active === id ? 'text-emerald-700 border-emerald-600 bg-emerald-50' : 'text-gray-500 hover:text-emerald-600',
-    blue: active === id ? 'text-blue-700 border-blue-600 bg-blue-50' : 'text-gray-500 hover:text-blue-600',
-    amber: active === id ? 'text-amber-700 border-amber-500 bg-amber-50' : 'text-gray-500 hover:text-amber-600',
-    rose: active === id ? 'text-rose-700 border-rose-600 bg-rose-50' : 'text-gray-500 hover:text-rose-600',
-    indigo: active === id ? 'text-indigo-700 border-indigo-600 bg-indigo-50' : 'text-gray-500 hover:text-indigo-600',
-    yellow: active === id ? 'text-yellow-700 border-yellow-600 bg-yellow-50' : 'text-gray-500 hover:text-yellow-600',
+    emerald: active === id ? 'text-emerald-700 border-emerald-600 bg-emerald-50' : 'text-slate-500 hover:text-emerald-600',
+    blue: active === id ? 'text-blue-700 border-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600',
+    amber: active === id ? 'text-amber-700 border-amber-500 bg-amber-50' : 'text-slate-500 hover:text-amber-600',
+    rose: active === id ? 'text-rose-700 border-rose-600 bg-rose-50' : 'text-slate-500 hover:text-rose-600',
+    indigo: active === id ? 'text-indigo-700 border-indigo-600 bg-indigo-50' : 'text-slate-500 hover:text-indigo-600',
+    yellow: active === id ? 'text-yellow-700 border-yellow-600 bg-yellow-50' : 'text-slate-500 hover:text-yellow-600',
   };
 
   return (
     <button 
       onClick={() => set(id)}
-      className={`px-4 py-3 font-bold text-sm transition-all whitespace-nowrap border-b-2 border-transparent rounded-t-lg ${colors[color]}`}
+      className={`px-4 py-3 font-black text-sm transition-all whitespace-nowrap border-b-[3px] border-transparent rounded-t-xl ${colors[color]}`}
     >
       {label}
     </button>
-  );
-};
-
-const DaySection = ({ day, date, title, icon, color, children }) => {
-  const bgColors = {
-    gray: 'bg-slate-500', indigo: 'bg-indigo-600', amber: 'bg-amber-500', 
-    blue: 'bg-blue-600', rose: 'bg-rose-600', emerald: 'bg-emerald-600', orange: 'bg-orange-600'
-  };
-  const textColors = {
-    gray: 'text-slate-700', indigo: 'text-indigo-800', amber: 'text-amber-800', 
-    blue: 'text-blue-800', rose: 'text-rose-800', emerald: 'text-emerald-800', orange: 'text-orange-800'
-  };
-
-  return (
-    <div className="flex gap-4 bg-white p-5 rounded-xl border border-slate-100 shadow-sm print-break-inside-avoid">
-      <div className="flex flex-col items-center">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md text-white shrink-0 ${bgColors[color]}`}>
-          {React.cloneElement(icon, { size: 16 })}
-        </div>
-        <div className="flex-1 w-0.5 bg-gray-200 my-2 print:hidden"></div>
-      </div>
-      <div className="flex-1 pb-2">
-        <h2 className="text-base font-bold text-gray-900 flex items-baseline gap-2">
-          {day} <span className="text-xs font-normal text-gray-500">{date}</span>
-        </h2>
-        <h3 className={`text-lg font-black mb-3 ${textColors[color]}`}>{title}</h3>
-        <div className="space-y-4">{children}</div>
-      </div>
-    </div>
-  );
-};
-
-const TimelineItem = ({ time, title, desc }) => (
-  <div className="flex gap-3 items-start">
-    <div className="w-11 text-xs font-bold text-slate-400 pt-0.5 shrink-0 text-right font-mono bg-slate-50 px-1 rounded">{time}</div>
-    <div>
-      <h4 className="font-black text-slate-800 text-sm">{title}</h4>
-      {desc && <p className="text-xs text-slate-600 mt-1 leading-relaxed font-bold">{desc}</p>}
-    </div>
-  </div>
-);
-
-const AlertBox = ({ type, children }) => (
-  <div className={`border-l-4 p-3 text-xs font-bold rounded-r mb-2 ${type === 'red' ? 'border-red-400 bg-red-50 text-red-800' : 'border-blue-400 bg-blue-50 text-blue-800'}`}>
-    {children}
-  </div>
-);
-
-const HighlightBox = ({ color, icon, title, children }) => {
-  const styles = {
-    blue: "bg-blue-50 border-blue-200 text-blue-900",
-    red: "bg-red-50 border-red-200 text-red-900",
-    emerald: "bg-emerald-50 border-emerald-200 text-emerald-900",
-    orange: "bg-orange-50 border-orange-200 text-orange-900",
-  };
-  const activeStyle = styles[color] || styles.blue;
-
-  return (
-    <div className={`border p-3 rounded-lg my-2 ${activeStyle}`}>
-      <div className="flex items-center gap-2 font-black text-sm mb-1">{icon} {title}</div>
-      <div className="text-xs font-bold opacity-90">{children}</div>
-    </div>
   );
 };
 
