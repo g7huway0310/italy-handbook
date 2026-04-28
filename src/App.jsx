@@ -161,6 +161,7 @@ export default function App() {
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
+          <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
           <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
           <TabButton id="todo" label="🛡️ 待辦與防護" active={activeTab} set={setActiveTab} color="rose" />
         </div>
@@ -195,6 +196,10 @@ export default function App() {
 
         <div className={`page-break-before ${activeTab === 'venice' ? 'block' : 'hidden print-tab-content'}`}>
           <VeniceQrView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'taxrefund' ? 'block' : 'hidden print-tab-content'}`}>
+          <TaxRefundView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'shopping' ? 'block' : 'hidden print-tab-content'}`}>
@@ -1442,6 +1447,96 @@ const VeniceQrView = () => {
     </div>
   );
 };
+
+// ==========================================
+// Tab: Tax Refund Guide
+// ==========================================
+const TaxRefundView = () => (
+  <div className="p-4 md:p-8 space-y-8 bg-amber-50 print-break-inside-avoid">
+    <div className="text-center pb-2 border-b border-amber-200">
+      <h1 className="text-3xl font-black text-amber-900 mb-2">💶 義大利退稅攻略</h1>
+      <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Tax Free Playbook</p>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-amber-900 mb-4 flex items-center gap-2">
+        <CreditCard className="text-amber-600" /> 2026 最新門檻與資格
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
+          <div className="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-2">Threshold</div>
+          <div className="text-sm font-bold text-amber-900">同日、同店滿 €70 即可退稅</div>
+          <div className="text-xs text-amber-800 mt-2 font-bold">非歐盟旅客適用，實際退稅約 12%–15%（依稅率與手續費）。</div>
+        </div>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Eligibility</div>
+          <ul className="text-sm text-slate-700 space-y-2 font-bold">
+            <li>非歐盟居住者（台灣護照）</li>
+            <li>年齡需滿 16–18 歲以上（依店家規定）</li>
+            <li>商品需於購買後 3 個月內攜帶出境歐盟</li>
+          </ul>
+        </div>
+      </div>
+      <div className="text-xs text-amber-700 font-bold mt-3">提醒：門檻與規定請以店家/退稅公司最新公告為準。</div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+        <FileText className="text-blue-500" /> 實戰流程 (購物 ➜ 機場)
+      </h3>
+      <ol className="list-decimal pl-5 text-sm text-slate-700 space-y-2 font-bold">
+        <li>結帳前先說明要辦理 Tax Free，請店家開立「電子退稅單」</li>
+        <li>店家填護照資料，確認國籍寫 Taiwan</li>
+        <li>離境機場先到海關查驗或自助機完成退稅確認</li>
+        <li>再到退稅櫃檯/機台領現金或刷回卡</li>
+        <li>托運行李內商品：一定要在托運前完成退稅</li>
+      </ol>
+      <div className="mt-3 text-xs text-slate-500 font-bold">建議提早 3–5 小時到機場，退稅常需排隊。</div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
+        <MapPin className="text-emerald-600" /> 羅馬 FCO 退稅動線 (官方 ADR)
+      </h3>
+      <ul className="text-sm text-emerald-900 space-y-2 font-bold">
+        <li>海關退稅點：T1、T3 出境區，以及 Boarding Area E / A</li>
+        <li>托運行李內商品：務必在 check-in 前完成退稅</li>
+        <li>Global Blue / Planet / Tax Refund：
+          <span className="block text-emerald-800 mt-1">T3 出境區靠近 check-in 196–225、T1 出境區靠近 check-in 111–140、Boarding Area E (ADR Info Point 附近)</span>
+        </li>
+        <li>其他情況：找 Customs Office 或使用自助機 + 專用郵箱</li>
+      </ul>
+      <div className="text-xs text-emerald-700 font-bold mt-3">資料來源：ADR「Immigration and customs」頁面。</div>
+    </div>
+
+    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+        <Banknote className="text-amber-600" /> 現金 vs 信用卡
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
+          <div className="text-sm font-black text-amber-900 mb-2">現金退稅</div>
+          <ul className="text-xs text-amber-800 space-y-2 font-bold">
+            <li>立即拿到現金，最直覺</li>
+            <li>通常手續費較高、金額會較少</li>
+          </ul>
+        </div>
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div className="text-sm font-black text-slate-900 mb-2">刷回信用卡</div>
+          <ul className="text-xs text-slate-700 space-y-2 font-bold">
+            <li>金額通常較多、較划算</li>
+            <li>入帳需等待幾天到數週</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
+      <Info size={16} className="text-blue-300" />
+      結帳時先說「Tax Free」，並確認國籍寫 Taiwan。商品與單據務必帶在身上以備海關抽查。
+    </div>
+  </div>
+);
 
 // ==========================================
 // Tab: Shopping Guide 
