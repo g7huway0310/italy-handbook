@@ -266,6 +266,7 @@ const SurvivalGuideView = () => {
                     <ul className="text-sm text-slate-700 space-y-3 font-bold">
                       <li><strong className="text-slate-900">可以退稅嗎？</strong><br/>Italiano: <span className="text-amber-700">Posso fare il Tax Free?</span></li>
                       <li><strong className="text-slate-900">我是非歐盟旅客，請幫我開退稅單。</strong><br/>Italiano: <span className="text-amber-700">Sono un turista extra-UE, mi fa il modulo Tax Free?</span></li>
+                      <li><strong className="text-slate-900">請國籍填「Taiwan」，不要寫「China」。</strong><br/>Italiano: <span className="text-amber-700">Per favore, scriva "Taiwan" come nazionalita, non "China".</span></li>
                       <li><strong className="text-slate-900">海關蓋章在哪？</strong><br/>Italiano: <span className="text-amber-700">Dove si fa il timbro doganale?</span></li>
                     </ul>
                   </div>
