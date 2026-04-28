@@ -246,6 +246,32 @@ const SurvivalGuideView = () => {
                 </div>
             </div>
 
+              {/* 退稅流程與句子 */}
+              <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-amber-200 print-break-inside-avoid">
+                <h3 className="text-xl font-black text-amber-900 mb-6 flex items-center gap-2 border-b border-amber-100 pb-3">
+                  <ShoppingBag className="text-amber-600"/> 退稅流程與一句話
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                    <div className="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-2">Tax Free Steps</div>
+                    <ol className="list-decimal pl-5 text-sm text-amber-900 space-y-2 font-bold">
+                      <li>結帳前先問是否可退稅</li>
+                      <li>出示護照，店家開立退稅單</li>
+                      <li>離境前到海關蓋章 (Customs)</li>
+                      <li>到退稅櫃檯/機台退現金或刷回卡</li>
+                    </ol>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">How To Ask</div>
+                    <ul className="text-sm text-slate-700 space-y-3 font-bold">
+                      <li><strong className="text-slate-900">可以退稅嗎？</strong><br/>Italiano: <span className="text-amber-700">Posso fare il Tax Free?</span></li>
+                      <li><strong className="text-slate-900">我是非歐盟旅客，請幫我開退稅單。</strong><br/>Italiano: <span className="text-amber-700">Sono un turista extra-UE, mi fa il modulo Tax Free?</span></li>
+                      <li><strong className="text-slate-900">海關蓋章在哪？</strong><br/>Italiano: <span className="text-amber-700">Dove si fa il timbro doganale?</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
             {/* 文化防雷包 */}
             <div className="bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg text-white print-break-inside-avoid">
                 <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2 border-b border-slate-600 pb-3">
