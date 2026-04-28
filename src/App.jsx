@@ -264,10 +264,10 @@ const SurvivalGuideView = () => {
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">How To Ask</div>
                     <ul className="text-sm text-slate-700 space-y-3 font-bold">
-                      <li><strong className="text-slate-900">可以退稅嗎？</strong><br/>Italiano: <span className="text-amber-700">Posso fare il Tax Free?</span></li>
-                      <li><strong className="text-slate-900">我是非歐盟旅客，請幫我開退稅單。</strong><br/>Italiano: <span className="text-amber-700">Sono un turista extra-UE, mi fa il modulo Tax Free?</span></li>
-                      <li><strong className="text-slate-900">請國籍填「Taiwan」，不要寫「China」。</strong><br/>Italiano: <span className="text-amber-700">Per favore, scriva "Taiwan" come nazionalita, non "China".</span></li>
-                      <li><strong className="text-slate-900">海關蓋章在哪？</strong><br/>Italiano: <span className="text-amber-700">Dove si fa il timbro doganale?</span></li>
+                            <li><strong className="text-slate-900">可以退稅嗎？</strong><br/>Italiano: <span className="text-amber-700">Posso fare il Tax Free?</span><br/>English: <span className="text-amber-700">Can I do tax free?</span></li>
+                            <li><strong className="text-slate-900">我是非歐盟旅客，請幫我開退稅單。</strong><br/>Italiano: <span className="text-amber-700">Sono un turista extra-UE, mi fa il modulo Tax Free?</span><br/>English: <span className="text-amber-700">I am a non-EU tourist. Can you issue the tax-free form?</span></li>
+                            <li><strong className="text-slate-900">請國籍填「Taiwan」，不要寫「China」。</strong><br/>Italiano: <span className="text-amber-700">Per favore, scriva "Taiwan" come nazionalita, non "China".</span><br/>English: <span className="text-amber-700">Please write "Taiwan" as nationality, not "China".</span></li>
+                            <li><strong className="text-slate-900">海關蓋章在哪？</strong><br/>Italiano: <span className="text-amber-700">Dove si fa il timbro doganale?</span><br/>English: <span className="text-amber-700">Where can I get the customs stamp?</span></li>
                     </ul>
                   </div>
                 </div>
