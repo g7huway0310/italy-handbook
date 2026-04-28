@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Plane, Train, MapPin, Camera, Sunrise, Copy, Printer, Check, 
   Navigation, Shield, Ban, Globe, CreditCard, Banknote, 
@@ -6,7 +6,7 @@ import {
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
   AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
   Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee,
-  Languages, Volume2, Droplets, MapPinned
+  Languages, Volume2, Droplets, MapPinned, Smartphone, Download, Map
 } from 'lucide-react';
 
 export default function App() {
@@ -156,6 +156,8 @@ export default function App() {
         <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
           <TabButton id="survival" label="🗣️ 語言與求救" active={activeTab} set={setActiveTab} color="purple" />
+          <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
+          <TabButton id="packing" label="🧳 行李與藥品" active={activeTab} set={setActiveTab} color="cyan" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
@@ -173,6 +175,14 @@ export default function App() {
 
         <div className={`page-break-before ${activeTab === 'survival' ? 'block' : 'hidden print-tab-content'}`}>
             <SurvivalGuideView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'emergency' ? 'block' : 'hidden print-tab-content'}`}>
+          <EmergencyCardView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'packing' ? 'block' : 'hidden print-tab-content'}`}>
+          <PackingChecklistView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'budget' ? 'block' : 'hidden print-tab-content'}`}>
@@ -207,10 +217,10 @@ const SurvivalGuideView = () => {
     const [selectedCity, setSelectedCity] = useState('roma');
 
     const hotels = {
-        milano: { city: "米蘭", name: "Hotel Midway", address: "Via Luigi Settembrini, 41, 20124 Milano MI" },
-        venezia: { city: "威尼斯", name: "Hotel Principe", address: "Lista di Spagna, 146, 30121 Venezia VE" },
-        firenze: { city: "佛羅倫斯", name: "Plus Florence", address: "Via Santa Caterina d'Alessandria, 15/17, 50129 Firenze FI" },
-        roma: { city: "羅馬", name: "Hotel Milani", address: "Via Magenta, 12, 00185 Roma RM" },
+      milano: { city: "米蘭", name: "Hotel Midway", address: "Via Giovanni Battista Sammartini, 15, 20125 Milano MI" },
+      venezia: { city: "威尼斯", name: "Hotel Principe", address: "Rio Tera Lista di Spagna, 146, 30121 Venezia VE" },
+      firenze: { city: "佛羅倫斯", name: "Plus Florence Hostel", address: "Via Santa Caterina D'Alessandria, 15, 50129 Firenze FI" },
+      roma: { city: "羅馬", name: "Hotel Milani | BZAR hotels", address: "Via Magenta, 12, 00185 Roma RM" },
     };
 
     const phrases = [
@@ -316,6 +326,353 @@ const SurvivalGuideView = () => {
         </div>
     );
 };
+
+  // ==========================================
+  // Tab: 緊急卡片 View
+  // ==========================================
+  const EmergencyCardView = () => {
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    const buildImageUrl = (filename) => `${baseUrl}${filename}`;
+    const buildMapUrl = (item) => {
+      if (typeof item === "string") {
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item)}`;
+      }
+      if (item?.url) return item.url;
+      if (item?.query) {
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}`;
+      }
+      return "https://www.google.com/maps";
+    };
+    const [qrMissing, setQrMissing] = useState({});
+
+    const emergencyContacts = [
+      { label: "歐盟緊急電話", value: "112", note: "警察 / 救護 / 消防" },
+      { label: "駐義大利台北代表處", value: "+39-06-9826-2800", note: "上班時間" },
+      { label: "代表處緊急專線", value: "+39-366-8066-434", note: "護照遺失 / 急難" },
+    ];
+
+    const essentialInfo = [
+      { label: "護照號碼", value: "請填寫護照號碼" },
+      { label: "保險公司 / 保單號", value: "請填寫保險資訊" },
+      { label: "台灣緊急聯絡人", value: "請填寫姓名與電話" },
+      { label: "旅伴聯絡方式", value: "請填寫旅伴手機" },
+    ];
+
+    const hotels = [
+      {
+        id: "milano",
+        city: "米蘭",
+        name: "Hotel Midway",
+        address: "Via Giovanni Battista Sammartini, 15, 20125 Milano MI",
+        mapUrl: "https://maps.app.goo.gl/9zUrVo2tfAjxo2YJ6",
+        qr: "hotel-midway-qr.png",
+      },
+      {
+        id: "venezia",
+        city: "威尼斯",
+        name: "Hotel Principe",
+        address: "Rio Tera Lista di Spagna, 146, 30121 Venezia VE",
+        mapUrl: "https://maps.app.goo.gl/PQDfG27ing4NyJDGA",
+        qr: "hotel-principe-qr.png",
+      },
+      {
+        id: "firenze",
+        city: "佛羅倫斯",
+        name: "Plus Florence Hostel",
+        address: "Via Santa Caterina D'Alessandria, 15, 50129 Firenze FI",
+        mapUrl: "https://maps.app.goo.gl/GRsmBV3hFY8RPcvD9",
+        qr: "hotel-plus-florence-qr.png",
+      },
+      {
+        id: "roma",
+        city: "羅馬",
+        name: "Hotel Milani | BZAR hotels",
+        address: "Via Magenta, 12, 00185 Roma RM",
+        mapUrl: "https://maps.app.goo.gl/mKKmKnZvDEn8N7NLA",
+        qr: "hotel-milani-qr.png",
+      },
+    ];
+
+    const mapGroups = [
+      {
+        title: "飯店",
+        items: hotels.map((hotel) => ({ label: hotel.name, query: hotel.address, url: hotel.mapUrl })),
+      },
+      {
+        title: "主要車站",
+        items: [
+          { label: "Milano Centrale", query: "Milano Centrale Station" },
+          { label: "Venezia S. Lucia", query: "Venezia Santa Lucia Station" },
+          { label: "Firenze S.M.N", query: "Firenze Santa Maria Novella Station" },
+          { label: "Roma Termini", query: "Roma Termini Station" },
+        ],
+      },
+      {
+        title: "關鍵景點",
+        items: [
+          { label: "Duomo Milano", query: "Duomo di Milano" },
+          { label: "Piazza San Marco", query: "Piazza San Marco Venice" },
+          { label: "Uffizi", query: "Uffizi Gallery" },
+          { label: "Colosseum", query: "Colosseum Rome" },
+          { label: "Vatican Museums", query: "Vatican Museums" },
+        ],
+      },
+    ];
+
+    const handleQrError = (id) => {
+      setQrMissing((prev) => ({ ...prev, [id]: true }));
+    };
+
+    return (
+      <div className="p-4 md:p-8 space-y-8 bg-red-50 print-break-inside-avoid">
+        <div className="text-center pb-2 border-b border-red-200">
+          <h1 className="text-3xl font-black text-red-900 mb-2">🚨 緊急卡片與離線備援</h1>
+          <p className="text-red-700 text-xs uppercase tracking-[0.2em] font-black">Emergency Ready</p>
+        </div>
+
+        <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-700 shadow-lg print-break-inside-avoid">
+          <div className="flex items-center gap-2 text-sm font-black text-blue-200">
+            <Download size={16} /> 離線模式與加入主畫面
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-xs font-bold">
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+              <div className="flex items-center gap-2 text-emerald-300 mb-2">
+                <Smartphone size={14} /> Android / Chrome
+              </div>
+              <ol className="list-decimal pl-4 space-y-1 text-slate-200">
+                <li>開啟右上角選單</li>
+                <li>點選「安裝應用程式」</li>
+                <li>加入主畫面後可離線瀏覽</li>
+              </ol>
+            </div>
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+              <div className="flex items-center gap-2 text-amber-300 mb-2">
+                <Smartphone size={14} /> iPhone / Safari
+              </div>
+              <ol className="list-decimal pl-4 space-y-1 text-slate-200">
+                <li>點分享按鈕</li>
+                <li>選「加入主畫面」</li>
+                <li>首次開啟後即可離線</li>
+              </ol>
+            </div>
+          </div>
+          <div className="text-[11px] text-slate-300 mt-3">
+            提醒：第一次開啟要有網路，之後可離線查看行程、QR 與緊急資訊。
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {emergencyContacts.map((contact) => (
+            <div key={contact.label} className="bg-white border border-red-100 p-4 rounded-xl shadow-sm">
+              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{contact.label}</div>
+              <div className="text-xl font-black text-red-600 mt-1">{contact.value}</div>
+              <div className="text-xs font-bold text-slate-500 mt-1">{contact.note}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
+          <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+            <ShieldAlert className="text-red-500" /> 護照 / 保險 / 聯絡資料
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {essentialInfo.map((info) => (
+              <div key={info.label} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{info.label}</div>
+                <div className="text-sm font-black text-slate-800 mt-2">{info.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
+          <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+            <MapPin className="text-emerald-500" /> 飯店地址與 QR
+          </h3>
+          <div className="text-xs font-bold text-slate-500 mb-4">
+            若要離線掃描飯店地址 QR，請將圖片放到 public/ 並使用下列檔名。
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {hotels.map((hotel) => (
+              <div key={hotel.id} className="border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{hotel.city}</div>
+                    <div className="text-base font-black text-slate-800 mt-1">{hotel.name}</div>
+                  </div>
+                  <a
+                    href={buildMapUrl({ url: hotel.mapUrl, query: hotel.address })}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-black border border-emerald-200"
+                  >
+                    地圖
+                  </a>
+                </div>
+                <div className="text-xs font-bold text-slate-600 leading-relaxed">{hotel.address}</div>
+                <div className="flex items-center gap-3">
+                  {qrMissing[hotel.id] ? (
+                    <div className="w-28 h-28 rounded-xl border border-dashed border-slate-300 bg-slate-50 text-slate-400 text-[10px] font-black flex items-center justify-center text-center">
+                      尚未放入 QR
+                    </div>
+                  ) : (
+                    <img
+                      src={buildImageUrl(hotel.qr)}
+                      alt={`${hotel.name} QR`}
+                      className="w-28 h-28 object-contain border border-slate-200 rounded-xl p-2 bg-white"
+                      loading="lazy"
+                      onError={() => handleQrError(hotel.id)}
+                    />
+                  )}
+                  <div className="text-[10px] font-black text-slate-400">
+                    {hotel.qr}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
+          <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+            <Map className="text-blue-500" /> 地圖捷徑
+          </h3>
+          <div className="space-y-4">
+            {mapGroups.map((group) => (
+              <div key={group.title}>
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{group.title}</div>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <a
+                      key={item.label}
+                      href={buildMapUrl(item)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-black border border-blue-200"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ==========================================
+  // Tab: 行李與藥品清單 View
+  // ==========================================
+  const PackingChecklistView = () => {
+    const storageKey = "italy-handbook-packing-v1";
+    const packingItems = {
+      preTrip: [
+        { id: "passport", label: "護照 / 影本" },
+        { id: "insurance", label: "保險資料 / 緊急聯絡" },
+        { id: "cards", label: "信用卡 / 現金 / 交通卡" },
+        { id: "adapter", label: "歐規轉接頭 / 充電線" },
+        { id: "lock", label: "鋼絲鎖 / 行李吊牌" },
+        { id: "meds", label: "常備藥 / 處方箋" },
+        { id: "clothes", label: "換洗衣物 / 雨具" },
+        { id: "copies", label: "重要文件雲端備份" },
+      ],
+      daily: [
+        { id: "water", label: "水壺 / 補水" },
+        { id: "coins", label: "零錢 (廁所/小費)" },
+        { id: "tickets", label: "門票 / 車票 / QR" },
+        { id: "power", label: "行動電源 / 手機電量" },
+        { id: "meds_daily", label: "每日藥品 / OK 繃" },
+        { id: "sunscreen", label: "防曬 / 帽子" },
+      ],
+    };
+
+    const buildInitialState = () => ({
+      preTrip: packingItems.preTrip.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}),
+      daily: packingItems.daily.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}),
+    });
+
+    const [packingState, setPackingState] = useState(() => {
+      if (typeof window === "undefined") return buildInitialState();
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        if (saved) return saved;
+      } catch (err) {
+        return buildInitialState();
+      }
+      return buildInitialState();
+    });
+
+    useEffect(() => {
+      if (typeof window === "undefined") return;
+      localStorage.setItem(storageKey, JSON.stringify(packingState));
+    }, [packingState]);
+
+    const togglePackingItem = (section, id) => {
+      setPackingState((prev) => ({
+        ...prev,
+        [section]: {
+          ...prev[section],
+          [id]: !prev[section]?.[id],
+        },
+      }));
+    };
+
+    const renderChecklist = (items, section) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {items.map((item) => {
+          const checked = !!packingState?.[section]?.[item.id];
+          return (
+            <label
+              key={item.id}
+              className={`flex items-center gap-2 text-sm font-bold rounded-lg border px-3 py-2 transition ${
+                checked
+                  ? "bg-emerald-50 border-emerald-200 text-emerald-700 line-through"
+                  : "bg-white border-slate-200 text-slate-700"
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={() => togglePackingItem(section, item.id)}
+                className="accent-emerald-600"
+              />
+              {item.label}
+            </label>
+          );
+        })}
+      </div>
+    );
+
+    return (
+      <div className="p-4 md:p-8 space-y-8 bg-cyan-50 print-break-inside-avoid">
+        <div className="text-center pb-2 border-b border-cyan-200">
+          <h1 className="text-3xl font-black text-cyan-900 mb-2">🧳 行李與藥品清單</h1>
+          <p className="text-cyan-700 text-xs uppercase tracking-[0.2em] font-black">Packing & Daily Refill</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-cyan-200 shadow-sm print-break-inside-avoid">
+          <h3 className="text-lg font-black text-cyan-900 mb-4 flex items-center gap-2">
+            <ShoppingBag className="text-cyan-600" /> 出發前必備
+          </h3>
+          {renderChecklist(packingItems.preTrip, "preTrip")}
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm print-break-inside-avoid">
+          <h3 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
+            <Umbrella className="text-emerald-600" /> 每日補充提醒
+          </h3>
+          {renderChecklist(packingItems.daily, "daily")}
+        </div>
+
+        <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
+          <Info size={16} className="text-blue-300" />
+          勾選狀態會自動保存在本機瀏覽器，離線時也能使用。
+        </div>
+      </div>
+    );
+  };
 
 // ==========================================
 // Tab: Budget View
@@ -751,6 +1108,53 @@ const ItineraryView = () => {
       }
     ];
 
+    const dailyChecklistItems = [
+      { id: "checkin", label: "退房 / 入住確認" },
+      { id: "transit", label: "車站 / 交通確認" },
+      { id: "tickets", label: "門票 / 預約確認" },
+      { id: "gear", label: "備品：插座 / 鋼絲鎖 / 常備藥" },
+    ];
+
+    const checklistStorageKey = "italy-handbook-daily-checklist-v1";
+    const buildInitialChecklist = () => {
+      return ItineraryData.reduce((acc, day) => {
+        acc[day.day] = dailyChecklistItems.reduce((items, item) => {
+          items[item.id] = false;
+          return items;
+        }, {});
+        return acc;
+      }, {});
+    };
+
+    const [checklistByDay, setChecklistByDay] = useState(() => {
+      if (typeof window === "undefined") return buildInitialChecklist();
+      try {
+        const saved = JSON.parse(localStorage.getItem(checklistStorageKey));
+        if (saved) return saved;
+      } catch (err) {
+        return buildInitialChecklist();
+      }
+      return buildInitialChecklist();
+    });
+
+    useEffect(() => {
+      if (typeof window === "undefined") return;
+      localStorage.setItem(checklistStorageKey, JSON.stringify(checklistByDay));
+    }, [checklistByDay]);
+
+    const toggleChecklistItem = (day, itemId) => {
+      setChecklistByDay((prev) => {
+        const currentDay = prev?.[day] || {};
+        return {
+          ...prev,
+          [day]: {
+            ...currentDay,
+            [itemId]: !currentDay[itemId],
+          },
+        };
+      });
+    };
+
     return (
         <div className="p-4 md:p-8 bg-[#F8FAFC]">
             <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
@@ -808,6 +1212,33 @@ const ItineraryView = () => {
                           </div>
                         </div>
                       )}
+
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-4 print-break-inside-avoid">
+                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">今日 Checklist</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {dailyChecklistItems.map((item) => {
+                            const checked = !!checklistByDay?.[d.day]?.[item.id];
+                            return (
+                              <label
+                                key={item.id}
+                                className={`flex items-center gap-2 text-xs font-bold rounded-lg border px-3 py-2 transition ${
+                                  checked
+                                    ? "bg-emerald-50 border-emerald-200 text-emerald-700 line-through"
+                                    : "bg-slate-50 border-slate-200 text-slate-700"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  onChange={() => toggleChecklistItem(d.day, item.id)}
+                                  className="accent-emerald-600"
+                                />
+                                {item.label}
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                     
                     <div className="space-y-6 px-2 relative">
@@ -1082,6 +1513,8 @@ const TabButton = ({ id, label, active, set, color }) => {
     indigo: active === id ? 'text-indigo-700 border-indigo-600 bg-indigo-50' : 'text-slate-500 hover:text-indigo-600',
     yellow: active === id ? 'text-yellow-700 border-yellow-600 bg-yellow-50' : 'text-slate-500 hover:text-yellow-600',
     purple: active === id ? 'text-purple-700 border-purple-600 bg-purple-50' : 'text-slate-500 hover:text-purple-600',
+    red: active === id ? 'text-red-700 border-red-600 bg-red-50' : 'text-slate-500 hover:text-red-600',
+    cyan: active === id ? 'text-cyan-700 border-cyan-600 bg-cyan-50' : 'text-slate-500 hover:text-cyan-600',
   };
 
   return (
