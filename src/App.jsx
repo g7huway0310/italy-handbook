@@ -214,15 +214,6 @@ export default function App() {
 // Tab: 語言與求救 View (長輩專用)
 // ==========================================
 const SurvivalGuideView = () => {
-    const [selectedCity, setSelectedCity] = useState('roma');
-
-    const hotels = {
-      milano: { city: "米蘭", name: "Hotel Midway", address: "Via Giovanni Battista Sammartini, 15, 20125 Milano MI" },
-      venezia: { city: "威尼斯", name: "Hotel Principe", address: "Rio Tera Lista di Spagna, 146, 30121 Venezia VE" },
-      firenze: { city: "佛羅倫斯", name: "Plus Florence Hostel", address: "Via Santa Caterina D'Alessandria, 15, 50129 Firenze FI" },
-      roma: { city: "羅馬", name: "Hotel Milani | BZAR hotels", address: "Via Magenta, 12, 00185 Roma RM" },
-    };
-
     const phrases = [
         { tw: "廁所在哪裡？", it: "Dov'è la toilette?", sound: "多-吠 拉 托雷特", icon: "🚽" },
         { tw: "可以結帳嗎？", it: "Il conto, per favore.", sound: "伊 康偷，沛 罰波雷", icon: "💳" },
@@ -234,45 +225,6 @@ const SurvivalGuideView = () => {
 
     return (
         <div className="p-4 md:p-8 space-y-8 bg-purple-50 print-break-inside-avoid">
-            
-            {/* 防走失計程車卡 */}
-            <div className="bg-white rounded-2xl shadow-lg border-t-8 border-purple-600 overflow-hidden print-break-inside-avoid">
-                <div className="p-6 md:p-8">
-                    <h2 className="text-2xl font-black text-purple-900 mb-2 flex items-center gap-2">
-                        <MapPinned className="text-purple-600"/> 防走失「帶我回飯店」卡
-                    </h2>
-                    <p className="text-purple-700 text-sm font-bold mb-6">
-                        遇到迷路或與家人走散時，請保持冷靜，點選您目前所在的城市，並將手機螢幕出示給計程車司機或警察看。
-                    </p>
-
-                    {/* 城市切換按鈕 */}
-                    <div className="flex flex-wrap gap-2 mb-6 no-print">
-                        {Object.keys(hotels).map(key => (
-                            <button 
-                                key={key}
-                                onClick={() => setSelectedCity(key)}
-                                className={`px-4 py-2 rounded-xl text-sm font-black transition-all ${selectedCity === key ? 'bg-purple-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
-                            >
-                                {hotels[key].city}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* 給司機看的大字卡 */}
-                    <div className="bg-yellow-50 border-4 border-yellow-400 p-6 md:p-10 rounded-2xl text-center shadow-inner">
-                        <div className="text-sm md:text-base font-black text-slate-500 mb-4 uppercase tracking-widest">Show this to a taxi driver / Mostra questo al tassista</div>
-                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">
-                            Per favore, portami a questo hotel:
-                            <span className="block text-lg font-bold text-slate-600 mt-2">(請帶我回這個飯店：)</span>
-                        </h3>
-                        <div className="bg-white py-6 px-4 rounded-xl border border-yellow-200 shadow-sm inline-block w-full">
-                            <div className="text-xl md:text-2xl font-black text-purple-700 mb-2">{hotels[selectedCity].name}</div>
-                            <div className="text-lg md:text-xl font-bold text-slate-800 leading-snug">{hotels[selectedCity].address}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* 手指義大利語 */}
             <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 print-break-inside-avoid">
                 <h3 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2 border-b pb-3">
@@ -331,8 +283,6 @@ const SurvivalGuideView = () => {
   // Tab: 緊急卡片 View
   // ==========================================
   const EmergencyCardView = () => {
-    const baseUrl = import.meta.env.BASE_URL || '/';
-    const buildImageUrl = (filename) => `${baseUrl}${filename}`;
     const buildMapUrl = (item) => {
       if (typeof item === "string") {
         return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item)}`;
@@ -343,7 +293,6 @@ const SurvivalGuideView = () => {
       }
       return "https://www.google.com/maps";
     };
-    const [qrMissing, setQrMissing] = useState({});
 
     const emergencyContacts = [
       { label: "歐盟緊急電話", value: "112", note: "警察 / 救護 / 消防" },
@@ -365,7 +314,6 @@ const SurvivalGuideView = () => {
         name: "Hotel Midway",
         address: "Via Giovanni Battista Sammartini, 15, 20125 Milano MI",
         mapUrl: "https://maps.app.goo.gl/9zUrVo2tfAjxo2YJ6",
-        qr: "hotel-midway-qr.png",
       },
       {
         id: "venezia",
@@ -373,7 +321,6 @@ const SurvivalGuideView = () => {
         name: "Hotel Principe",
         address: "Rio Tera Lista di Spagna, 146, 30121 Venezia VE",
         mapUrl: "https://maps.app.goo.gl/PQDfG27ing4NyJDGA",
-        qr: "hotel-principe-qr.png",
       },
       {
         id: "firenze",
@@ -381,7 +328,6 @@ const SurvivalGuideView = () => {
         name: "Plus Florence Hostel",
         address: "Via Santa Caterina D'Alessandria, 15, 50129 Firenze FI",
         mapUrl: "https://maps.app.goo.gl/GRsmBV3hFY8RPcvD9",
-        qr: "hotel-plus-florence-qr.png",
       },
       {
         id: "roma",
@@ -389,45 +335,63 @@ const SurvivalGuideView = () => {
         name: "Hotel Milani | BZAR hotels",
         address: "Via Magenta, 12, 00185 Roma RM",
         mapUrl: "https://maps.app.goo.gl/mKKmKnZvDEn8N7NLA",
-        qr: "hotel-milani-qr.png",
       },
     ];
+
+    const [selectedHotelId, setSelectedHotelId] = useState("roma");
+    const selectedHotel = hotels.find((hotel) => hotel.id === selectedHotelId) || hotels[0];
 
     const mapGroups = [
       {
         title: "飯店",
         items: hotels.map((hotel) => ({ label: hotel.name, query: hotel.address, url: hotel.mapUrl })),
       },
-      {
-        title: "主要車站",
-        items: [
-          { label: "Milano Centrale", query: "Milano Centrale Station" },
-          { label: "Venezia S. Lucia", query: "Venezia Santa Lucia Station" },
-          { label: "Firenze S.M.N", query: "Firenze Santa Maria Novella Station" },
-          { label: "Roma Termini", query: "Roma Termini Station" },
-        ],
-      },
-      {
-        title: "關鍵景點",
-        items: [
-          { label: "Duomo Milano", query: "Duomo di Milano" },
-          { label: "Piazza San Marco", query: "Piazza San Marco Venice" },
-          { label: "Uffizi", query: "Uffizi Gallery" },
-          { label: "Colosseum", query: "Colosseum Rome" },
-          { label: "Vatican Museums", query: "Vatican Museums" },
-        ],
-      },
     ];
-
-    const handleQrError = (id) => {
-      setQrMissing((prev) => ({ ...prev, [id]: true }));
-    };
 
     return (
       <div className="p-4 md:p-8 space-y-8 bg-red-50 print-break-inside-avoid">
         <div className="text-center pb-2 border-b border-red-200">
           <h1 className="text-3xl font-black text-red-900 mb-2">🚨 緊急卡片與離線備援</h1>
           <p className="text-red-700 text-xs uppercase tracking-[0.2em] font-black">Emergency Ready</p>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-lg border-t-8 border-red-500 overflow-hidden print-break-inside-avoid">
+          <div className="p-6 md:p-8">
+            <h2 className="text-2xl font-black text-red-900 mb-2 flex items-center gap-2">
+              <MapPinned className="text-red-500"/> 防走失「帶我回飯店」卡
+            </h2>
+            <p className="text-red-700 text-sm font-bold mb-6">
+              迷路或與家人走散時，點選所在城市，直接把手機畫面給計程車司機或警察看。
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-6 no-print">
+              {hotels.map((hotel) => (
+                <button
+                  key={hotel.id}
+                  onClick={() => setSelectedHotelId(hotel.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-black transition-all ${
+                    selectedHotelId === hotel.id
+                      ? "bg-red-500 text-white shadow-md"
+                      : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                  }`}
+                >
+                  {hotel.city}
+                </button>
+              ))}
+            </div>
+
+            <div className="bg-yellow-50 border-4 border-yellow-400 p-6 md:p-10 rounded-2xl text-center shadow-inner">
+              <div className="text-sm md:text-base font-black text-slate-500 mb-4 uppercase tracking-widest">Show this to a taxi driver / Mostra questo al tassista</div>
+              <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">
+                Per favore, portami a questo hotel:
+                <span className="block text-lg font-bold text-slate-600 mt-2">(請帶我回這個飯店：)</span>
+              </h3>
+              <div className="bg-white py-6 px-4 rounded-xl border border-yellow-200 shadow-sm inline-block w-full">
+                <div className="text-xl md:text-2xl font-black text-red-600 mb-2">{selectedHotel.name}</div>
+                <div className="text-lg md:text-xl font-bold text-slate-800 leading-snug">{selectedHotel.address}</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-700 shadow-lg print-break-inside-avoid">
@@ -487,11 +451,8 @@ const SurvivalGuideView = () => {
 
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
           <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
-            <MapPin className="text-emerald-500" /> 飯店地址與 QR
+            <MapPin className="text-emerald-500" /> 飯店地址
           </h3>
-          <div className="text-xs font-bold text-slate-500 mb-4">
-            若要離線掃描飯店地址 QR，請將圖片放到 public/ 並使用下列檔名。
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {hotels.map((hotel) => (
               <div key={hotel.id} className="border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
@@ -510,24 +471,6 @@ const SurvivalGuideView = () => {
                   </a>
                 </div>
                 <div className="text-xs font-bold text-slate-600 leading-relaxed">{hotel.address}</div>
-                <div className="flex items-center gap-3">
-                  {qrMissing[hotel.id] ? (
-                    <div className="w-28 h-28 rounded-xl border border-dashed border-slate-300 bg-slate-50 text-slate-400 text-[10px] font-black flex items-center justify-center text-center">
-                      尚未放入 QR
-                    </div>
-                  ) : (
-                    <img
-                      src={buildImageUrl(hotel.qr)}
-                      alt={`${hotel.name} QR`}
-                      className="w-28 h-28 object-contain border border-slate-200 rounded-xl p-2 bg-white"
-                      loading="lazy"
-                      onError={() => handleQrError(hotel.id)}
-                    />
-                  )}
-                  <div className="text-[10px] font-black text-slate-400">
-                    {hotel.qr}
-                  </div>
-                </div>
               </div>
             ))}
           </div>
