@@ -6,7 +6,7 @@ import {
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
   AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
   Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee,
-  Languages, Volume2, Droplets, MapPinned, Smartphone, Download, Map
+  MapPinned, Smartphone, Download
 } from 'lucide-react';
 
 export default function App() {
@@ -155,15 +155,12 @@ export default function App() {
         {/* Navigation Tabs */}
         <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+          <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
-          <TabButton id="survival" label="🗣️ 語言與求救" active={activeTab} set={setActiveTab} color="purple" />
           <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
-          <TabButton id="packing" label="🧳 行李與藥品" active={activeTab} set={setActiveTab} color="cyan" />
-          <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
-          <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
           <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
+          <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
           <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
-          <TabButton id="todo" label="🛡️ 待辦與防護" active={activeTab} set={setActiveTab} color="rose" />
         </div>
       </div>
 
@@ -174,28 +171,20 @@ export default function App() {
             <ItineraryView />
         </div>
 
-        <div className={`page-break-before ${activeTab === 'survival' ? 'block' : 'hidden print-tab-content'}`}>
-            <SurvivalGuideView />
-        </div>
-
         <div className={`page-break-before ${activeTab === 'emergency' ? 'block' : 'hidden print-tab-content'}`}>
           <EmergencyCardView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'packing' ? 'block' : 'hidden print-tab-content'}`}>
-          <PackingChecklistView />
+          <PackingTodoView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'budget' ? 'block' : 'hidden print-tab-content'}`}>
             <BudgetView rate={exchangeRate} items={budgetItems} isPer={isPerPerson} setIsPer={setIsPerPerson} />
         </div>
 
-        <div className={`page-break-before ${activeTab === 'reservation' ? 'block' : 'hidden print-tab-content'}`}>
-            <ReservationListView />
-        </div>
-
-        <div className={`page-break-before ${activeTab === 'venice' ? 'block' : 'hidden print-tab-content'}`}>
-          <VeniceQrView />
+        <div className={`page-break-before ${activeTab === 'ticketsqr' ? 'block' : 'hidden print-tab-content'}`}>
+          <TicketsQrView />
         </div>
 
         <div className={`page-break-before ${activeTab === 'taxrefund' ? 'block' : 'hidden print-tab-content'}`}>
@@ -206,110 +195,10 @@ export default function App() {
             <ShoppingGuideView />
         </div>
 
-        <div className={`page-break-before ${activeTab === 'todo' ? 'block' : 'hidden print-tab-content'}`}>
-            <TodoGuideView />
-        </div>
-
       </div>
     </div>
   );
 }
-
-// ==========================================
-// Tab: 語言與求救 View (長輩專用)
-// ==========================================
-const SurvivalGuideView = () => {
-    const phrases = [
-        { tw: "廁所在哪裡？", it: "Dov'è la toilette?", sound: "多-吠 拉 托雷特", icon: "🚽" },
-        { tw: "可以結帳嗎？", it: "Il conto, per favore.", sound: "伊 康偷，沛 罰波雷", icon: "💳" },
-        { tw: "無氣泡水", it: "Acqua naturale.", sound: "阿誇 納圖拉雷", icon: "💧" },
-        { tw: "請給我熱水", it: "Acqua calda, per favore.", sound: "阿誇 卡達，沛 罰波雷", icon: "🍵" },
-        { tw: "謝謝！", it: "Grazie!", sound: "葛拉-記-耶", icon: "🙏" },
-        { tw: "救命 / 幫幫我", it: "Aiuto!", sound: "阿-優-偷", icon: "🆘" }
-    ];
-
-    return (
-        <div className="p-4 md:p-8 space-y-8 bg-purple-50 print-break-inside-avoid">
-            {/* 手指義大利語 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 print-break-inside-avoid">
-                <h3 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2 border-b pb-3">
-                    <Languages className="text-blue-500"/> 手指義大利語 (點餐/如廁必備)
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {phrases.map((p, idx) => (
-                        <div key={idx} className="flex gap-4 items-center bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <div className="text-3xl shrink-0">{p.icon}</div>
-                            <div>
-                                <div className="font-black text-slate-800 text-lg">{p.tw}</div>
-                                <div className="font-bold text-blue-600 text-lg mt-1">{p.it}</div>
-                                <div className="text-xs font-bold text-slate-500 mt-1 flex items-center gap-1">
-                                    <Volume2 size={12}/> 中文發音：{p.sound}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-              {/* 退稅流程與句子 */}
-              <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-amber-200 print-break-inside-avoid">
-                <h3 className="text-xl font-black text-amber-900 mb-6 flex items-center gap-2 border-b border-amber-100 pb-3">
-                  <ShoppingBag className="text-amber-600"/> 退稅流程與一句話
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
-                    <div className="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-2">Tax Free Steps</div>
-                    <ol className="list-decimal pl-5 text-sm text-amber-900 space-y-2 font-bold">
-                      <li>結帳前先問是否可退稅</li>
-                      <li>出示護照，店家開立退稅單</li>
-                      <li>離境前到海關蓋章 (Customs)</li>
-                      <li>到退稅櫃檯/機台退現金或刷回卡</li>
-                    </ol>
-                  </div>
-                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">How To Ask</div>
-                    <ul className="text-sm text-slate-700 space-y-3 font-bold">
-                            <li><strong className="text-slate-900">可以退稅嗎？</strong><br/>Italiano: <span className="text-amber-700">Posso fare il Tax Free?</span><br/>English: <span className="text-amber-700">Can I do tax free?</span></li>
-                            <li><strong className="text-slate-900">我是非歐盟旅客，請幫我開退稅單。</strong><br/>Italiano: <span className="text-amber-700">Sono un turista extra-UE, mi fa il modulo Tax Free?</span><br/>English: <span className="text-amber-700">I am a non-EU tourist. Can you issue the tax-free form?</span></li>
-                            <li><strong className="text-slate-900">請國籍填「Taiwan」，不要寫「China」。</strong><br/>Italiano: <span className="text-amber-700">Per favore, scriva "Taiwan" come nazionalita, non "China".</span><br/>English: <span className="text-amber-700">Please write "Taiwan" as nationality, not "China".</span></li>
-                            <li><strong className="text-slate-900">海關蓋章在哪？</strong><br/>Italiano: <span className="text-amber-700">Dove si fa il timbro doganale?</span><br/>English: <span className="text-amber-700">Where can I get the customs stamp?</span></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            {/* 文化防雷包 */}
-            <div className="bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg text-white print-break-inside-avoid">
-                <h3 className="text-xl font-black text-amber-400 mb-6 flex items-center gap-2 border-b border-slate-600 pb-3">
-                    <AlertTriangle className="text-amber-500"/> 文化衝擊防雷包 (長輩請先看)
-                </h3>
-                <div className="space-y-4">
-                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
-                        <Droplets className="text-blue-300 shrink-0 mt-0.5" />
-                        <div>
-                            <div className="font-black text-white text-base">馬桶旁邊的「矮水槽」是洗屁股的！</div>
-                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">義大利飯店浴室通常有兩個類似馬桶的東西。沒有蓋子、有水龍頭的叫做 Bidet (洗下身盆)。<strong className="text-rose-300">千萬不要拿來洗臉或洗水果喔！</strong></div>
-                        </div>
-                    </div>
-                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
-                        <Coffee className="text-amber-300 shrink-0 mt-0.5" />
-                        <div>
-                            <div className="font-black text-white text-base">餐廳沒有「免費熱水」</div>
-                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">義大利人沒有喝熱水的習慣。餐廳的水都是一瓶瓶賣的。如果需要吃藥或習慣喝熱水，<strong className="text-amber-300">請每天早上用飯店的快煮壺裝滿保溫瓶帶出門</strong>。</div>
-                        </div>
-                    </div>
-                    <div className="bg-slate-700/50 p-4 rounded-xl flex gap-3 items-start">
-                        <Banknote className="text-emerald-300 shrink-0 mt-0.5" />
-                        <div>
-                            <div className="font-black text-white text-base">不用給小費，帳單已含「桌費」</div>
-                            <div className="text-sm text-slate-300 mt-1 leading-relaxed">坐下來吃飯時，帳單通常會多收一筆「Coperto (桌費/麵包費)」，大約每人 2-4 歐元。這是正常的，因此吃完後<strong className="text-emerald-300">不用另外留小費在桌上</strong>。</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
 
   // ==========================================
   // Tab: 緊急卡片 View
@@ -372,13 +261,6 @@ const SurvivalGuideView = () => {
 
     const [selectedHotelId, setSelectedHotelId] = useState("roma");
     const selectedHotel = hotels.find((hotel) => hotel.id === selectedHotelId) || hotels[0];
-
-    const mapGroups = [
-      {
-        title: "飯店",
-        items: hotels.map((hotel) => ({ label: hotel.name, query: hotel.address, url: hotel.mapUrl })),
-      },
-    ];
 
     return (
       <div className="p-4 md:p-8 space-y-8 bg-red-50 print-break-inside-avoid">
@@ -518,31 +400,6 @@ const SurvivalGuideView = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
-          <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
-            <Map className="text-blue-500" /> 地圖捷徑
-          </h3>
-          <div className="space-y-4">
-            {mapGroups.map((group) => (
-              <div key={group.title}>
-                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{group.title}</div>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <a
-                      key={item.label}
-                      href={buildMapUrl(item)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-black border border-blue-200"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     );
   };
@@ -1293,22 +1150,6 @@ const TodoGuideView = () => (
 
     <section className="print-break-inside-avoid">
         <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
-            <FileText className="text-blue-500"/> 出發前必備行政文件
-        </h3>
-        <div className="bg-blue-50 p-5 rounded-lg border border-blue-200">
-            <div className="text-sm font-black text-blue-900 mb-3 flex items-center gap-2">
-               <QrCode className="text-blue-500" size={18}/> 威尼斯入城費 (Access Fee) 免繳申請
-            </div>
-            <ul className="text-xs text-blue-800 space-y-3 list-none font-bold">
-                <li className="flex gap-2 items-start"><Info className="text-blue-400 shrink-0 mt-0.5" size={14}/> <span>我們住在威尼斯本島，已含城市稅，因此**完全免繳**入城費，但「必須」事先上網申請豁免 QR Code 備查。</span></li>
-                <li className="flex gap-2 items-start"><CheckCircle2 className="text-blue-500 shrink-0 mt-0.5" size={14}/> <span>請至官網 (cda.ve.it/en/) 選擇「I am a guest in an accommodation facility located in the Municipality of Venice」。</span></li>
-                <li className="flex gap-2 items-start"><CheckCircle2 className="text-blue-500 shrink-0 mt-0.5" size={14}/> <span>輸入入住日期與飯店名稱 (Hotel Principe)，取得全家人的免繳 QR Code 截圖存在手機裡。</span></li>
-            </ul>
-        </div>
-    </section>
-
-    <section className="print-break-inside-avoid">
-        <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
             <Clock className="text-amber-500"/> 搶票與預訂任務
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1343,6 +1184,16 @@ const TodoGuideView = () => (
         </ul>
       </div>
     </section>
+  </div>
+);
+
+// ==========================================
+// Tab: 行李＆待辦（合併）
+// ==========================================
+const PackingTodoView = () => (
+  <div className="space-y-8">
+    <PackingChecklistView />
+    <TodoGuideView />
   </div>
 );
 
@@ -1447,6 +1298,16 @@ const VeniceQrView = () => {
     </div>
   );
 };
+
+// ==========================================
+// Tab: 票券＆QR（合併）
+// ==========================================
+const TicketsQrView = () => (
+  <div className="space-y-8">
+    <ReservationListView />
+    <VeniceQrView />
+  </div>
+);
 
 // ==========================================
 // Tab: Tax Refund Guide
