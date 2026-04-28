@@ -155,10 +155,10 @@ export default function App() {
         {/* Navigation Tabs */}
         <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+          <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="survival" label="🗣️ 語言與求救" active={activeTab} set={setActiveTab} color="purple" />
           <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
           <TabButton id="packing" label="🧳 行李與藥品" active={activeTab} set={setActiveTab} color="cyan" />
-          <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
           <TabButton id="reservation" label="🎫 劃位與車票" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="venice" label="🔳 威尼斯入城碼" active={activeTab} set={setActiveTab} color="yellow" />
           <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
