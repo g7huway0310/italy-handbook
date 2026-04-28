@@ -389,6 +389,16 @@ const SurvivalGuideView = () => {
               <div className="bg-white py-6 px-4 rounded-xl border border-yellow-200 shadow-sm inline-block w-full">
                 <div className="text-xl md:text-2xl font-black text-red-600 mb-2">{selectedHotel.name}</div>
                 <div className="text-lg md:text-xl font-bold text-slate-800 leading-snug">{selectedHotel.address}</div>
+                <div className="mt-4 flex justify-center">
+                  <a
+                    href={buildMapUrl({ url: selectedHotel.mapUrl, query: selectedHotel.address })}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700 text-sm font-black border border-emerald-200"
+                  >
+                    開啟地圖
+                  </a>
+                </div>
               </div>
             </div>
           </div>
