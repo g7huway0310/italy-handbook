@@ -1016,9 +1016,9 @@ const ItineraryView = () => {
                   <h1 className="text-2xl md:text-3xl font-black mb-2 leading-tight">義大利 15 天家族壯遊</h1>
                   <p className="text-slate-200 text-xs md:text-sm font-bold leading-relaxed">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
                 </div>
-                <div className="flex gap-2 no-print md:self-start">
-                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Maximize2 size={14}/> 展開全部</button>
-                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Minimize2 size={14}/> 摺疊全部</button>
+                <div className="flex flex-col sm:flex-row gap-2 no-print md:self-start w-full sm:w-auto">
+                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Maximize2 size={14}/> 展開全部</button>
+                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Minimize2 size={14}/> 摺疊全部</button>
                 </div>
               </div>
             </div>
