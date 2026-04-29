@@ -1233,6 +1233,7 @@ const VeniceQrView = () => {
       <div className="text-center pb-2 border-b border-amber-200">
         <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">🔳 威尼斯入城費豁免 QR Code</h1>
         <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Access Fee Exemption</p>
+        <SectionHeaderNote />
       </div>
 
       <div className="max-w-4xl mx-auto bg-amber-50/60 border border-amber-200 rounded-2xl p-5 text-amber-900 text-sm font-bold flex items-start gap-3 print-break-inside-avoid">
@@ -1318,6 +1319,7 @@ const TaxRefundView = () => (
     <div className="text-center pb-2 border-b border-amber-200">
       <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">💶 義大利退稅攻略</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Tax Free Playbook</p>
+      <SectionHeaderNote />
     </div>
 
     <div className="bg-white p-6 rounded-2xl border border-amber-200 shadow-sm print-break-inside-avoid">
@@ -1479,6 +1481,7 @@ const ShoppingGuideView = () => (
     <div className="text-center pb-2 border-b border-amber-200">
       <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">🛒 義大利必買伴手禮圖鑑</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Supermarket & Specialty Shopping</p>
+      <SectionHeaderNote />
     </div>
 
     <div className="bg-white p-6 rounded-xl border border-amber-200 shadow-sm print-break-inside-avoid">
