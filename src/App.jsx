@@ -136,9 +136,9 @@ export default function App() {
               🇮🇹 義大利 2026 家族壯遊手冊
             </h2>
             <div className="flex flex-wrap gap-2 mt-2">
-              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] uppercase rounded font-black border border-emerald-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
-              <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase rounded font-black border border-blue-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">體力調節優化</span>
-              <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] uppercase rounded font-black border border-purple-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">長輩防護升級</span>
+                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-emerald-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
+                <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-blue-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">體力調節優化</span>
+                <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-purple-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">長輩防護升級</span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -1469,7 +1469,7 @@ const TabButton = ({ id, label, active, set, color }) => {
   return (
     <button 
       onClick={() => set(id)}
-      className={`relative overflow-hidden px-4 py-2.5 md:py-3 font-black text-sm transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
+      className={`relative overflow-hidden px-4 py-2.5 md:py-3 font-semibold md:font-black text-[14px] md:text-sm leading-snug transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
     >
       <span className="relative z-10">{label}</span>
       <span
