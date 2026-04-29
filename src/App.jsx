@@ -1469,7 +1469,7 @@ const TabButton = ({ id, label, active, set, color }) => {
   return (
     <button 
       onClick={() => set(id)}
-      className={`relative overflow-hidden px-4 py-2.5 md:py-3 font-semibold md:font-black text-[14px] md:text-sm leading-snug transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
+      className={`relative px-4 py-3 font-semibold md:font-black text-[14px] md:text-sm leading-normal transition-all whitespace-nowrap rounded-xl border min-h-[48px] ${colors[color]}`}
     >
       <span className="relative z-10">{label}</span>
       <span
