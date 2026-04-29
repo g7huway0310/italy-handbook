@@ -129,7 +129,7 @@ export default function App() {
       )}
 
       {/* Control Bar (列印時隱藏) */}
-      <div className="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 no-print">
+      <div className="max-w-5xl mx-auto mb-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-sm border border-slate-200 no-print sticky top-2 z-40 md:static">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
@@ -301,8 +301,9 @@ export default function App() {
                 <span className="block text-lg font-bold text-slate-600 mt-2">(請帶我回這個飯店：)</span>
               </h3>
               <div className="bg-white py-6 px-4 rounded-xl border border-yellow-200 shadow-sm inline-block w-full">
-                <div className="text-xl md:text-2xl font-black text-red-600 mb-2">{selectedHotel.name}</div>
-                <div className="text-lg md:text-xl font-bold text-slate-800 leading-snug">{selectedHotel.address}</div>
+                <div className="text-lg md:text-2xl font-black text-red-600">{selectedHotel.name}</div>
+                <div className="h-px bg-slate-200 my-3 md:hidden" />
+                <div className="text-base md:text-xl font-bold text-slate-800 leading-snug">{selectedHotel.address}</div>
                 <div className="mt-4 flex justify-center">
                   <a
                     href={buildMapUrl({ url: selectedHotel.mapUrl, query: selectedHotel.address })}
@@ -1035,12 +1036,12 @@ const ItineraryView = () => {
                         <span className="text-[9px] md:text-[10px] uppercase leading-none mb-1">Day</span>
                         <span className="text-xl md:text-2xl leading-none">{d.day}</span>
                       </div>
-                      <div className="flex-1 pr-4">
+                      <div className="flex-1 pr-4 min-w-0">
                         <h3 className="font-black text-slate-800 text-sm md:text-base leading-snug">{d.city}</h3>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <p className="text-[11px] text-slate-400 font-black uppercase tracking-wider leading-relaxed">{d.date}</p>
+                        <div className="flex flex-wrap items-center gap-2 mt-1 min-w-0">
+                          <p className="text-[11px] text-slate-500/80 font-black uppercase tracking-wider leading-relaxed truncate max-w-[140px] sm:max-w-none">{d.date}</p>
                           {d.hotel && (
-                            <span className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-bold border ${isExpanded ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
+                            <span className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-bold border truncate max-w-[180px] sm:max-w-none ${isExpanded ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
                               <Hotel size={10}/> {d.hotel}
                             </span>
                           )}
@@ -1285,7 +1286,7 @@ const VeniceQrView = () => {
                 <img
                   src={buildImageUrl(item.image)}
                   alt={`Venice access QR ${item.fullName}`}
-                  className="w-40 h-40 object-contain border border-slate-200 rounded-xl p-2 bg-white"
+                  className="w-36 h-36 sm:w-40 sm:h-40 object-contain border border-slate-100 rounded-xl p-2 bg-white"
                   loading="lazy"
                 />
               </div>
@@ -1537,9 +1538,14 @@ const TabButton = ({ id, label, active, set, color }) => {
   return (
     <button 
       onClick={() => set(id)}
-      className={`px-4 py-2.5 md:py-3 font-black text-sm transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
+      className={`relative overflow-hidden px-4 py-2.5 md:py-3 font-black text-sm transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
     >
-      {label}
+      <span className="relative z-10">{label}</span>
+      <span
+        className={`absolute left-3 right-3 bottom-1 h-0.5 rounded-full transition-all duration-300 ${
+          active === id ? 'opacity-100 scale-x-100 bg-current' : 'opacity-0 scale-x-0 bg-current'
+        }`}
+      />
     </button>
   );
 };
