@@ -298,6 +298,7 @@ export default function App() {
         <div className="text-center pb-2 border-b border-red-200">
           <h1 className="text-2xl md:text-3xl font-black text-red-900 mb-2 leading-tight">🚨 緊急卡片與離線備援</h1>
           <p className="text-red-700 text-xs uppercase tracking-[0.2em] font-black">Emergency Ready</p>
+          <SectionHeaderNote />
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg border-t-8 border-red-500 overflow-hidden print-break-inside-avoid">
@@ -386,6 +387,8 @@ export default function App() {
             <a
               key={contact.label}
               href={`tel:${formatTel(contact.value)}`}
+              title="長按可複製號碼"
+              aria-label={`${contact.label} ${contact.value} 長按可複製號碼`}
               className="bg-white border border-red-100 p-4 rounded-xl shadow-sm hover:border-red-200 hover:shadow-md transition flex flex-col gap-1"
             >
               <div className="flex items-center justify-between">
@@ -399,6 +402,7 @@ export default function App() {
             </a>
           ))}
         </div>
+        <div className="text-[11px] font-semibold text-slate-500 text-center">長按可複製號碼</div>
 
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm print-break-inside-avoid">
           <h3 className="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
@@ -546,6 +550,7 @@ export default function App() {
         <div className="text-center pb-2 border-b border-cyan-200">
           <h1 className="text-2xl md:text-3xl font-black text-cyan-900 mb-2 leading-tight">🧳 行李與藥品清單</h1>
           <p className="text-cyan-700 text-xs uppercase tracking-[0.2em] font-black">Packing & Daily Refill</p>
+          <SectionHeaderNote />
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-cyan-200 shadow-sm print-break-inside-avoid">
@@ -602,6 +607,7 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
               <p className="text-slate-500 text-sm md:text-base font-bold mt-1 leading-[1.6] tracking-wide md:tracking-normal">
                         核心花費已鎖定，精確區分「已付款」與「待預訂」。
                     </p>
+                  <SectionHeaderNote align="left" />
                 </div>
                 <div className="flex bg-slate-100 rounded-xl p-1 border border-slate-200 w-full md:w-auto">
                     <button onClick={() => setIsPer(false)} className={`px-6 py-2 text-xs rounded-lg font-black transition-all ${!isPer ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500'}`}>👪 家族總計 (3人)</button>
@@ -747,6 +753,7 @@ const ReservationListView = () => (
             <div className="text-center pb-4">
                 <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-2 leading-tight">🎫 正式車票與憑證清單</h1>
                 <p className="text-indigo-600/80 text-xs uppercase tracking-[0.2em] font-black">Official Tickets & Reservations</p>
+              <SectionHeaderNote />
             </div>
 
             <div className="flex bg-white border-2 border-indigo-200 rounded-2xl overflow-hidden shadow-sm print-break-inside-avoid">
@@ -1021,6 +1028,7 @@ const ItineraryView = () => {
                   <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
                   <h1 className="text-2xl md:text-3xl font-black mb-2 leading-tight">義大利 15 天家族壯遊</h1>
                   <p className="text-slate-200 text-sm md:text-base font-bold leading-[1.6] tracking-wide md:tracking-normal">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
+                  <SectionHeaderNote align="left" tone="light" />
                 </div>
                 <div className="flex flex-wrap gap-2 no-print md:self-start w-full sm:w-auto">
                   <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Maximize2 size={14}/> 展開全部</button>
@@ -1082,15 +1090,19 @@ const ItineraryView = () => {
                       {d.events.map((e, i) => {
                         let iconBg = "bg-white border-slate-200 text-slate-400";
                         let textColor = "text-slate-600 font-medium";
+                        let barColor = "bg-slate-200";
                         if (e.type === 'highlight') {
                           iconBg = "bg-amber-100 border-amber-300 text-amber-600 shadow-sm z-10";
                           textColor = "text-slate-900 font-black";
+                          barColor = "bg-amber-400";
                         } else if (e.type === 'transit') {
                           iconBg = "bg-blue-50 border-blue-200 text-blue-500 z-10";
                           textColor = "text-slate-700 font-bold";
+                          barColor = "bg-blue-400";
                         } else if (e.type === 'leisure') {
                           iconBg = "bg-emerald-50 border-emerald-200 text-emerald-500 z-10";
                           textColor = "text-slate-700 font-bold";
+                          barColor = "bg-emerald-400";
                         } else {
                           iconBg = "bg-white border-slate-200 text-slate-400 z-10";
                         }
@@ -1100,7 +1112,8 @@ const ItineraryView = () => {
                             <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center bg-white ${iconBg}`}>
                               {React.cloneElement(e.icon, { size: 20 })}
                             </div>
-                            <div className="flex-1 pt-2 pb-2">
+                            <div className="flex-1 pt-2 pb-2 relative pl-3">
+                              <div className={`absolute left-0 top-2 bottom-2 w-1 rounded-full ${barColor}`} />
                               <p className="text-[15px] font-black text-slate-800 font-mono tracking-tight mb-1">{e.time}</p>
                               <p className={`text-sm leading-relaxed ${textColor}`}>{e.desc}</p>
                             </div>
@@ -1523,6 +1536,22 @@ const SectionTag = ({ label, tone = "slate" }) => {
   return (
     <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-black tracking-widest ${tones[tone] || tones.slate}`}>
       {label}
+    </div>
+  );
+};
+
+const SectionHeaderNote = ({ note = "向下滑動查看更多", align = "center", tone = "slate" }) => {
+  const alignClass = align === "left" ? "items-start text-left" : "items-center text-center";
+  const tones = {
+    slate: { line: "bg-slate-200/80", text: "text-slate-500" },
+    light: { line: "bg-white/10", text: "text-slate-300" },
+  };
+  const current = tones[tone] || tones.slate;
+
+  return (
+    <div className={`mt-3 flex flex-col gap-2 ${alignClass}`}>
+      <div className={`h-px w-16 ${current.line}`} />
+      <div className={`text-[11px] font-semibold ${current.text}`}>{note}</div>
     </div>
   );
 };
