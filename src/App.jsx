@@ -129,7 +129,7 @@ export default function App() {
       )}
 
       {/* Control Bar (列印時隱藏) */}
-      <div className="max-w-5xl mx-auto mb-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-sm border border-slate-200 no-print sticky top-2 z-40 md:static">
+      <div className="max-w-5xl mx-auto mb-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-md md:shadow-sm border border-slate-300 md:border-slate-200 no-print sticky top-2 z-40 md:static">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
@@ -153,14 +153,18 @@ export default function App() {
         </div>
         
         {/* Navigation Tabs */}
-        <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-2 gap-2">
-          <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
-          <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
-          <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
-          <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
-          <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
-          <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
-          <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+        <div className="relative mt-6">
+          <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2">
+            <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+            <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
+            <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
+            <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
+            <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
+            <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
+            <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+          </div>
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
         </div>
       </div>
 
