@@ -136,24 +136,24 @@ export default function App() {
               🇮🇹 義大利 2026 家族壯遊手冊
             </h2>
             <div className="flex flex-wrap gap-2 mt-2">
-                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] uppercase rounded font-black border border-emerald-200 tracking-wider">完美排版列印</span>
-                <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase rounded font-black border border-blue-200 tracking-wider">體力調節優化</span>
-                <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] uppercase rounded font-black border border-purple-200 tracking-wider">長輩防護升級</span>
+              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] uppercase rounded font-black border border-emerald-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
+              <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase rounded font-black border border-blue-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">體力調節優化</span>
+              <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] uppercase rounded font-black border border-purple-200 tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">長輩防護升級</span>
             </div>
           </div>
-          <div className="flex gap-3">
-            <button onClick={handleCopy} className="px-3 md:px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs md:text-sm font-bold transition flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <button onClick={handleCopy} className="px-3 md:px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs md:text-sm font-bold transition flex items-center justify-center gap-2 w-full sm:w-auto">
               {copied ? <CheckCircle2 size={16} className="text-emerald-600"/> : <Copy size={16}/>}
               {copied ? "已複製" : "分享連結"}
             </button>
-            <button onClick={handlePrint} className="px-4 md:px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs md:text-sm font-bold shadow transition flex items-center gap-2">
+            <button onClick={handlePrint} className="px-4 md:px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs md:text-sm font-bold shadow transition flex items-center justify-center gap-2 w-full sm:w-auto">
               <Printer size={16} /> 列印成手冊
             </button>
           </div>
         </div>
         
         {/* Navigation Tabs */}
-        <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-1 gap-1">
+        <div className="flex mt-6 border-b border-slate-200 overflow-x-auto pb-2 gap-2">
           <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
           <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
           <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
@@ -1030,15 +1030,15 @@ const ItineraryView = () => {
                 <div key={d.day} className={`bg-white rounded-2xl transition-all duration-300 overflow-hidden border print-break-inside-avoid ${isExpanded ? 'border-blue-400 shadow-md' : 'border-slate-200 hover:border-slate-300'}`}>
                   
                   <button onClick={() => toggleDay(d.day)} className="w-full px-6 py-5 flex items-center justify-between text-left print:pointer-events-none">
-                    <div className="flex items-center gap-5 w-full">
-                      <div className={`w-14 h-14 rounded-xl flex flex-col items-center justify-center font-black transition-colors shrink-0 ${isExpanded ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500'}`}>
-                        <span className="text-[10px] uppercase leading-none mb-1">Day</span>
-                        <span className="text-2xl leading-none">{d.day}</span>
+                    <div className="flex items-center gap-4 md:gap-5 w-full">
+                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex flex-col items-center justify-center font-black transition-colors shrink-0 ${isExpanded ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500'}`}>
+                        <span className="text-[9px] md:text-[10px] uppercase leading-none mb-1">Day</span>
+                        <span className="text-xl md:text-2xl leading-none">{d.day}</span>
                       </div>
                       <div className="flex-1 pr-4">
-                        <h3 className="font-black text-slate-800 text-base">{d.city}</h3>
+                        <h3 className="font-black text-slate-800 text-sm md:text-base leading-snug">{d.city}</h3>
                         <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <p className="text-[11px] text-slate-400 font-black uppercase tracking-wider">{d.date}</p>
+                          <p className="text-[11px] text-slate-400 font-black uppercase tracking-wider leading-relaxed">{d.date}</p>
                           {d.hotel && (
                             <span className={`text-[10px] px-2 py-0.5 rounded flex items-center gap-1 font-bold border ${isExpanded ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
                               <Hotel size={10}/> {d.hotel}
@@ -1523,21 +1523,21 @@ const ShoppingGuideView = () => (
 
 const TabButton = ({ id, label, active, set, color }) => {
   const colors = {
-    emerald: active === id ? 'text-emerald-700 border-emerald-600 bg-emerald-50' : 'text-slate-500 hover:text-emerald-600',
-    blue: active === id ? 'text-blue-700 border-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600',
-    amber: active === id ? 'text-amber-700 border-amber-500 bg-amber-50' : 'text-slate-500 hover:text-amber-600',
-    rose: active === id ? 'text-rose-700 border-rose-600 bg-rose-50' : 'text-slate-500 hover:text-rose-600',
-    indigo: active === id ? 'text-indigo-700 border-indigo-600 bg-indigo-50' : 'text-slate-500 hover:text-indigo-600',
-    yellow: active === id ? 'text-yellow-700 border-yellow-600 bg-yellow-50' : 'text-slate-500 hover:text-yellow-600',
-    purple: active === id ? 'text-purple-700 border-purple-600 bg-purple-50' : 'text-slate-500 hover:text-purple-600',
-    red: active === id ? 'text-red-700 border-red-600 bg-red-50' : 'text-slate-500 hover:text-red-600',
-    cyan: active === id ? 'text-cyan-700 border-cyan-600 bg-cyan-50' : 'text-slate-500 hover:text-cyan-600',
+    emerald: active === id ? 'text-emerald-700 border-emerald-300 bg-emerald-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-emerald-700 hover:border-emerald-200 hover:bg-emerald-50/40',
+    blue: active === id ? 'text-blue-700 border-blue-300 bg-blue-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-blue-700 hover:border-blue-200 hover:bg-blue-50/40',
+    amber: active === id ? 'text-amber-700 border-amber-300 bg-amber-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-amber-700 hover:border-amber-200 hover:bg-amber-50/40',
+    rose: active === id ? 'text-rose-700 border-rose-300 bg-rose-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-rose-700 hover:border-rose-200 hover:bg-rose-50/40',
+    indigo: active === id ? 'text-indigo-700 border-indigo-300 bg-indigo-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-indigo-700 hover:border-indigo-200 hover:bg-indigo-50/40',
+    yellow: active === id ? 'text-yellow-700 border-yellow-300 bg-yellow-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-yellow-700 hover:border-yellow-200 hover:bg-yellow-50/40',
+    purple: active === id ? 'text-purple-700 border-purple-300 bg-purple-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-purple-700 hover:border-purple-200 hover:bg-purple-50/40',
+    red: active === id ? 'text-red-700 border-red-300 bg-red-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-red-700 hover:border-red-200 hover:bg-red-50/40',
+    cyan: active === id ? 'text-cyan-700 border-cyan-300 bg-cyan-50 shadow-sm' : 'text-slate-600 border-slate-200 bg-white hover:text-cyan-700 hover:border-cyan-200 hover:bg-cyan-50/40',
   };
 
   return (
     <button 
       onClick={() => set(id)}
-      className={`px-4 py-3 font-black text-sm transition-all whitespace-nowrap border-b-[3px] border-transparent rounded-t-xl ${colors[color]}`}
+      className={`px-4 py-2.5 md:py-3 font-black text-sm transition-all whitespace-nowrap rounded-xl border min-h-[44px] ${colors[color]}`}
     >
       {label}
     </button>
