@@ -965,53 +965,6 @@ const ItineraryView = () => {
       }
     ];
 
-    const dailyChecklistItems = [
-      { id: "checkin", label: "退房 / 入住確認" },
-      { id: "transit", label: "車站 / 交通確認" },
-      { id: "tickets", label: "門票 / 預約確認" },
-      { id: "gear", label: "備品：插座 / 鋼絲鎖 / 常備藥" },
-    ];
-
-    const checklistStorageKey = "italy-handbook-daily-checklist-v1";
-    const buildInitialChecklist = () => {
-      return ItineraryData.reduce((acc, day) => {
-        acc[day.day] = dailyChecklistItems.reduce((items, item) => {
-          items[item.id] = false;
-          return items;
-        }, {});
-        return acc;
-      }, {});
-    };
-
-    const [checklistByDay, setChecklistByDay] = useState(() => {
-      if (typeof window === "undefined") return buildInitialChecklist();
-      try {
-        const saved = JSON.parse(localStorage.getItem(checklistStorageKey));
-        if (saved) return saved;
-      } catch (err) {
-        return buildInitialChecklist();
-      }
-      return buildInitialChecklist();
-    });
-
-    useEffect(() => {
-      if (typeof window === "undefined") return;
-      localStorage.setItem(checklistStorageKey, JSON.stringify(checklistByDay));
-    }, [checklistByDay]);
-
-    const toggleChecklistItem = (day, itemId) => {
-      setChecklistByDay((prev) => {
-        const currentDay = prev?.[day] || {};
-        return {
-          ...prev,
-          [day]: {
-            ...currentDay,
-            [itemId]: !currentDay[itemId],
-          },
-        };
-      });
-    };
-
     return (
         <div className="p-4 md:p-8 bg-[#F8FAFC]">
             <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 md:p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
@@ -1073,32 +1026,6 @@ const ItineraryView = () => {
                         </div>
                       )}
 
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-4 print-break-inside-avoid">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">今日 Checklist</div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                          {dailyChecklistItems.map((item) => {
-                            const checked = !!checklistByDay?.[d.day]?.[item.id];
-                            return (
-                              <label
-                                key={item.id}
-                                className={`flex items-center gap-2 text-xs font-bold rounded-lg border px-3 py-2 transition ${
-                                  checked
-                                    ? "bg-emerald-50 border-emerald-200 text-emerald-700 line-through"
-                                    : "bg-slate-50 border-slate-200 text-slate-700"
-                                }`}
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={checked}
-                                  onChange={() => toggleChecklistItem(d.day, item.id)}
-                                  className="accent-emerald-600"
-                                />
-                                {item.label}
-                              </label>
-                            );
-                          })}
-                        </div>
-                      </div>
                     </div>
                     
                     <div className="space-y-6 px-2 relative">
