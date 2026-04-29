@@ -132,7 +132,7 @@ export default function App() {
       <div className="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 no-print">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
-            <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
+            <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
               🇮🇹 義大利 2026 家族壯遊手冊
             </h2>
             <div className="flex flex-wrap gap-2 mt-2">
@@ -142,11 +142,11 @@ export default function App() {
             </div>
           </div>
           <div className="flex gap-3">
-            <button onClick={handleCopy} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-2">
+            <button onClick={handleCopy} className="px-3 md:px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs md:text-sm font-bold transition flex items-center gap-2">
               {copied ? <CheckCircle2 size={16} className="text-emerald-600"/> : <Copy size={16}/>}
               {copied ? "已複製" : "分享連結"}
             </button>
-            <button onClick={handlePrint} className="px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-sm font-bold shadow transition flex items-center gap-2">
+            <button onClick={handlePrint} className="px-4 md:px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs md:text-sm font-bold shadow transition flex items-center gap-2">
               <Printer size={16} /> 列印成手冊
             </button>
           </div>
@@ -265,7 +265,7 @@ export default function App() {
     return (
       <div className="p-4 md:p-8 space-y-8 bg-red-50 print-break-inside-avoid">
         <div className="text-center pb-2 border-b border-red-200">
-          <h1 className="text-3xl font-black text-red-900 mb-2">🚨 緊急卡片與離線備援</h1>
+          <h1 className="text-2xl md:text-3xl font-black text-red-900 mb-2 leading-tight">🚨 緊急卡片與離線備援</h1>
           <p className="text-red-700 text-xs uppercase tracking-[0.2em] font-black">Emergency Ready</p>
         </div>
 
@@ -500,7 +500,7 @@ export default function App() {
     return (
       <div className="p-4 md:p-8 space-y-8 bg-cyan-50 print-break-inside-avoid">
         <div className="text-center pb-2 border-b border-cyan-200">
-          <h1 className="text-3xl font-black text-cyan-900 mb-2">🧳 行李與藥品清單</h1>
+          <h1 className="text-2xl md:text-3xl font-black text-cyan-900 mb-2 leading-tight">🧳 行李與藥品清單</h1>
           <p className="text-cyan-700 text-xs uppercase tracking-[0.2em] font-black">Packing & Daily Refill</p>
         </div>
 
@@ -568,7 +568,7 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                         <div className="text-emerald-200 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1">
                           <CreditCard size={12}/> PAID (已刷卡結清) {isPer && "(單人)"}
                         </div>
-                        <div className="text-3xl font-black mb-1">NT$ {dispPaid.toLocaleString()}</div>
+                        <div className="text-2xl md:text-3xl font-black mb-1">NT$ {dispPaid.toLocaleString()}</div>
                         <div className="text-xs font-bold text-emerald-100 flex items-center gap-1">
                           <AlertOctagon size={12} className="text-amber-300"/> 另有 NT$ {dispPending.toLocaleString()} 行前待訂
                         </div>
@@ -581,7 +581,7 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                         <div className="text-orange-100 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1">
                           <Banknote size={12}/> CASH NEEDED (當地準備) {isPer && "(單人)"}
                         </div>
-                        <div className="text-3xl font-black mb-1">€ {dispPayLaterEur.toLocaleString()}</div>
+                        <div className="text-2xl md:text-3xl font-black mb-1">€ {dispPayLaterEur.toLocaleString()}</div>
                         <div className="text-xs font-bold text-orange-100">約 NT$ {dispPayLaterTwd.toLocaleString()} (含日常餐飲)</div>
                     </div>
                     <Wallet size={80} className="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4" />
@@ -592,7 +592,7 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                         <div className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1">
                           <Calculator size={12}/> {isPer ? "GRAND TOTAL (單人總預估)" : "GRAND TOTAL (家族總預估)"}
                         </div>
-                        <div className="text-4xl font-black mb-1">NT$ {dispGrandTotal.toLocaleString()}</div>
+                        <div className="text-3xl md:text-4xl font-black mb-1">NT$ {dispGrandTotal.toLocaleString()}</div>
                         <div className="text-xs font-bold text-slate-400">已付 + 待訂 + 當地預估花費</div>
                     </div>
                     <DollarSign size={100} className="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4" />
@@ -695,7 +695,7 @@ const ReservationListView = () => (
 
         <div className="max-w-3xl mx-auto space-y-6">
             <div className="text-center pb-4">
-                <h1 className="text-3xl font-black text-indigo-900 mb-2">🎫 正式車票與憑證清單</h1>
+                <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-2 leading-tight">🎫 正式車票與憑證清單</h1>
                 <p className="text-indigo-600/80 text-xs uppercase tracking-[0.2em] font-black">Official Tickets & Reservations</p>
             </div>
 
@@ -1009,14 +1009,17 @@ const ItineraryView = () => {
 
     return (
         <div className="p-4 md:p-8 bg-[#F8FAFC]">
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
-              <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
-              <h1 className="text-3xl font-black mb-2">義大利 15 天家族壯遊</h1>
-              <p className="text-slate-200 text-sm font-bold">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
-              
-              <div className="absolute top-6 right-6 flex gap-2 no-print">
-                 <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Maximize2 size={14}/> 展開全部</button>
-                 <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Minimize2 size={14}/> 摺疊全部</button>
+            <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 md:p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div>
+                  <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
+                  <h1 className="text-2xl md:text-3xl font-black mb-2 leading-tight">義大利 15 天家族壯遊</h1>
+                  <p className="text-slate-200 text-xs md:text-sm font-bold leading-relaxed">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
+                </div>
+                <div className="flex gap-2 no-print md:self-start">
+                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Maximize2 size={14}/> 展開全部</button>
+                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><Minimize2 size={14}/> 摺疊全部</button>
+                </div>
               </div>
             </div>
 
@@ -1235,7 +1238,7 @@ const VeniceQrView = () => {
   return (
     <div className="p-4 md:p-8 space-y-6 bg-slate-50 print-break-inside-avoid">
       <div className="text-center pb-2 border-b border-amber-200">
-        <h1 className="text-3xl font-black text-amber-900 mb-2">🔳 威尼斯入城費豁免 QR Code</h1>
+        <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">🔳 威尼斯入城費豁免 QR Code</h1>
         <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Access Fee Exemption</p>
       </div>
 
@@ -1315,7 +1318,7 @@ const TicketsQrView = () => (
 const TaxRefundView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-amber-50 print-break-inside-avoid">
     <div className="text-center pb-2 border-b border-amber-200">
-      <h1 className="text-3xl font-black text-amber-900 mb-2">💶 義大利退稅攻略</h1>
+      <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">💶 義大利退稅攻略</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Tax Free Playbook</p>
     </div>
 
@@ -1473,7 +1476,7 @@ const TaxRefundView = () => (
 const ShoppingGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-[#FFFBF0] print-break-inside-avoid">
     <div className="text-center pb-2 border-b border-amber-200">
-      <h1 className="text-3xl font-black text-amber-900 mb-2">🛒 義大利必買伴手禮圖鑑</h1>
+      <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">🛒 義大利必買伴手禮圖鑑</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Supermarket & Specialty Shopping</p>
     </div>
 
