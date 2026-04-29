@@ -89,6 +89,11 @@ export default function App() {
     }
   };
 
+  const scrollToTop = () => {
+    if (typeof window === "undefined") return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-2 md:p-6 font-sans text-slate-800 print:bg-white print:p-0">
       
@@ -153,18 +158,36 @@ export default function App() {
         </div>
         
         {/* Navigation Tabs */}
-        <div className="relative mt-6">
-          <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2">
-            <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
-            <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
-            <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
-            <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
-            <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
-            <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
-            <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+        <div className="mt-6 flex items-center gap-2 min-w-0">
+          <button
+            onClick={scrollToTop}
+            className="px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] flex items-center justify-center gap-1"
+            aria-label="跳至上方"
+          >
+            <ChevronUp size={16} />
+            <span className="hidden md:inline text-xs font-bold">跳至上方</span>
+          </button>
+          <div className="relative flex-1 min-w-0">
+            <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2">
+              <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+              <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
+              <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
+              <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
+              <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
+              <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
+              <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+            </div>
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
           </div>
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
+          <button
+            onClick={scrollToTop}
+            className="hidden md:flex px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] items-center justify-center gap-1"
+            aria-label="跳至上方"
+          >
+            <ChevronUp size={16} />
+            <span className="hidden md:inline text-xs font-bold">跳至上方</span>
+          </button>
         </div>
       </div>
 
@@ -265,9 +288,13 @@ export default function App() {
 
     const [selectedHotelId, setSelectedHotelId] = useState("roma");
     const selectedHotel = hotels.find((hotel) => hotel.id === selectedHotelId) || hotels[0];
+    const formatTel = (value) => value.replace(/[^\d+]/g, "");
 
     return (
       <div className="p-4 md:p-8 space-y-8 bg-red-50 print-break-inside-avoid">
+        <div className="flex justify-center md:justify-start">
+          <SectionTag label="🚨 緊急" tone="red" />
+        </div>
         <div className="text-center pb-2 border-b border-red-200">
           <h1 className="text-2xl md:text-3xl font-black text-red-900 mb-2 leading-tight">🚨 緊急卡片與離線備援</h1>
           <p className="text-red-700 text-xs uppercase tracking-[0.2em] font-black">Emergency Ready</p>
@@ -278,7 +305,7 @@ export default function App() {
             <h2 className="text-2xl font-black text-red-900 mb-2 flex items-center gap-2">
               <MapPinned className="text-red-500"/> 防走失「帶我回飯店」卡
             </h2>
-            <p className="text-red-700 text-sm font-bold mb-6">
+            <p className="text-red-700 text-sm md:text-base font-bold mb-6 leading-[1.6] tracking-wide md:tracking-normal">
               迷路或與家人走散時，點選所在城市，直接把手機畫面給計程車司機或警察看。
             </p>
 
@@ -356,11 +383,20 @@ export default function App() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {emergencyContacts.map((contact) => (
-            <div key={contact.label} className="bg-white border border-red-100 p-4 rounded-xl shadow-sm">
-              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{contact.label}</div>
-              <div className="text-xl font-black text-red-600 mt-1">{contact.value}</div>
-              <div className="text-xs font-bold text-slate-500 mt-1">{contact.note}</div>
-            </div>
+            <a
+              key={contact.label}
+              href={`tel:${formatTel(contact.value)}`}
+              className="bg-white border border-red-100 p-4 rounded-xl shadow-sm hover:border-red-200 hover:shadow-md transition flex flex-col gap-1"
+            >
+              <div className="flex items-center justify-between">
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{contact.label}</div>
+                <span className="text-[10px] font-black text-red-400">一鍵撥號</span>
+              </div>
+              <div className="text-xl font-black text-red-600 flex items-center gap-2">
+                <PhoneCall size={16} className="text-red-500" /> {contact.value}
+              </div>
+              <div className="text-xs font-bold text-slate-500">{contact.note}</div>
+            </a>
           ))}
         </div>
 
@@ -504,6 +540,9 @@ export default function App() {
 
     return (
       <div className="p-4 md:p-8 space-y-8 bg-cyan-50 print-break-inside-avoid">
+        <div className="flex justify-center md:justify-start">
+          <SectionTag label="🧳 行李" tone="cyan" />
+        </div>
         <div className="text-center pb-2 border-b border-cyan-200">
           <h1 className="text-2xl md:text-3xl font-black text-cyan-900 mb-2 leading-tight">🧳 行李與藥品清單</h1>
           <p className="text-cyan-700 text-xs uppercase tracking-[0.2em] font-black">Packing & Daily Refill</p>
@@ -523,7 +562,7 @@ export default function App() {
           {renderChecklist(packingItems.daily, "daily")}
         </div>
 
-        <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
+        <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid leading-[1.6] tracking-wide md:tracking-normal">
           <Info size={16} className="text-blue-300" />
           勾選狀態會自動保存在本機瀏覽器，離線時也能使用。
         </div>
@@ -552,12 +591,15 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
 
     return (
         <div className="p-6 md:p-10 space-y-8 bg-slate-50 print-break-inside-avoid">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-2xl border border-slate-200 shadow-sm gap-4 no-print">
+          <div className="flex justify-center md:justify-start">
+            <SectionTag label="💰 財務" tone="emerald" />
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-2xl border border-slate-200 shadow-sm gap-4 no-print">
                 <div>
                     <h2 className="text-2xl font-black text-slate-800 flex items-center gap-2">
                         <Calculator className="text-emerald-600"/> 雙軌財務總管
                     </h2>
-                    <p className="text-slate-500 text-xs font-bold mt-1">
+              <p className="text-slate-500 text-sm md:text-base font-bold mt-1 leading-[1.6] tracking-wide md:tracking-normal">
                         核心花費已鎖定，精確區分「已付款」與「待預訂」。
                     </p>
                 </div>
@@ -686,12 +728,15 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
 // ==========================================
 const ReservationListView = () => (
     <div className="p-6 md:p-10 space-y-8 bg-indigo-50 print-break-inside-avoid">
+    <div className="flex justify-center md:justify-start">
+      <SectionTag label="🎫 票券" tone="indigo" />
+    </div>
         
         <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl border-2 border-indigo-200 shadow-sm print-break-inside-avoid">
             <h3 className="text-lg font-black text-indigo-900 flex items-center gap-2 mb-3">
                 <AlertTriangle className="text-amber-500" /> 🚨 義大利高鐵搭乘 3 大鐵則
             </h3>
-            <ul className="text-sm text-slate-700 space-y-3 font-bold">
+      <ul className="text-sm text-slate-700 space-y-3 font-bold leading-[1.6] tracking-wide md:tracking-normal">
                 <li className="flex gap-2 items-start"><span className="text-indigo-600">1.</span> <div><strong>免紙本打票：</strong>我們買的都是對號座高鐵(Frecciarossa/Italo)，不需要找黃色打票機。查票時手機出示電子票 QR Code 即可。</div></li>
                 <li className="flex gap-2 items-start"><span className="text-indigo-600">2.</span> <div><strong>看懂電子看板：</strong>義大利火車只會在「發車前 10-15 分鐘」才會在電子大看板顯示月台號碼 (<span className="bg-indigo-100 text-indigo-800 px-1 rounded">Binario</span>)。請提早抵達大廳盯著螢幕。</div></li>
                 <li className="flex gap-2 items-start"><span className="text-indigo-600">3.</span> <div><strong>行李上鎖戰略：</strong>長輩坐位子上看不到車廂前後的公共行李架。上車後請務必用大創買的「自行車鋼絲鎖」把三個行李跟鐵桿鎖在一起！</div></li>
@@ -967,16 +1012,19 @@ const ItineraryView = () => {
 
     return (
         <div className="p-4 md:p-8 bg-[#F8FAFC]">
+            <div className="mb-3 flex justify-center md:justify-start">
+              <SectionTag label="🗓 行程" tone="blue" />
+            </div>
             <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 md:p-8 rounded-2xl shadow-lg mb-8 relative print-break-inside-avoid">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div>
                   <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
                   <h1 className="text-2xl md:text-3xl font-black mb-2 leading-tight">義大利 15 天家族壯遊</h1>
-                  <p className="text-slate-200 text-xs md:text-sm font-bold leading-relaxed">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
+                  <p className="text-slate-200 text-sm md:text-base font-bold leading-[1.6] tracking-wide md:tracking-normal">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-2 no-print md:self-start w-full sm:w-auto">
-                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Maximize2 size={14}/> 展開全部</button>
-                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Minimize2 size={14}/> 摺疊全部</button>
+                <div className="flex flex-wrap gap-2 no-print md:self-start w-full sm:w-auto">
+                  <button onClick={expandAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Maximize2 size={14}/> 展開全部</button>
+                  <button onClick={collapseAll} className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 w-full sm:w-auto"><Minimize2 size={14}/> 摺疊全部</button>
                 </div>
               </div>
             </div>
@@ -1029,7 +1077,7 @@ const ItineraryView = () => {
                     </div>
                     
                     <div className="space-y-6 px-2 relative">
-                      <div className="absolute left-[23px] top-2 bottom-2 w-0.5 bg-slate-200"></div>
+                      <div className="absolute left-[19px] md:left-[23px] top-2 bottom-2 w-0.5 bg-slate-200"></div>
                       
                       {d.events.map((e, i) => {
                         let iconBg = "bg-white border-slate-200 text-slate-400";
@@ -1048,8 +1096,8 @@ const ItineraryView = () => {
                         }
 
                         return (
-                          <div key={i} className="flex gap-5 relative print-break-inside-avoid">
-                            <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center bg-white ${iconBg}`}>
+                          <div key={i} className="flex gap-4 md:gap-5 relative print-break-inside-avoid">
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center bg-white ${iconBg}`}>
                               {React.cloneElement(e.icon, { size: 20 })}
                             </div>
                             <div className="flex-1 pt-2 pb-2">
@@ -1190,7 +1238,9 @@ const VeniceQrView = () => {
             <div className="flex items-start justify-between">
               <div>
                 <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Your Code</div>
-                <div className="text-lg font-black text-slate-800 mt-1">{item.fullName}</div>
+                <div className="mt-2 inline-flex px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-lg font-black">
+                  {item.fullName}
+                </div>
               </div>
               <div className="text-right">
                 <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Access Fee</div>
@@ -1249,6 +1299,9 @@ const TicketsQrView = () => (
 // ==========================================
 const TaxRefundView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-amber-50 print-break-inside-avoid">
+    <div className="flex justify-center md:justify-start">
+      <SectionTag label="💶 退稅" tone="amber" />
+    </div>
     <div className="text-center pb-2 border-b border-amber-200">
       <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">💶 義大利退稅攻略</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Tax Free Playbook</p>
@@ -1273,7 +1326,7 @@ const TaxRefundView = () => (
           </ul>
         </div>
       </div>
-      <div className="text-xs text-amber-700 font-bold mt-3">提醒：門檻與規定請以店家/退稅公司最新公告為準。</div>
+      <div className="text-xs text-amber-700 font-bold mt-3 leading-[1.6] tracking-wide md:tracking-normal">提醒：門檻與規定請以店家/退稅公司最新公告為準。</div>
     </div>
 
     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print-break-inside-avoid">
@@ -1287,7 +1340,7 @@ const TaxRefundView = () => (
         <li>再到退稅櫃檯/機台領現金或刷回卡</li>
         <li>托運行李內商品：一定要在托運前完成退稅</li>
       </ol>
-      <div className="mt-3 text-xs text-slate-500 font-bold">建議提早 3–5 小時到機場，退稅常需排隊。</div>
+      <div className="mt-3 text-xs text-slate-500 font-bold leading-[1.6] tracking-wide md:tracking-normal">建議提早 3–5 小時到機場，退稅常需排隊。</div>
     </div>
 
     <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm print-break-inside-avoid">
@@ -1369,7 +1422,7 @@ const TaxRefundView = () => (
         </li>
         <li>其他情況：找 Customs Office 或使用自助機 + 專用郵箱</li>
       </ul>
-      <div className="text-xs text-emerald-700 font-bold mt-3">資料來源：ADR「Immigration and customs」頁面。</div>
+      <div className="text-xs text-emerald-700 font-bold mt-3 leading-[1.6] tracking-wide md:tracking-normal">資料來源：ADR「Immigration and customs」頁面。</div>
     </div>
 
     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print-break-inside-avoid">
@@ -1392,7 +1445,7 @@ const TaxRefundView = () => (
           </ul>
         </div>
       </div>
-      <div className="text-xs text-slate-500 font-bold mt-3">現場常見自助機 (Kiosk) 與人工櫃檯，可依排隊狀況選擇。</div>
+      <div className="text-xs text-slate-500 font-bold mt-3 leading-[1.6] tracking-wide md:tracking-normal">現場常見自助機 (Kiosk) 與人工櫃檯，可依排隊狀況選擇。</div>
     </div>
 
     <div className="bg-slate-900 text-white p-5 rounded-2xl text-xs font-bold flex items-center gap-3 print-break-inside-avoid">
@@ -1407,6 +1460,9 @@ const TaxRefundView = () => (
 // ==========================================
 const ShoppingGuideView = () => (
   <div className="p-4 md:p-8 space-y-8 bg-[#FFFBF0] print-break-inside-avoid">
+    <div className="flex justify-center md:justify-start">
+      <SectionTag label="🛒 伴手" tone="amber" />
+    </div>
     <div className="text-center pb-2 border-b border-amber-200">
       <h1 className="text-2xl md:text-3xl font-black text-amber-900 mb-2 leading-tight">🛒 義大利必買伴手禮圖鑑</h1>
       <p className="text-amber-700 text-xs uppercase tracking-[0.2em] font-black">Supermarket & Specialty Shopping</p>
@@ -1428,7 +1484,7 @@ const ShoppingGuideView = () => (
         <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
             <Globe className="text-blue-600"/> 媽媽的廚房寶物：巴薩米克油醋戰略
         </h3>
-        <p className="text-sm text-slate-700 font-bold mb-4">依據「預算與用途」，我們分為兩個戰場：</p>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4 leading-[1.6] tracking-wide md:tracking-normal">依據「預算與用途」，我們分為兩個戰場：</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-5 rounded-lg border border-blue-100">
                 <div className="font-black text-sm text-blue-900 mb-2">戰場 A：追求 CP 值與日常料理</div>
@@ -1452,6 +1508,24 @@ const ShoppingGuideView = () => (
 );
 
 // --- Components ---
+
+const SectionTag = ({ label, tone = "slate" }) => {
+  const tones = {
+    slate: "bg-slate-100 text-slate-700 border-slate-200",
+    blue: "bg-blue-50 text-blue-700 border-blue-200",
+    indigo: "bg-indigo-50 text-indigo-700 border-indigo-200",
+    emerald: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    red: "bg-rose-50 text-rose-700 border-rose-200",
+    amber: "bg-amber-50 text-amber-700 border-amber-200",
+    cyan: "bg-cyan-50 text-cyan-700 border-cyan-200",
+  };
+
+  return (
+    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-black tracking-widest ${tones[tone] || tones.slate}`}>
+      {label}
+    </div>
+  );
+};
 
 const TabButton = ({ id, label, active, set, color }) => {
   const colors = {
@@ -1486,7 +1560,7 @@ const CheckItem = ({ item, desc }) => (
     <div className="mt-1 text-emerald-500 shrink-0"><CheckCircle size={18}/></div>
     <div>
       <div className="text-sm font-black text-slate-800">{item}</div>
-      <div className="text-xs font-bold text-slate-600 mt-1 leading-relaxed">{desc}</div>
+      <div className="text-xs font-bold text-slate-600 mt-1 leading-[1.6] tracking-wide md:tracking-normal">{desc}</div>
     </div>
   </li>
 );
