@@ -95,7 +95,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-2 md:p-6 font-sans text-slate-800 print:bg-white print:p-0">
+    <div className="min-h-screen min-h-[100svh] overflow-x-hidden bg-slate-50 p-2 md:p-6 font-sans text-slate-800 print:bg-white print:p-0">
       
       {/* 完美的跨頁列印核心 CSS */}
       <style>{`
