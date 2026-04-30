@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { 
   Plane, Train, MapPin, Camera, Sunrise, Copy, Printer, Check, 
   Navigation, Shield, Ban, Globe, CreditCard, Banknote, 
@@ -15,6 +15,51 @@ export default function App() {
   const [isPerPerson, setIsPerPerson] = useState(false); // 完美回歸：單人花費切換狀態
   const [exchangeRate] = useState(35.5);
   const [actionMessage, setActionMessage] = useState(""); 
+  const controlBarRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const setAppVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--app-vh", `${vh}px`);
+    };
+
+    // Lock the viewport height to reduce iOS address bar jumpiness.
+    setAppVh();
+    const viewport = window.visualViewport;
+    viewport?.addEventListener("resize", setAppVh);
+    window.addEventListener("resize", setAppVh);
+    window.addEventListener("orientationchange", setAppVh);
+
+    return () => {
+      viewport?.removeEventListener("resize", setAppVh);
+      window.removeEventListener("resize", setAppVh);
+      window.removeEventListener("orientationchange", setAppVh);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !controlBarRef.current) return;
+
+    const updateControlBarHeight = () => {
+      const height = controlBarRef.current?.offsetHeight || 0;
+      document.documentElement.style.setProperty("--control-bar-height", `${height}px`);
+    };
+
+    updateControlBarHeight();
+    let observer;
+    if ("ResizeObserver" in window) {
+      observer = new ResizeObserver(updateControlBarHeight);
+      observer.observe(controlBarRef.current);
+    }
+    window.addEventListener("resize", updateControlBarHeight);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", updateControlBarHeight);
+    };
+  }, []);
 
   // ==========================================
   // 1. 財務底層資料 (精細拆分城市稅)
@@ -95,7 +140,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen min-h-[100svh] overflow-x-hidden bg-slate-50 p-2 md:p-6 font-sans text-slate-800 print:bg-white print:p-0">
+    <div className="min-h-screen min-h-[100svh] min-h-[calc(var(--app-vh)*100)] overflow-x-hidden bg-slate-50 px-2 md:px-6 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] md:pb-6 pt-[var(--control-bar-height)] font-sans text-slate-800 print:bg-white print:px-0 print:pb-0 print:pt-0 print:min-h-0">
       
       {/* 完美的跨頁列印核心 CSS */}
       <style>{`
@@ -134,60 +179,64 @@ export default function App() {
       )}
 
       {/* Control Bar (列印時隱藏) */}
-      <div className="max-w-5xl mx-auto mb-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-md md:shadow-sm border border-slate-300 md:border-slate-200 no-print sticky top-2 z-40 md:static">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
-            <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
-              🇮🇹 義大利 2026 家族壯遊手冊
-            </h2>
-            <div className="flex flex-wrap gap-2 mt-2">
-                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-emerald-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
-                <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-blue-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">體力調節優化</span>
-                <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-purple-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">長輩防護升級</span>
+      <div ref={controlBarRef} className="fixed inset-x-0 top-0 z-40 no-print">
+        <div className="px-2 md:px-6 pt-[env(safe-area-inset-top)] pb-3">
+          <div className="max-w-5xl mx-auto bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-md md:shadow-sm border border-slate-300 md:border-slate-200">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div>
+                <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
+                  🇮🇹 義大利 2026 家族壯遊手冊
+                </h2>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-emerald-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
+                  <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-blue-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">體力調節優化</span>
+                  <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-purple-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">長輩防護升級</span>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <button onClick={handleCopy} className="px-3 md:px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs md:text-sm font-bold transition flex items-center justify-center gap-2 w-full sm:w-auto">
+                  {copied ? <CheckCircle2 size={16} className="text-emerald-600"/> : <Copy size={16}/>}
+                  {copied ? "已複製" : "分享連結"}
+                </button>
+                <button onClick={handlePrint} className="px-4 md:px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs md:text-sm font-bold shadow transition flex items-center justify-center gap-2 w-full sm:w-auto">
+                  <Printer size={16} /> 列印成手冊
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation Tabs */}
+            <div className="mt-6 flex items-center gap-2 min-w-0">
+              <button
+                onClick={scrollToTop}
+                className="px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] flex items-center justify-center gap-1"
+                aria-label="跳至上方"
+              >
+                <ChevronUp size={16} />
+                <span className="hidden md:inline text-xs font-bold">跳至上方</span>
+              </button>
+              <div className="relative flex-1 min-w-0">
+                <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2">
+                  <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
+                  <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
+                  <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
+                  <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
+                  <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
+                  <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
+                  <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+                </div>
+                <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
+                <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
+              </div>
+              <button
+                onClick={scrollToTop}
+                className="hidden md:flex px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] items-center justify-center gap-1"
+                aria-label="跳至上方"
+              >
+                <ChevronUp size={16} />
+                <span className="hidden md:inline text-xs font-bold">跳至上方</span>
+              </button>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <button onClick={handleCopy} className="px-3 md:px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs md:text-sm font-bold transition flex items-center justify-center gap-2 w-full sm:w-auto">
-              {copied ? <CheckCircle2 size={16} className="text-emerald-600"/> : <Copy size={16}/>}
-              {copied ? "已複製" : "分享連結"}
-            </button>
-            <button onClick={handlePrint} className="px-4 md:px-5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs md:text-sm font-bold shadow transition flex items-center justify-center gap-2 w-full sm:w-auto">
-              <Printer size={16} /> 列印成手冊
-            </button>
-          </div>
-        </div>
-        
-        {/* Navigation Tabs */}
-        <div className="mt-6 flex items-center gap-2 min-w-0">
-          <button
-            onClick={scrollToTop}
-            className="px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] flex items-center justify-center gap-1"
-            aria-label="跳至上方"
-          >
-            <ChevronUp size={16} />
-            <span className="hidden md:inline text-xs font-bold">跳至上方</span>
-          </button>
-          <div className="relative flex-1 min-w-0">
-            <div className="flex border-b border-slate-200 overflow-x-auto pb-2 gap-2">
-              <TabButton id="itinerary" label="🗓️ 每日行程" active={activeTab} set={setActiveTab} color="blue" />
-              <TabButton id="ticketsqr" label="🎫 票券＆QR" active={activeTab} set={setActiveTab} color="indigo" />
-              <TabButton id="budget" label="💰 雙軌財務" active={activeTab} set={setActiveTab} color="emerald" />
-              <TabButton id="emergency" label="🚨 緊急卡片" active={activeTab} set={setActiveTab} color="red" />
-              <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
-              <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
-              <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
-            </div>
-            <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
-            <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
-          </div>
-          <button
-            onClick={scrollToTop}
-            className="hidden md:flex px-2.5 py-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 bg-white shadow-sm min-h-[44px] min-w-[44px] items-center justify-center gap-1"
-            aria-label="跳至上方"
-          >
-            <ChevronUp size={16} />
-            <span className="hidden md:inline text-xs font-bold">跳至上方</span>
-          </button>
         </div>
       </div>
 
