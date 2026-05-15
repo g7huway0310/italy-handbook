@@ -185,7 +185,7 @@ export default function App() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div>
                 <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 leading-snug">
-                  🇮🇹 義大利 2026 家族壯遊手冊
+                  🇮🇹 義大利 2026 國瑋導遊手冊
                 </h2>
                 <div className="flex flex-wrap gap-2 mt-2">
                   <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] md:text-[10px] uppercase rounded font-semibold md:font-black border border-emerald-200 tracking-wide md:tracking-wider w-[calc(50%-0.25rem)] sm:w-auto text-center">完美排版列印</span>
