@@ -669,6 +669,10 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
           { value: 5, count: 10 },
         ];
 
+    const denominationTotalEur = denominationPlan.reduce((sum, note) => sum + (note.value * note.count), 0);
+    const denominationDiffEur = denominationTotalEur - recommendedCashDisplayEur;
+    const denominationTotalTwd = Math.round(denominationTotalEur * rate);
+
     return (
         <div className="p-6 md:p-10 space-y-8 bg-slate-50 print-break-inside-avoid">
           <div className="flex justify-center md:justify-start">
@@ -759,6 +763,23 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                       <div className="text-[11px] text-indigo-200 font-bold mt-1">
                         建議小面額優先（€100 以上少拿）。
                       </div>
+
+                      <div className="mt-4 flex flex-wrap items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-widest font-black text-indigo-200">換鈔模式</span>
+                        <button
+                          onClick={() => setIsPer(false)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-black border transition ${!isPer ? 'bg-white text-indigo-700 border-indigo-100 shadow-sm' : 'bg-indigo-900/40 text-indigo-100 border-indigo-300/30 hover:bg-indigo-900/60'}`}
+                        >
+                          👪 家族 €1,050
+                        </button>
+                        <button
+                          onClick={() => setIsPer(true)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-black border transition ${isPer ? 'bg-white text-indigo-700 border-indigo-100 shadow-sm' : 'bg-indigo-900/40 text-indigo-100 border-indigo-300/30 hover:bg-indigo-900/60'}`}
+                        >
+                          👤 單人 €350
+                        </button>
+                      </div>
+
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
                         {denominationPlan.map((note) => (
                           <div key={note.value} className="bg-white/95 rounded-xl text-center p-3 border border-indigo-100">
@@ -766,6 +787,24 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                             <div className="text-[11px] font-black text-slate-500 mt-1">x {note.count} 張 = € {(note.value * note.count).toLocaleString()}</div>
                           </div>
                         ))}
+                      </div>
+
+                      <div className="mt-4 bg-white/95 border border-indigo-100 rounded-xl p-3 text-xs text-slate-700 font-black leading-[1.7]">
+                        <div className="text-[10px] uppercase tracking-widest text-indigo-700 mb-1">面額驗算（給銀行）</div>
+                        <div>
+                          驗算一：€ {denominationPlan.map((note) => `${note.value}x${note.count}`).join(' + ')} =
+                          <span className="text-indigo-700"> € {denominationTotalEur.toLocaleString()}</span>
+                        </div>
+                        <div>
+                          驗算二：目標 € {recommendedCashDisplayEur.toLocaleString()}，差額
+                          <span className={`${denominationDiffEur === 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                            {' '}{denominationDiffEur > 0 ? '+' : ''}€ {denominationDiffEur.toLocaleString()}
+                          </span>
+                        </div>
+                        <div>
+                          驗算三：€ {denominationTotalEur.toLocaleString()} x 匯率 {rate} = 約
+                          <span className="text-indigo-700"> NT$ {denominationTotalTwd.toLocaleString()}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
