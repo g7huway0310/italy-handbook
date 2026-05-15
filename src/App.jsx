@@ -643,6 +643,32 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
     const dispPayLaterEur = Math.round(totalPayLaterEur / divisor);
     const dispPayLaterTwd = Math.round(totalPayLaterTwd / divisor);
 
+    const recommendedCashPerPersonEur = 350;
+    const recommendedCashFamilyEur = recommendedCashPerPersonEur * 3;
+    const recommendedCashDisplayEur = isPer ? recommendedCashPerPersonEur : recommendedCashFamilyEur;
+    const recommendedCashDisplayTwd = Math.round(recommendedCashDisplayEur * rate);
+
+    const mustCashEur = items.payLater
+      .filter((item) => item.id.startsWith('c1_') || item.id === 'c2' || item.id === 'c5')
+      .reduce((sum, item) => sum + item.eur, 0);
+    const cardFriendlyEur = totalPayLaterEur - mustCashEur;
+    const dispMustCashEur = Math.round(mustCashEur / divisor);
+    const dispCardFriendlyEur = Math.round(cardFriendlyEur / divisor);
+
+    const denominationPlan = isPer
+      ? [
+          { value: 50, count: 3 },
+          { value: 20, count: 5 },
+          { value: 10, count: 8 },
+          { value: 5, count: 4 },
+        ]
+      : [
+          { value: 50, count: 10 },
+          { value: 20, count: 15 },
+          { value: 10, count: 20 },
+          { value: 5, count: 10 },
+        ];
+
     return (
         <div className="p-6 md:p-10 space-y-8 bg-slate-50 print-break-inside-avoid">
           <div className="flex justify-center md:justify-start">
@@ -700,6 +726,50 @@ const BudgetView = ({ rate, items, isPer, setIsPer }) => {
                     <DollarSign size={100} className="absolute right-0 bottom-0 opacity-10 transform translate-x-4 translate-y-4" />
                 </div>
             </div>
+
+                <div className="bg-[#312E81] text-white rounded-2xl shadow-xl border border-indigo-700/80 overflow-hidden print-break-inside-avoid">
+                  <div className="p-6 md:p-7 border-b border-indigo-400/30">
+                    <h3 className="font-black text-lg md:text-2xl text-amber-300 flex items-center gap-2">
+                      <Wallet size={18} /> 出國前換匯策略：到底該帶多少歐元現金？
+                    </h3>
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className={`rounded-xl border p-4 ${isPer ? 'bg-indigo-500/30 border-indigo-200/50' : 'bg-indigo-900/40 border-indigo-400/40'}`}>
+                        <div className="text-[10px] uppercase tracking-widest font-black text-indigo-100">建議每人最低額度</div>
+                        <div className="mt-2 text-4xl font-black text-white">€ {recommendedCashPerPersonEur.toLocaleString()} <span className="text-lg font-bold text-indigo-200">/人</span></div>
+                        <div className="text-xs font-bold text-indigo-200 mt-2">約台幣 NT$ {Math.round((recommendedCashPerPersonEur * rate)).toLocaleString()}</div>
+                      </div>
+                      <div className={`rounded-xl border p-4 ${!isPer ? 'bg-indigo-500/30 border-indigo-200/50' : 'bg-indigo-900/40 border-indigo-400/40'}`}>
+                        <div className="text-[10px] uppercase tracking-widest font-black text-indigo-100">家庭總準備額度</div>
+                        <div className="mt-2 text-4xl font-black text-white">€ {recommendedCashFamilyEur.toLocaleString()} <span className="text-lg font-bold text-indigo-200">(3人)</span></div>
+                        <div className="text-xs font-bold text-indigo-200 mt-2">約台幣 NT$ {Math.round((recommendedCashFamilyEur * rate)).toLocaleString()}</div>
+                      </div>
+                    </div>
+                    <div className="mt-4 text-sm font-bold text-indigo-100 leading-[1.7]">
+                      目前顯示：<span className="text-amber-300 font-black">€ {recommendedCashDisplayEur.toLocaleString()}</span>（約 NT$ {recommendedCashDisplayTwd.toLocaleString()}）。
+                      其中 <span className="text-emerald-300">€ {dispMustCashEur.toLocaleString()}</span> 屬於「較常需現金」(城市稅/貢多拉/零錢小費)，
+                      <span className="text-sky-300"> € {dispCardFriendlyEur.toLocaleString()}</span> 多為可刷卡項目。
+                    </div>
+                  </div>
+
+                  <div className="p-6 md:p-7 bg-indigo-900/35">
+                    <div className="rounded-2xl border border-indigo-300/35 bg-indigo-500/20 p-4 md:p-5">
+                      <div className="text-amber-300 font-black text-sm md:text-base flex items-center gap-2">
+                        <Store size={16} /> 台灣銀行換鈔面額指南（直接給櫃台看）
+                      </div>
+                      <div className="text-[11px] text-indigo-200 font-bold mt-1">
+                        建議小面額優先（€100 以上少拿）。
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                        {denominationPlan.map((note) => (
+                          <div key={note.value} className="bg-white/95 rounded-xl text-center p-3 border border-indigo-100">
+                            <div className={`text-2xl font-black ${note.value === 10 ? 'text-rose-500' : note.value === 5 ? 'text-emerald-600' : 'text-blue-600'}`}>€ {note.value}</div>
+                            <div className="text-[11px] font-black text-slate-500 mt-1">x {note.count} 張 = € {(note.value * note.count).toLocaleString()}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden print-break-inside-avoid">
