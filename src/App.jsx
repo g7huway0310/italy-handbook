@@ -15,8 +15,6 @@ export default function App() {
   const [isPerPerson, setIsPerPerson] = useState(false); // 完美回歸：單人花費切換狀態
   const [exchangeRate] = useState(35.5);
   const [actionMessage, setActionMessage] = useState(""); 
-  const [hideControlBar, setHideControlBar] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const controlBarRef = useRef(null);
 
   useEffect(() => {
@@ -63,29 +61,7 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY;
-      const scrollThreshold = 50; // 只在滑動超過 50px 時才切換
-
-      // 手機版（md 以下）才應用滑動隱藏
-      if (window.innerWidth < 768) {
-        if (isScrollingDown && currentScrollY > scrollThreshold) {
-          setHideControlBar(true);
-        } else {
-          setHideControlBar(false);
-        }
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   // ==========================================
   // 1. 財務底層資料 (精細拆分城市稅)
@@ -166,7 +142,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen min-h-[100svh] min-h-[calc(var(--app-vh)*100)] overflow-x-hidden bg-slate-50 px-2 md:px-6 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] md:pb-6 pt-0 md:pt-[var(--control-bar-height)] font-sans text-slate-800 print:bg-white print:px-0 print:pb-0 print:pt-0 print:min-h-0">
+    <div className="min-h-screen min-h-[100svh] min-h-[calc(var(--app-vh)*100)] overflow-x-hidden bg-slate-50 px-2 md:px-6 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] md:pb-6 pt-0 font-sans text-slate-800 print:bg-white print:px-0 print:pb-0 print:pt-0 print:min-h-0">
       
       {/* 完美的跨頁列印核心 CSS */}
       <style>{`
@@ -205,9 +181,7 @@ export default function App() {
       )}
 
       {/* Control Bar (列印時隱藏) */}
-      <div ref={controlBarRef} className={`fixed inset-x-0 top-0 z-40 no-print transition-transform duration-300 ease-in-out md:translate-y-0 ${
-        hideControlBar ? '-translate-y-full' : 'translate-y-0'
-      }`}>
+      <div ref={controlBarRef} className="sticky top-0 left-0 right-0 z-40 no-print md:static">
         <div className="px-2 md:px-6 pt-[env(safe-area-inset-top)] pb-3">
           <div className="max-w-5xl mx-auto bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-md md:shadow-sm border border-slate-300 md:border-slate-200">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
