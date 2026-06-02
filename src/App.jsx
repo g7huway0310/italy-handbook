@@ -1680,6 +1680,51 @@ const ShoppingGuideView = () => (
             </div>
         </div>
     </div>
+    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm print-break-inside-avoid">
+      <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-2 border-b pb-2">
+        <MapPin className="text-slate-600"/> 米蘭中央市場 Mercato Centrale Milano
+      </h3>
+      <div className="space-y-4 text-sm text-slate-700 font-bold">
+        <p>米蘭中央市場位於米蘭中央車站側翼，從車站側邊入口進去即可抵達。入口不像佛羅倫斯中央市場那麼顯眼，第一次來很容易錯過。</p>
+        <p>這裡 2021 年正式開幕，原本是車站內閒置超過 20 年的辦公區域，改建時保留許多原有建築元素，結合百年車站老建築與現代美食空間，氛圍非常特別。</p>
+        <p>市場約有 30 家特色餐飲店，從北義到南義代表美食都幾乎可以找到。市場以餐飲店鋪為主，沒有傳統菜市場的攤販感，而是兩層樓長型的美食空間。</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">必訪店家</div>
+            <ul className="space-y-2 text-xs text-slate-700 font-bold leading-relaxed">
+              <li>🍞 Il Pane & Dolci | Davide Longoni (4號)：天然酵母麵包、可頌、義式甜點，早餐首選。</li>
+              <li>🍄 Luciano Savini (7號)：Savini 松露品牌，松露義大利麵、松露燉飯、松露伴手禮。</li>
+              <li>🐟 La Pescheria Con Cucina | Bistrot Pedol (21號)：海鮮控必吃，現場冰櫃展示新鮮海鮮，現點現做。</li>
+              <li>🍔 Lo Smash Burger | Joe Bastianich (17號)：MasterChef Italia 評審打造的美式 Smash Burger。</li>
+              <li>🥟 Ravioli Cinesi | Agie Zhou (5號)：華人主廚經營，現包水餃與餛飩，非常特別。</li>
+              <li>🥐 La Sfogliatella Napoletana (6號)：拿坡里經典千層酥甜點，搭濃縮咖啡超完美。</li>
+              <li>🍚 IL Riso (14號)：米蘭最經典的米蘭燉飯，不少當地人推薦。</li>
+            </ul>
+          </div>
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">市場特色</div>
+            <ul className="space-y-2 text-xs text-slate-700 font-bold leading-relaxed">
+              <li>✔ 全部以餐飲店鋪為主，規劃成兩層樓長型空間。</li>
+              <li>✔ 位置就在中央車站旁，下火車就能吃、搭車前可再來一餐。</li>
+              <li>✔ 公共座位很多，不限店家自由使用。一樓客滿時可以直接上二樓。</li>
+              <li>✔ 和佛羅倫斯中央市場不同，米蘭更像現代美食空間，而非傳統市場的攤販氛圍。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-700 text-sm font-bold leading-relaxed">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">營業時間</div>
+          <p>週日～週三：06:30 ～ 23:00</p>
+          <p>週四～週六：06:30 ～ 24:00</p>
+        </div>
+
+        <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-900 text-sm font-bold leading-relaxed">
+          <p className="font-black">總結</p>
+          <p>若你住在米蘭中央車站附近，或坐火車進出米蘭，米蘭中央市場真的非常值得安排。不用特地跑景點，雨天也能逛，對自由行旅客來說是最方便、最容易被忽略的美食寶藏之一。</p>
+        </div>
+      </div>
+    </div>
   </div>
 );
 
