@@ -2012,6 +2012,146 @@ const WineGuideView = () => (
             </div>
         </div>
     </div>
+
+    <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <BookOpen className="text-blue-600"/> 📖 餐廳酒單破解：找這幾個字就對了
+        </h3>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
+            義大利餐廳的酒單（Carta dei Vini）通常全是義大利文。如果你想要找你最愛的「濃郁、重口味、不酸澀」紅酒，直接在酒單上尋找以下關鍵字：
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <div className="font-black text-blue-900 text-lg mb-1">🍷 找產區與葡萄</div>
+                <ul className="text-sm text-slate-700 font-bold space-y-2 list-disc list-inside">
+                    <li><span className="text-blue-800">Puglia / Primitivo / Negroamaro</span>：出現在南義的酒，保證果醬感爆棚、單寧極低。</li>
+                    <li><span className="text-blue-800">Veneto / Valpolicella Ripasso</span>：出現在北義，帶有櫻桃果乾與黑巧克力的微甜豐厚感。</li>
+                    <li><span className="text-blue-800">Bolgheri / Super Tuscan</span>：托斯卡尼的波爾多混釀，完美復刻 Napa 頂級 Cabernet 的重桶風格。</li>
+                </ul>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="font-black text-amber-900 text-lg mb-1">📝 找釀造工法與等級</div>
+                <ul className="text-sm text-slate-700 font-bold space-y-2 list-disc list-inside">
+                    <li><span className="text-amber-800">Appassimento / Passito</span>：最關鍵的字！只要有這個字，就是你最愛的風乾濃郁微甜風格。</li>
+                    <li><span className="text-amber-800">Riserva</span>：代表在橡木桶陳年很久，會有更濃的香草、雪茄盒與皮革香氣。</li>
+                    <li><span className="text-amber-800">Superiore</span>：代表酒精濃度更高（通常大於 13.5%），酒體更厚實飽滿。</li>
+                </ul>
+            </div>
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100 md:col-span-2">
+                <div className="font-black text-emerald-900 text-lg mb-1 flex items-center gap-2"><Wine size={16}/> 實用點酒義大利文</div>
+                <div className="text-sm text-slate-700 font-bold flex flex-col md:flex-row gap-4">
+                    <div className="flex-1">
+                        <span className="text-emerald-800 font-black">單杯酒 (Al Calice)：</span><br/>"Un calice di vino rosso, per favore." (請給我一杯紅酒)
+                    </div>
+                    <div className="flex-1">
+                        <span className="text-emerald-800 font-black">一整瓶 (In Bottiglia)：</span><br/>"Una bottiglia, per favore." (請給我一瓶)
+                    </div>
+                    <div className="flex-1 text-rose-700">
+                        <span className="font-black">⚠️ House Wine 警告：</span><br/>酒單上的 "Vino della Casa" 雖然便宜（常裝在玻璃壺裡），但通常是高酸、酒體輕薄的搭餐酒。若追求厚實感，請直接點整瓶。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Utensils className="text-blue-600"/> 🍽️ 餐廳實戰：五大情境點酒指南
+        </h3>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
+            走進餐廳時，直接套用以下的「風味對接系統」，確保每一餐的餐酒搭配都能達到完美平衡：
+        </p>
+        <div className="space-y-4">
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <div className="font-black text-blue-900 text-lg mb-1 flex items-center gap-2"><Anchor size={18} className="text-blue-600"/> 威尼斯：吃海鮮或墨魚麵</div>
+                <div className="text-xs text-rose-600 font-black mb-2">⚠️ 系統警報：重口味紅酒的絕對禁區（會產生生鏽金屬味！）</div>
+                <div className="text-sm text-slate-700 font-bold">
+                    <span className="text-blue-800 font-black">🍷 怎麼點：</span>尋找白酒 **"Chardonnay (Alto Adige)"** 或 **"Soave Classico Superiore"**，詢問是否有 **"Affinato in Barrique"（橡木桶陳年）**。若非喝紅酒不可，點基礎的 **"Valpolicella Classico"** 並請餐廳 **"leggermente fresco"（稍微冰鎮）**。
+                </div>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="font-black text-amber-900 text-lg mb-1 flex items-center gap-2"><Utensils size={18} className="text-amber-600"/> 佛羅倫斯：一公斤戰斧大牛排</div>
+                <div className="text-xs text-amber-700 font-black mb-2">🔥 完美匹配：單寧與油脂的正面對決，直攻超級托斯卡尼</div>
+                <div className="text-sm text-slate-700 font-bold">
+                    <span className="text-amber-800 font-black">🍷 怎麼點：</span>尋找酒單上的 **"Bolgheri DOC"** 或 **"Toscana IGT"**。滿滿的黑醋栗與香草橡木桶味，完全就是頂級 Napa Cabernet 的靈魂，配牛排爽度極高！
+                </div>
+            </div>
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                <div className="font-black text-emerald-900 text-lg mb-1 flex items-center gap-2"><MapPin size={18} className="text-emerald-600"/> 羅馬：培根蛋麵或茄汁燉肉麵</div>
+                <div className="text-xs text-emerald-700 font-black mb-2">🍝 風味適配：用果香包覆濃郁油脂（羊起司與豬頰肉）</div>
+                <div className="text-sm text-slate-700 font-bold">
+                    <span className="text-emerald-800 font-black">🍷 怎麼點：</span>尋找南義的 **"Primitivo di Manduria"**。這支酒幾乎沒有澀感，爆棚的藍莓果醬甜味剛好能中和羊起司的鹹味與豬頰肉的油脂，是極度討喜的暴力搭配。
+                </div>
+            </div>
+            <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                <div className="font-black text-purple-900 text-lg mb-1 flex items-center gap-2"><MapPin size={18} className="text-purple-600"/> 米蘭：番紅花燉飯或燉牛膝</div>
+                <div className="text-xs text-purple-700 font-black mb-2">🥩 深度融合：骨髓膠質與陳年醇香的共鳴</div>
+                <div className="text-sm text-slate-700 font-bold">
+                    <span className="text-purple-800 font-black">🍷 怎麼點：</span>尋找 **"Sforzato di Valtellina DOCG"**。這支 100% 風乾紅酒帶有焦油與濃縮黑棗氣息，宏大結構能完美承載燉牛膝的濃厚膠質，多了一層中藥材複雜香氣。
+                </div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                <div className="font-black text-rose-900 text-lg mb-1 flex items-center gap-2"><Store size={18} className="text-rose-600"/> 隨性小酒館：披薩與冷肉拼盤</div>
+                <div className="text-xs text-rose-700 font-black mb-2">🍕 百搭神兵：高 CP 值的降維打擊</div>
+                <div className="text-sm text-slate-700 font-bold">
+                    <span className="text-rose-800 font-black">🍷 怎麼點：</span>毫不猶豫點一瓶 **"Valpolicella Ripasso"**。吸收阿瑪羅尼精華，自帶黑巧克力與微甜果香，不搶戲又豐厚，是鎮住整桌家常菜的萬用解答。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div className="bg-slate-900 text-white p-6 rounded-xl border border-slate-700 shadow-lg print-break-inside-avoid">
+        <h3 className="text-xl font-black text-amber-400 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2">
+            <Coffee className="text-amber-500"/> ☕️ 完美收尾：飯後咖啡與消化酒
+        </h3>
+        <p className="text-sm text-slate-300 font-bold mb-5 leading-relaxed">
+            在義大利吃完重口味大餐後，真正的收尾絕對不是甜點，而是透過高濃度咖啡因與高酒精度，瞬間截斷口腔油膩感並加速消化！
+        </p>
+        
+        <div className="space-y-6">
+            <div>
+                <h4 className="text-lg font-black text-emerald-400 mb-2 flex items-center gap-2"><Coffee size={16}/> 第一階段：濃縮咖啡 (Il Caffè)</h4>
+                <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                    <div className="text-sm text-slate-200 font-bold leading-relaxed mb-2">
+                        <span className="text-rose-400 font-black">絕對禁忌：</span>飯後不喝卡布奇諾或拿鐵（對他們來說，加牛奶是早餐喝的）。
+                    </div>
+                    <div className="text-sm text-slate-200 font-bold leading-relaxed mb-2">
+                        <span className="text-amber-300 font-black">怎麼點：</span>服務生問「Un caffè?」時，回答 **"Un caffè, per favore."**。端上來的會是標準 Espresso，極度濃稠的 Crema 與黑巧克力厚實感，能瞬間清空滿嘴的牛排與紅酒味。
+                    </div>
+                    <div className="text-sm text-slate-200 font-bold leading-relaxed">
+                        <span className="text-blue-300 font-black">進階點法：</span>點一杯 **Caffè Corretto (校正咖啡)**。加入一小杯 Grappa 烈酒，強烈酒感與深焙咖啡會在食道產生極具張力的燃燒感。
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 className="text-lg font-black text-emerald-400 mb-2 flex items-center gap-2"><Wine size={16}/> 第二階段：消化酒 (Digestivo)</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                        <div className="font-black text-amber-200 text-base mb-1">桶陳白蘭地 (Grappa)</div>
+                        <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                            <span className="text-amber-400">怎麼點：</span>指定 **"Grappa Invecchiata"** (桶陳版) 或更極致的 **"Grappa di Amarone"**。<br/>
+                            <span className="text-amber-400">體驗：</span>像頂級雪莉桶威士忌，帶有深邃的無花果乾、焦糖與香草味，搭配一小塊黑巧克力，是非常具備大將之風的收尾。
+                        </div>
+                    </div>
+                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                        <div className="font-black text-emerald-200 text-base mb-1">草本苦酒 (Amaro)</div>
+                        <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                            <span className="text-emerald-400">怎麼點：</span>北義或羅馬點 **Amaro Nonino**，喜歡濃郁西西里風味點 **Amaro Averna**。<br/>
+                            <span className="text-emerald-400">體驗：</span>口感黏稠甜潤，像濃縮中藥香料糖漿。喝下肚後胃部會產生一股溫暖熱流，舒緩吃太飽的腹脹感。
+                        </div>
+                    </div>
+                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                        <div className="font-black text-rose-200 text-base mb-1">聖酒與杏仁餅 (Vin Santo)</div>
+                        <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                            <span className="text-rose-400">怎麼點：</span>跟服務生說 **"Vin Santo con Cantucci"**。<br/>
+                            <span className="text-rose-400">體驗：</span>充滿氧化風味、核桃與蜂蜜香的高階甜酒。拿硬邦邦的義大利杏仁餅浸泡吸飽琥珀色酒液後吃，是最完美的傳統甜點。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 );
 
