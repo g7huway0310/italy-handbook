@@ -1901,6 +1901,73 @@ const WineGuideView = () => (
             </div>
         </div>
     </div>
+
+    <div className="bg-white p-6 rounded-xl border border-rose-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-rose-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Store className="text-rose-600"/> 🛒 威、佛、羅：三大城市超市獵酒指南
+        </h3>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
+            由於行程跨越威尼斯、佛羅倫斯、羅馬，若打算在超市買酒，可參考以下戰略：
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div className="font-black text-slate-800 text-lg mb-1">威尼斯 <span className="text-sm text-slate-500">(Venezia)</span></div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed">
+                    <span className="text-rose-600 font-black">超市目標：</span>Despar / Coop<br/>
+                    <span className="text-rose-600 font-black">在地優勢：</span>威尼斯所在的威尼托 (Veneto) 大區正是 Amarone 的故鄉！在這裡的超市，風乾紅酒的選擇最齊全，有時還能挖到當地特價的高 CP 值小農酒莊。
+                </div>
+            </div>
+            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div className="font-black text-slate-800 text-lg mb-1">佛羅倫斯 <span className="text-sm text-slate-500">(Firenze)</span></div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed">
+                    <span className="text-rose-600 font-black">超市目標：</span>Esselunga / Conad<br/>
+                    <span className="text-rose-600 font-black">在地優勢：</span>雖然這裡是 Chianti (奇揚地) 的地盤，但在大型 Esselunga 依然能買到頂級 Amarone。強烈建議在此買酒回飯店，搭配外帶的牛肚包或佛羅倫斯大牛排！
+                </div>
+            </div>
+            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div className="font-black text-slate-800 text-lg mb-1">羅馬 <span className="text-sm text-slate-500">(Roma)</span></div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed">
+                    <span className="text-rose-600 font-black">超市目標：</span>Termini 車站下的 Conad<br/>
+                    <span className="text-rose-600 font-black">在地優勢：</span>羅馬的 Conad 酒類專區非常大。若行程已接近尾聲，可在此作最後掃貨。注意 Amarone 瓶身通常特別重（常超過 1.5kg），請預留行李重量。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div className="bg-rose-900 text-white p-6 rounded-xl border border-rose-800 shadow-lg print-break-inside-avoid">
+        <h3 className="text-xl font-black text-rose-200 mb-4 flex items-center gap-2 border-b border-rose-800 pb-2">
+            <Utensils className="text-rose-400"/> 🍕 在地潛規則與超神搭餐術
+        </h3>
+        <div className="space-y-4">
+            <div className="flex items-start gap-3">
+                <div className="bg-rose-800 p-2 rounded-full shrink-0"><CheckCircle className="text-rose-300" size={18}/></div>
+                <div>
+                    <div className="font-black text-rose-100 text-base mb-1">神級搭餐：Amarone × 佛羅倫斯大牛排</div>
+                    <div className="text-xs text-rose-200/80 font-bold leading-relaxed">
+                        在佛羅倫斯若外帶或去餐廳吃大牛排 (Bistecca)，Amarone 飽滿的酒體、濃郁的黑莓果香與高酒精的微甜感，能完美中和炭烤牛肉的油脂。若吃拿坡里披薩，平價的 Appassimento 就能搭得極好！
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-start gap-3">
+                <div className="bg-rose-800 p-2 rounded-full shrink-0"><CheckCircle className="text-rose-300" size={18}/></div>
+                <div>
+                    <div className="font-black text-rose-100 text-base mb-1">開瓶器 (Cavatappi) 是必備品</div>
+                    <div className="text-xs text-rose-200/80 font-bold leading-relaxed">
+                        超市買的風乾紅酒 99% 是軟木塞。記得在超市順手買一把簡單的「海馬刀」(Cavatappi)，約 €2-3。或是向飯店櫃台借用，有禮貌地說：「Scusa, hai un cavatappi? (不好意思，有開瓶器嗎？)」
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-start gap-3">
+                <div className="bg-rose-800 p-2 rounded-full shrink-0"><CheckCircle className="text-rose-300" size={18}/></div>
+                <div>
+                    <div className="font-black text-rose-100 text-base mb-1">搬運警告：重型瓶身殺手</div>
+                    <div className="text-xs text-rose-200/80 font-bold leading-relaxed">
+                        Masi、Zenato 等頂級酒莊為了彰顯 Amarone 的王者地位，瓶身玻璃特別厚實，單瓶重量可達 1.5 - 1.8 公斤。在城市移動搭火車時，請平均分配在行李箱底層，並用衣物妥善包裹防撞。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 );
 
