@@ -226,6 +226,8 @@ export default function App() {
                   <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
                   <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
                   <TabButton id="wine" label="🍷 喝紅酒" active={activeTab} set={setActiveTab} color="rose" />
+                  <TabButton id="food" label="🍰 必吃小吃" active={activeTab} set={setActiveTab} color="orange" />
+                  <TabButton id="language" label="🗣️ 實用空耳" active={activeTab} set={setActiveTab} color="purple" />
                 </div>
                 <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
                 <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
@@ -276,6 +278,14 @@ export default function App() {
 
         <div className={`page-break-before ${activeTab === 'wine' ? 'block' : 'hidden print-tab-content'}`}>
             <WineGuideView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'food' ? 'block' : 'hidden print-tab-content'}`}>
+            <FoodGuideView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'language' ? 'block' : 'hidden print-tab-content'}`}>
+            <LanguageGuideView />
         </div>
 
       </div>
@@ -2308,6 +2318,114 @@ const LanguageGuideView = () => (
                     <div className="text-sm text-slate-600 font-bold">不好意思 / 借過</div>
                 </div>
                 <div className="text-emerald-700 font-bold text-base flex items-center gap-1"><Volume2 size={14}/> 斯估渣</div>
+            </div>
+        </div>
+    </div>
+  </div>
+);
+
+const FoodGuideView = () => (
+  <div className="p-4 md:p-8 space-y-8 bg-orange-50 print-break-inside-avoid">
+    <div className="bg-orange-900 text-white p-6 rounded-xl shadow-lg border border-orange-800">
+      <h2 className="text-2xl md:text-3xl font-black mb-2 flex items-center gap-3">
+        <Utensils className="text-orange-400" size={32}/>
+        三大名城：必吃傳統美食與甜點
+      </h2>
+      <p className="text-orange-100 font-medium leading-relaxed">
+        不想每餐都上館子？這份地圖收錄了羅馬、佛羅倫斯、威尼斯最具代表性的「邊走邊吃」平民美食、傳統糕點與咖啡甜點。照著空耳點，讓你像個真正的在地人。
+      </p>
+    </div>
+
+    {/* Venice */}
+    <div className="bg-white p-6 rounded-xl border border-cyan-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-cyan-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Anchor className="text-cyan-600"/> 🎭 威尼斯 (Venezia) 必吃：水都的隨性小點
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-100">
+                <div className="text-xs text-cyan-600 font-black mb-1 uppercase tracking-wider">威尼斯靈魂小菜</div>
+                <div className="font-black text-cyan-900 text-xl mb-1">Cicchetti</div>
+                <div className="text-cyan-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 齊給滴</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-cyan-200 pt-2">
+                    威尼斯版 Tapas，通常放在小塊麵包上。走進 Bacaro (小酒館) 必點：<br/>
+                    <span className="text-cyan-800 font-black bg-cyan-200/50 px-1 rounded mt-1 inline-block">"Baccalà Mantecato" (巴卡拉 曼鐵卡偷)</span>：超綿密鱈魚泥！
+                </div>
+            </div>
+            <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-100">
+                <div className="text-xs text-cyan-600 font-black mb-1 uppercase tracking-wider">威尼斯發明 / 國民甜點</div>
+                <div className="font-black text-cyan-900 text-xl mb-1">Tiramisù</div>
+                <div className="text-cyan-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 提拉米蘇</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-cyan-200 pt-2">
+                    威尼托大區是提拉米蘇的發源地！這裡的作法非常傳統，咖啡與馬斯卡彭起司的比例極度完美，酒香濃郁。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {/* Florence */}
+    <div className="bg-white p-6 rounded-xl border border-rose-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-rose-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Store className="text-rose-600"/> ⚜️ 佛羅倫斯 (Firenze) 必吃：粗獷與優雅的結合
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                <div className="text-xs text-rose-600 font-black mb-1 uppercase tracking-wider">托斯卡尼國民神餅</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Schiacciata</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 斯恰洽踏</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-rose-200 pt-2">
+                    超酥脆的烤薄餅！佛羅倫斯排隊名店 All'Antico Vinaio 就是用它夾滿開心果火腿 <span className="text-rose-800 font-black bg-rose-200/50 px-1 rounded">"Mortadella" (摸塔爹拉)</span>。
+                </div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                <div className="text-xs text-rose-600 font-black mb-1 uppercase tracking-wider">必吃硬漢甜點</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Cantucci</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 坎兔奇 (杏仁脆餅)</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-rose-200 pt-2">
+                    硬邦邦的杏仁餅。正確吃法是點一杯甜酒 <span className="text-rose-800 font-black bg-rose-200/50 px-1 rounded">"Vin Santo" (賓 桑偷)</span>，把餅乾泡軟後再吃！
+                </div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 md:col-span-2">
+                <div className="text-xs text-rose-600 font-black mb-1 uppercase tracking-wider">朝聖現代義式冰淇淋發源地</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Gelato Artigianale</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 傑拉頭 阿提加納雷</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-rose-200 pt-2">
+                    走進冰店請直接點這兩個無敵口味：<br/>
+                    1. <span className="text-rose-800 font-black bg-rose-200/50 px-1 rounded">"Pistacchio" (匹斯踏秋)</span>：開心果口味，要挑土黃偏綠的才是真材實料。<br/>
+                    2. <span className="text-rose-800 font-black bg-rose-200/50 px-1 rounded">"Nocciola" (諾丘拉)</span>：榛果口味，比巧克力還要濃郁香甜！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {/* Rome */}
+    <div className="bg-white p-6 rounded-xl border border-amber-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-amber-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <MapPin className="text-amber-600"/> 🏛️ 羅馬 (Roma) 必吃：最罪惡的高熱量享受
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="text-xs text-amber-600 font-black mb-1 uppercase tracking-wider">羅馬人最愛的邪惡早餐</div>
+                <div className="font-black text-amber-900 text-xl mb-1">Maritozzo</div>
+                <div className="text-amber-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 馬里偷佐</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-amber-200 pt-2">
+                    剖半的布里歐軟麵包，裡面塞入爆量的鮮奶油 (Panna)。配上一杯拿鐵或是卡布奇諾，是羅馬最道地的甜蜜早晨。
+                </div>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="text-xs text-amber-600 font-black mb-1 uppercase tracking-wider">羅馬街頭炸物之王</div>
+                <div className="font-black text-amber-900 text-xl mb-1">Supplì</div>
+                <div className="text-amber-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 蘇普里</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-amber-200 pt-2">
+                    羅馬版炸飯糰！番茄肉醬燉飯包住起司炸到酥脆。趁熱拔開會有長長牽絲（全名叫「電話線炸飯糰」）。
+                </div>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100 md:col-span-2">
+                <div className="text-xs text-amber-600 font-black mb-1 uppercase tracking-wider">猶太區千年名菜</div>
+                <div className="font-black text-amber-900 text-xl mb-1">Carciofi alla Giudia</div>
+                <div className="text-amber-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 卡爾丘菲 阿拉 糾迪亞</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-amber-200 pt-2">
+                    羅馬猶太區特產「油炸朝鮮薊」。整朵洋薊下鍋高溫油炸，像一朵盛開的金黃色向日葵，葉片吃起來像洋芋片般酥脆！
+                </div>
             </div>
         </div>
     </div>
