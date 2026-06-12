@@ -1846,23 +1846,23 @@ const WineGuideView = () => (
 
     <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm print-break-inside-avoid">
         <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
-            <Tag className="text-blue-600"/> 🏷️ 實戰酒標解密：這三個字絕不踩雷
+            <Tag className="text-blue-600"/> 🏷️ 無腦抓酒關鍵字：不澀、果香爆發、超好入口
         </h3>
         <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
-            在貨架或酒單上篩選時，除了認明 <strong>Amarone</strong> 或 <strong>Appassimento</strong>，請疊加這三個關鍵字：
+            如果想要尋找「不酸、不澀、微甜且風味極度豐富」的紅酒，去超市直接找酒標上有以下 3 個關鍵字的酒，閉著眼睛拿都不會錯：
         </p>
         <div className="space-y-3">
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                <div className="font-black text-blue-900 text-lg mb-1">Classico <span className="text-sm text-blue-700">(經典產區)</span></div>
-                <div className="text-sm text-slate-700 font-bold">認明 "Amarone della Valpolicella <strong>Classico</strong>"。代表葡萄來自產區最核心歷史坡地，風味集中度與陳年潛力更強。</div>
+                <div className="font-black text-blue-900 text-lg mb-1">Appassimento <span className="text-sm text-blue-700">(全風乾工法)</span></div>
+                <div className="text-sm text-slate-700 font-bold">看到這個字就穩了！代表葡萄被風乾成葡萄乾再釀造。保證沒有討厭的苦澀味，滿滿的黑莓果醬與巧克力香，極度順口！</div>
             </div>
             <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
-                <div className="font-black text-amber-900 text-lg mb-1">Riserva <span className="text-sm text-amber-700">(珍藏級)</span></div>
-                <div className="text-sm text-slate-700 font-bold">法定陳年時間大拉伸（至少 4 年以上）。木桶帶來的香草、煙燻、皮革等三層香氣極度深邃，預算充足強烈推薦。</div>
+                <div className="font-black text-amber-900 text-lg mb-1">Primitivo 或 Puglia <span className="text-sm text-amber-700">(南義陽光炸彈)</span></div>
+                <div className="text-sm text-slate-700 font-bold">Puglia 是南義大區，Primitivo 則是當地代表葡萄（即美國的金芬黛）。這裡的紅酒就是「甜美多汁」的代名詞，便宜又超級好喝！</div>
             </div>
             <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                <div className="font-black text-emerald-900 text-lg mb-1">Secco <span className="text-sm text-emerald-700">(乾型/不甜)</span></div>
-                <div className="text-sm text-slate-700 font-bold">若購買南義 Puglia 的風乾葡萄酒（看到 Passito），務必確認有標示 <strong>"Secco"</strong>，確保是無明顯殘糖的厚實乾紅酒，而非甜點酒。</div>
+                <div className="font-black text-emerald-900 text-lg mb-1">Ripasso <span className="text-sm text-emerald-700">(小阿瑪羅尼)</span></div>
+                <div className="text-sm text-slate-700 font-bold">如果覺得 Amarone 預算太高，找標示 "Valpolicella <strong>Ripasso</strong>" 的酒。它用 Amarone 剩下的果皮再發酵一次，帶有櫻桃果香與微香料感，CP值極高！</div>
             </div>
         </div>
     </div>
