@@ -6,7 +6,7 @@ import {
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
   AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
   Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee,
-  MapPinned, Smartphone, Download
+  MapPinned, Smartphone, Download, Wine, Tag
 } from 'lucide-react';
 
 export default function App() {
@@ -225,6 +225,7 @@ export default function App() {
                   <TabButton id="taxrefund" label="💶 退稅攻略" active={activeTab} set={setActiveTab} color="yellow" />
                   <TabButton id="packing" label="🧳 行李＆待辦" active={activeTab} set={setActiveTab} color="cyan" />
                   <TabButton id="shopping" label="🛒 必買伴手禮" active={activeTab} set={setActiveTab} color="amber" />
+                  <TabButton id="wine" label="🍷 喝紅酒" active={activeTab} set={setActiveTab} color="rose" />
                 </div>
                 <div className="pointer-events-none absolute left-0 top-0 h-full w-6 bg-gradient-to-r from-white/95 to-transparent md:hidden" />
                 <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white/95 to-transparent md:hidden" />
@@ -271,6 +272,10 @@ export default function App() {
 
         <div className={`page-break-before ${activeTab === 'shopping' ? 'block' : 'hidden print-tab-content'}`}>
             <ShoppingGuideView />
+        </div>
+
+        <div className={`page-break-before ${activeTab === 'wine' ? 'block' : 'hidden print-tab-content'}`}>
+            <WineGuideView />
         </div>
 
       </div>
@@ -1763,6 +1768,141 @@ const SectionHeaderNote = ({ note = "向下滑動查看更多", align = "center"
     </div>
   );
 };
+
+// ==========================================
+// Tab: 喝紅酒 (Wine Guide) View
+// ==========================================
+const WineGuideView = () => (
+  <div className="p-4 md:p-8 space-y-8 bg-rose-50 print-break-inside-avoid">
+    <div className="flex justify-center md:justify-start">
+      <SectionTag label="🍷 喝紅酒" tone="rose" />
+    </div>
+    <div className="text-center pb-2 border-b border-rose-200">
+      <h1 className="text-2xl md:text-3xl font-black text-rose-900 mb-2 leading-tight">🍷 義大利風乾紅酒終極指南</h1>
+      <p className="text-rose-700 text-xs uppercase tracking-[0.2em] font-black">Appassimento & Amarone</p>
+      <SectionHeaderNote />
+    </div>
+
+    <div className="bg-white p-6 rounded-xl border border-rose-200 shadow-sm print-break-inside-avoid">
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4 leading-[1.6] tracking-wide md:tracking-normal">
+            這是一份專為偏好 <strong>Napa 飽滿、重橡木桶、濃郁果香風格</strong>所設計的義大利「100% 全風乾葡萄（Appassimento/Amarone）」終極採購與品飲總整理。在義大利停留期間（以單一飯店停留 3 天為黃金品飲週期），你可以直接依據預算與通路，鎖定以下這份清單：
+        </p>
+
+        <h3 className="text-xl font-black text-rose-900 mt-6 mb-4 flex items-center gap-2 border-b pb-2">
+            <Wine className="text-rose-600"/> 📊 一表看懂：依預算直攻的名單
+        </h3>
+        <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left border-collapse">
+                <thead>
+                    <tr className="bg-rose-100 text-rose-900">
+                        <th className="p-3 border border-rose-200 font-black">預算級別</th>
+                        <th className="p-3 border border-rose-200 font-black">通路</th>
+                        <th className="p-3 border border-rose-200 font-black">推薦酒款/大廠名稱</th>
+                        <th className="p-3 border border-rose-200 font-black hidden md:table-cell">風味調性特徵</th>
+                        <th className="p-3 border border-rose-200 font-black">盲飲對接風格</th>
+                    </tr>
+                </thead>
+                <tbody className="text-slate-800">
+                    <tr className="bg-white hover:bg-rose-50/50">
+                        <td className="p-3 border border-rose-100 font-bold text-rose-700 whitespace-nowrap">€6 – €12</td>
+                        <td className="p-3 border border-rose-100">各大超市 (Coop, Conad, Esselunga)</td>
+                        <td className="p-3 border border-rose-100 font-bold">Grande Alberone "Quintus" 或 Puglia Appassimento IGT</td>
+                        <td className="p-3 border border-rose-100 hidden md:table-cell text-xs">爆炸性的藍莓果醬、無花果、甜美香料，單寧極低。</td>
+                        <td className="p-3 border border-rose-100 font-bold text-slate-600">加州金芬黛 (Zinfandel)</td>
+                    </tr>
+                    <tr className="bg-slate-50 hover:bg-rose-50/50">
+                        <td className="p-3 border border-rose-100 font-bold text-rose-700 whitespace-nowrap">€10 – €15</td>
+                        <td className="p-3 border border-rose-100">各大超市</td>
+                        <td className="p-3 border border-rose-100 font-bold">Gran Passione Rosso Veneto</td>
+                        <td className="p-3 border border-rose-100 hidden md:table-cell text-xs">混釀梅洛，帶有明顯香草、可可、圓潤甜美的紅莓味。</td>
+                        <td className="p-3 border border-rose-100 font-bold text-slate-600">Napa 現代派梅洛 (Merlot)</td>
+                    </tr>
+                    <tr className="bg-white hover:bg-rose-50/50">
+                        <td className="p-3 border border-rose-100 font-bold text-rose-700 whitespace-nowrap">€18 – €25</td>
+                        <td className="p-3 border border-rose-100">超市/酒專</td>
+                        <td className="p-3 border border-rose-100 font-bold">Sartori Amarone 或 Pasqua Amarone</td>
+                        <td className="p-3 border border-rose-100 hidden md:table-cell text-xs">入門級 Amarone，具備標配的風乾果醬感與厚實度。</td>
+                        <td className="p-3 border border-rose-100 font-bold text-slate-600">高 CP 值日常款</td>
+                    </tr>
+                    <tr className="bg-slate-50 hover:bg-rose-50/50">
+                        <td className="p-3 border border-rose-100 font-bold text-rose-700 whitespace-nowrap">€30 – €40</td>
+                        <td className="p-3 border border-rose-100">超市/酒專頂層</td>
+                        <td className="p-3 border border-rose-100 font-bold">Masi "Costasera" Amarone Classico 或 Tommasi Amarone Classico</td>
+                        <td className="p-3 border border-rose-100 hidden md:table-cell text-xs">Masi 帶有烤李子與中藥材複雜度；Tommasi 偏向深沉皮革與黑棗氣息。</td>
+                        <td className="p-3 border border-rose-100 font-bold text-slate-600">教科書級別經典</td>
+                    </tr>
+                    <tr className="bg-white hover:bg-rose-50/50">
+                        <td className="p-3 border border-rose-100 font-bold text-rose-700 whitespace-nowrap">€35 – €75</td>
+                        <td className="p-3 border border-rose-100">專業酒專 (Enoteca)</td>
+                        <td className="p-3 border border-rose-100 font-bold">Zenato Amarone Classico (€35-45) 或 Allegrini Amarone Classico (€60-75)</td>
+                        <td className="p-3 border border-rose-100 hidden md:table-cell text-xs">現代重桶派天花板。Zenato 充滿特濃黑巧克力、雪茄盒香氣；Allegrini 果味純淨、單寧如絲綢。</td>
+                        <td className="p-3 border border-rose-100 font-bold text-slate-600">頂級高階 Napa Cab</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="md:hidden text-[10px] text-slate-400 mt-2 text-right">向左滑動查看完整表格 👈</div>
+        </div>
+    </div>
+
+    <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Tag className="text-blue-600"/> 🏷️ 實戰酒標解密：這三個字絕不踩雷
+        </h3>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
+            在貨架或酒單上篩選時，除了認明 <strong>Amarone</strong> 或 <strong>Appassimento</strong>，請疊加這三個關鍵字：
+        </p>
+        <div className="space-y-3">
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <div className="font-black text-blue-900 text-lg mb-1">Classico <span className="text-sm text-blue-700">(經典產區)</span></div>
+                <div className="text-sm text-slate-700 font-bold">認明 "Amarone della Valpolicella <strong>Classico</strong>"。代表葡萄來自產區最核心歷史坡地，風味集中度與陳年潛力更強。</div>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="font-black text-amber-900 text-lg mb-1">Riserva <span className="text-sm text-amber-700">(珍藏級)</span></div>
+                <div className="text-sm text-slate-700 font-bold">法定陳年時間大拉伸（至少 4 年以上）。木桶帶來的香草、煙燻、皮革等三層香氣極度深邃，預算充足強烈推薦。</div>
+            </div>
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                <div className="font-black text-emerald-900 text-lg mb-1">Secco <span className="text-sm text-emerald-700">(乾型/不甜)</span></div>
+                <div className="text-sm text-slate-700 font-bold">若購買南義 Puglia 的風乾葡萄酒（看到 Passito），務必確認有標示 <strong>"Secco"</strong>，確保是無明顯殘糖的厚實乾紅酒，而非甜點酒。</div>
+            </div>
+        </div>
+    </div>
+
+    <div className="bg-slate-900 text-white p-6 rounded-xl border border-slate-700 shadow-lg print-break-inside-avoid">
+        <h3 className="text-xl font-black text-amber-400 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2">
+            <Hotel className="text-amber-500"/> 🏨 飯店 3 天停留：黃金品飲動態測試
+        </h3>
+        <p className="text-sm text-slate-300 font-bold mb-5 leading-relaxed">
+            重度風乾紅酒（酒精度高達 14.5% - 16%）擁有極強的抗氧化力，待在同一個飯店的三天，剛好可以完整測試演變：
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                <div className="font-black text-emerald-400 text-lg mb-2">第一晚 <span className="text-xs text-emerald-200/70">(剛開瓶)</span></div>
+                <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                    拔出軟木塞後，先倒出一小口讓瓶頸騰出空間，室溫靜置 <strong>1.5 到 2 小時</strong>。此時結構最強、骨架扎實，果香與酒精感交互帶出強烈衝擊。
+                </div>
+            </div>
+            <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                <div className="font-black text-amber-400 text-lg mb-2">第二晚 <span className="text-xs text-amber-200/70">(黃金甜蜜點)</span></div>
+                <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                    塞回軟木塞放室溫（冷氣房維持約 18-22°C，<strong>切勿放小冰箱</strong>）。經過一整天的微氧化，單寧徹底馴化，黑巧克力、濃縮咖啡與可可層次大面積爆發。
+                </div>
+            </div>
+            <div className="bg-slate-800 p-4 rounded-lg border border-slate-600">
+                <div className="font-black text-rose-400 text-lg mb-2">第三晚 <span className="text-xs text-rose-200/70">(完美收尾)</span></div>
+                <div className="text-xs text-slate-300 font-bold leading-relaxed">
+                    來到最後一杯，這類重度酒款的風味結構依然不會塌陷，反而會收斂出極具質感的煙草、雪松與木質調尾韻。
+                </div>
+            </div>
+        </div>
+        <div className="bg-indigo-900/40 p-4 rounded-lg border border-indigo-500/30 flex items-start gap-3">
+            <Info className="text-indigo-400 shrink-0 mt-0.5" size={18} />
+            <div className="text-xs text-indigo-100 font-bold leading-relaxed">
+                <strong className="text-indigo-300">裝備小建議：</strong> 如果飯店房間提供的玻璃杯太小或杯壁太厚，建議在當地超市順手花 2、3 歐元買一個肚大口收的紅酒杯（Calice da vino），能大幅提升香氣的凝聚與釋放效果。
+            </div>
+        </div>
+    </div>
+  </div>
+);
 
 const TabButton = ({ id, label, active, set, color }) => {
   const colors = {
