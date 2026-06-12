@@ -1867,6 +1867,41 @@ const WineGuideView = () => (
         </div>
     </div>
 
+    <div className="bg-white p-6 rounded-xl border border-rose-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-rose-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Wine className="text-rose-600"/> 🏆 超市無腦拿：3 款必買好找的神級紅酒
+        </h3>
+        <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
+            如果連關鍵字都不想記，直接把這三款的名字截圖下來！它們在各大超市出現率極高，而且完美符合「不澀、微甜、果香爆炸」的標準：
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] uppercase tracking-widest text-rose-500 font-black mb-1">平價果醬炸彈 (約 €7-9)</div>
+                <div className="font-black text-rose-900 text-lg mb-2">Grande Alberone<br/>"Quintus"</div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed mt-auto pt-2 border-t border-rose-200">
+                    <span className="text-rose-600">在哪買：</span>Coop、Conad 等大型超市<br/>
+                    <span className="text-rose-600">特色：</span>混釀了多種義大利風乾葡萄，喝起來像濃郁的藍莓果醬，幾乎感受不到單寧的澀味，是最具代表性的平價神酒。
+                </div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] uppercase tracking-widest text-rose-500 font-black mb-1">絲滑巧克力 (約 €10-14)</div>
+                <div className="font-black text-rose-900 text-lg mb-2">Gran Passione<br/>Rosso Veneto</div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed mt-auto pt-2 border-t border-rose-200">
+                    <span className="text-rose-600">在哪買：</span>威尼斯周邊超市、一般酒專<br/>
+                    <span className="text-rose-600">特色：</span>被稱為「平民版 Amarone」，口感像絲綢一樣滑順，帶有明顯的香草與烘焙可可香氣，配上微甜的櫻桃果感，非常討喜。
+                </div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] uppercase tracking-widest text-rose-500 font-black mb-1">名門經典必喝 (約 €14-16)</div>
+                <div className="font-black text-rose-900 text-lg mb-2">Masi<br/>"Campofiorin"</div>
+                <div className="text-xs text-slate-700 font-bold leading-relaxed mt-auto pt-2 border-t border-rose-200">
+                    <span className="text-rose-600">在哪買：</span>全義大利幾乎所有中大型超市<br/>
+                    <span className="text-rose-600">特色：</span>義大利最知名 Amarone 酒莊 Masi 的傳奇酒款。使用雙重發酵工法，結構稍微扎實，但依然果香滿滿、尾韻回甘，配起司無敵！
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div className="bg-slate-900 text-white p-6 rounded-xl border border-slate-700 shadow-lg print-break-inside-avoid">
         <h3 className="text-xl font-black text-amber-400 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2">
             <Hotel className="text-amber-500"/> 🏨 飯店 3 天停留：黃金品飲動態測試
