@@ -1960,9 +1960,18 @@ const WineGuideView = () => (
             <div className="flex items-start gap-3">
                 <div className="bg-rose-800 p-2 rounded-full shrink-0"><CheckCircle className="text-rose-300" size={18}/></div>
                 <div>
-                    <div className="font-black text-rose-100 text-base mb-1">搬運警告：重型瓶身殺手</div>
+                    <div className="font-black text-rose-100 text-base mb-1">極致享受：無視重量，攻頂熟食櫃！</div>
                     <div className="text-xs text-rose-200/80 font-bold leading-relaxed">
-                        Masi、Zenato 等頂級酒莊為了彰顯 Amarone 的王者地位，瓶身玻璃特別厚實，單瓶重量可達 1.5 - 1.8 公斤。在城市移動搭火車時，請平均分配在行李箱底層，並用衣物妥善包裹防撞。
+                        既然「只在當地喝掉」，完全不用管 Amarone 瓶身動輒 1.8 公斤的重量，直接挑最頂級、最重的酒買就對了！強烈建議到超市的<strong>生鮮熟食櫃 (Gastronomia)</strong> 買 100 克的生火腿 (Prosciutto) 與帕馬森起司。帶回威尼斯的飯店露台吹著微風喝酒，這就是義大利最 Chill 的道地玩法。
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-start gap-3">
+                <div className="bg-rose-800 p-2 rounded-full shrink-0"><CheckCircle className="text-rose-300" size={18}/></div>
+                <div>
+                    <div className="font-black text-rose-100 text-base mb-1">站吧台喝一杯 (Al Banco) 更融入當地</div>
+                    <div className="text-xs text-rose-200/80 font-bold leading-relaxed">
+                        走在佛羅倫斯或羅馬的街頭看到小酒館 (Enoteca)，如果只想喝一杯，可以學義大利人直接「站著在吧台喝」(Al Banco)。不僅價格更便宜（免座位費 Coperto），還能跟酒保用義大利文瞎聊兩句，這絕對是最接地氣的爽快體驗。
                     </div>
                 </div>
             </div>
