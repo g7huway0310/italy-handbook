@@ -6,7 +6,7 @@ import {
   CheckCircle, ShieldAlert, Umbrella, Store, AlertOctagon, Car, BookOpen, Anchor, Bus,
   AlertTriangle, PhoneCall, FileText, CheckCircle2, ShoppingBag, QrCode,
   Maximize2, Minimize2, ChevronUp, ChevronDown, Hotel, Compass, Eye, Coffee,
-  MapPinned, Smartphone, Download, Wine, Tag
+  MapPinned, Smartphone, Download, Wine, Tag, MessageCircle, Smile, Volume2, ThumbsUp, Heart
 } from 'lucide-react';
 
 export default function App() {
@@ -2160,6 +2160,154 @@ const WineGuideView = () => (
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+  </div>
+);
+
+const LanguageGuideView = () => (
+  <div className="p-4 md:p-8 space-y-8 bg-indigo-50 print-break-inside-avoid">
+    {/* Header */}
+    <div className="bg-indigo-900 text-white p-6 rounded-xl shadow-lg border border-indigo-800">
+      <h2 className="text-2xl md:text-3xl font-black mb-2 flex items-center gap-3">
+        <MessageCircle className="text-indigo-400" size={32}/>
+        實用義大利語空耳大全
+      </h2>
+      <p className="text-indigo-100 font-medium leading-relaxed">
+        在義大利，只要你願意試著說兩句義大利文（就算發音不標準），當地人都會對你展現極大的熱情！這份空耳小抄專為「拉近距離、順利點餐、討人喜歡」設計。
+      </p>
+    </div>
+
+    {/* Section 1: 打招呼與禮貌 */}
+    <div className="bg-white p-6 rounded-xl border border-indigo-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-indigo-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Smile className="text-indigo-600"/> 👋 拉近距離必備：打招呼與禮貌
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                <div className="text-xs text-indigo-500 font-black mb-1 uppercase tracking-wider">早安 / 您好 (白天用)</div>
+                <div className="font-black text-indigo-900 text-xl mb-1">Buongiorno</div>
+                <div className="text-indigo-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 崩酒諾</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-indigo-200 pt-2">走進餐廳、商店、進飯店大廳時必說！</div>
+            </div>
+            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                <div className="text-xs text-indigo-500 font-black mb-1 uppercase tracking-wider">晚安 (傍晚/晚上用)</div>
+                <div className="font-black text-indigo-900 text-xl mb-1">Buonasera</div>
+                <div className="text-indigo-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 波納歇拉</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-indigo-200 pt-2">晚餐走進餐廳時說這句，氣質滿分。</div>
+            </div>
+            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                <div className="text-xs text-indigo-500 font-black mb-1 uppercase tracking-wider">謝謝</div>
+                <div className="font-black text-indigo-900 text-xl mb-1">Grazie</div>
+                <div className="text-indigo-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 葛拉濟耶</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-indigo-200 pt-2">隨時掛在嘴邊，店員會對你更好。</div>
+            </div>
+            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                <div className="text-xs text-indigo-500 font-black mb-1 uppercase tracking-wider">不客氣 / 請進 / 給你</div>
+                <div className="font-black text-indigo-900 text-xl mb-1">Prego</div>
+                <div className="text-indigo-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 普雷狗</div>
+                <div className="text-sm text-slate-700 font-bold border-t border-indigo-200 pt-2">萬用字！服務生遞菜給你時也會說。</div>
+            </div>
+        </div>
+    </div>
+
+    {/* Section 2: 點餐與結帳 */}
+    <div className="bg-white p-6 rounded-xl border border-amber-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-amber-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Utensils className="text-amber-600"/> 🍝 吃貨必備：點餐與結帳
+        </h3>
+        <div className="space-y-4">
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="bg-amber-200 p-2 rounded-full mt-1"><Coffee className="text-amber-700" size={20}/></div>
+                <div className="flex-1">
+                    <div className="text-xs text-amber-700 font-black mb-1 uppercase tracking-wider">我想要... (萬用開頭)</div>
+                    <div className="font-black text-amber-900 text-xl mb-1">Vorrei...</div>
+                    <div className="text-amber-800 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 波蕾伊...</div>
+                    <div className="text-sm text-slate-700 font-bold">點餐神句。指著菜單說 <span className="text-amber-900 bg-amber-200/50 px-1 rounded">Vorrei questo (波蕾伊 潰斯偷)</span> 就是「我想要這個」。</div>
+                </div>
+            </div>
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="bg-amber-200 p-2 rounded-full mt-1"><Banknote className="text-amber-700" size={20}/></div>
+                <div className="flex-1">
+                    <div className="text-xs text-amber-700 font-black mb-1 uppercase tracking-wider">請買單 / 結帳</div>
+                    <div className="font-black text-amber-900 text-xl mb-1">Il conto, per favore</div>
+                    <div className="text-amber-800 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 伊爾 控偷，配爾 法波雷</div>
+                    <div className="text-sm text-slate-700 font-bold">在義大利要在座位上結帳，招手說這句即可。</div>
+                </div>
+            </div>
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg border border-amber-100">
+                <div className="bg-amber-200 p-2 rounded-full mt-1"><Info className="text-amber-700" size={20}/></div>
+                <div className="flex-1">
+                    <div className="text-xs text-amber-700 font-black mb-1 uppercase tracking-wider">要點水嗎？</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                        <div className="bg-white p-3 rounded border border-amber-200">
+                            <span className="font-black text-blue-800">Acqua Naturale</span> (阿瓜 拿土拉雷)<br/>
+                            <span className="text-sm text-slate-600 font-bold">沒有氣的礦泉水</span>
+                        </div>
+                        <div className="bg-white p-3 rounded border border-amber-200">
+                            <span className="font-black text-emerald-800">Acqua Frizzante</span> (阿瓜 芙莉讚鐵)<br/>
+                            <span className="text-sm text-slate-600 font-bold">氣泡水 (解膩神器)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {/* Section 3: 讚美與聊天 */}
+    <div className="bg-white p-6 rounded-xl border border-rose-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-rose-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Heart className="text-rose-600"/> 💖 讓店員超愛你：讚美與驚嘆
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] text-rose-500 font-black mb-1 uppercase tracking-wider">太好吃了！</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Buonissimo!</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 波你西摸！</div>
+                <div className="text-sm text-slate-700 font-bold mt-auto border-t border-rose-200 pt-2">當主廚或服務生問餐點好不好吃時，用誇張的表情說這句！</div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] text-rose-500 font-black mb-1 uppercase tracking-wider">完美！</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Perfetto!</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 佩爾費偷！</div>
+                <div className="text-sm text-slate-700 font-bold mt-auto border-t border-rose-200 pt-2">結帳、確認餐點、或表達滿意時的超好用字。</div>
+            </div>
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="text-[10px] text-rose-500 font-black mb-1 uppercase tracking-wider">乾杯！</div>
+                <div className="font-black text-rose-900 text-xl mb-1">Cin Cin!</div>
+                <div className="text-rose-700 font-bold text-lg mb-2 flex items-center gap-2"><Volume2 size={16}/> 親 親！</div>
+                <div className="text-sm text-slate-700 font-bold mt-auto border-t border-rose-200 pt-2">拿著超棒的 Amarone 敲杯時，絕對要說這句。</div>
+            </div>
+        </div>
+    </div>
+
+    {/* Section 4: 實用求生 */}
+    <div className="bg-white p-6 rounded-xl border border-emerald-200 shadow-sm print-break-inside-avoid">
+        <h3 className="text-xl font-black text-emerald-900 mb-4 flex items-center gap-2 border-b pb-2">
+            <Compass className="text-emerald-600"/> 🧭 實用求生句
+        </h3>
+        <div className="space-y-3">
+            <div className="flex justify-between items-center bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                <div>
+                    <div className="font-black text-emerald-900 text-lg">Dov'è il bagno?</div>
+                    <div className="text-sm text-slate-600 font-bold">洗手間在哪裡？</div>
+                </div>
+                <div className="text-emerald-700 font-bold text-base flex items-center gap-1"><Volume2 size={14}/> 兜杯 伊爾 巴紐？</div>
+            </div>
+            <div className="flex justify-between items-center bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                <div>
+                    <div className="font-black text-emerald-900 text-lg">Quanto costa?</div>
+                    <div className="text-sm text-slate-600 font-bold">這個多少錢？</div>
+                </div>
+                <div className="text-emerald-700 font-bold text-base flex items-center gap-1"><Volume2 size={14}/> 寬偷 扣斯塔？</div>
+            </div>
+            <div className="flex justify-between items-center bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                <div>
+                    <div className="font-black text-emerald-900 text-lg">Scusa</div>
+                    <div className="text-sm text-slate-600 font-bold">不好意思 / 借過</div>
+                </div>
+                <div className="text-emerald-700 font-bold text-base flex items-center gap-1"><Volume2 size={14}/> 斯估渣</div>
             </div>
         </div>
     </div>
