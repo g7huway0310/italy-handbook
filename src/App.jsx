@@ -2015,40 +2015,51 @@ const WineGuideView = () => (
 
     <div className="bg-white p-6 rounded-xl border border-blue-200 shadow-sm print-break-inside-avoid">
         <h3 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2 border-b pb-2">
-            <BookOpen className="text-blue-600"/> 📖 餐廳酒單破解：找這幾個字就對了
+            <BookOpen className="text-blue-600"/> 📖 餐廳酒單掃描雷達：自己找「香甜、不澀、順口」
         </h3>
         <p className="text-sm md:text-base text-slate-700 font-bold mb-4">
-            義大利餐廳的酒單（Carta dei Vini）通常全是義大利文。如果你想要找你最愛的「濃郁、重口味、不酸澀」紅酒，直接在酒單上尋找以下關鍵字：
+            如果你不想問侍酒師，想自己從密密麻麻的義大利文酒單（Carta dei Vini）中精準命中「香甜、順口、不澀、果香爆棚」的紅酒，請直接掃描以下三組關鍵字：
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                <div className="font-black text-blue-900 text-lg mb-1">🍷 找產區與葡萄</div>
-                <ul className="text-sm text-slate-700 font-bold space-y-2 list-disc list-inside">
-                    <li><span className="text-blue-800">Puglia / Primitivo / Negroamaro</span>：出現在南義的酒，保證果醬感爆棚、單寧極低。</li>
-                    <li><span className="text-blue-800">Veneto / Valpolicella Ripasso</span>：出現在北義，帶有櫻桃果乾與黑巧克力的微甜豐厚感。</li>
-                    <li><span className="text-blue-800">Bolgheri / Super Tuscan</span>：托斯卡尼的波爾多混釀，完美復刻 Napa 頂級 Cabernet 的重桶風格。</li>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 flex flex-col h-full">
+                <div className="font-black text-rose-900 text-lg mb-1 flex items-center gap-1">🍇 看葡萄與產區</div>
+                <div className="text-[10px] text-rose-700 font-black mb-2 uppercase tracking-wider">看到這些直接點，保證不澀！</div>
+                <ul className="text-sm text-slate-700 font-bold space-y-3 mt-auto border-t border-rose-200 pt-3">
+                    <li><span className="text-rose-800 text-base font-black bg-rose-200/50 px-1 rounded">Primitivo</span><br/>南義金芬黛，果醬甜味極高。</li>
+                    <li><span className="text-rose-800 text-base font-black bg-rose-200/50 px-1 rounded">Puglia</span><br/>南義大區，盛產無單寧果醬紅酒。</li>
+                    <li><span className="text-rose-800 text-base font-black bg-rose-200/50 px-1 rounded">Ripasso</span><br/>帶有櫻桃果乾微甜感的北義酒。</li>
                 </ul>
             </div>
-            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
-                <div className="font-black text-amber-900 text-lg mb-1">📝 找釀造工法與等級</div>
-                <ul className="text-sm text-slate-700 font-bold space-y-2 list-disc list-inside">
-                    <li><span className="text-amber-800">Appassimento / Passito</span>：最關鍵的字！只要有這個字，就是你最愛的風乾濃郁微甜風格。</li>
-                    <li><span className="text-amber-800">Riserva</span>：代表在橡木桶陳年很久，會有更濃的香草、雪茄盒與皮革香氣。</li>
-                    <li><span className="text-amber-800">Superiore</span>：代表酒精濃度更高（通常大於 13.5%），酒體更厚實飽滿。</li>
+            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100 flex flex-col h-full">
+                <div className="font-black text-amber-900 text-lg mb-1 flex items-center gap-1">📝 看工法與甜度</div>
+                <div className="text-[10px] text-amber-700 font-black mb-2 uppercase tracking-wider">印在酒名旁邊的保證書</div>
+                <ul className="text-sm text-slate-700 font-bold space-y-3 mt-auto border-t border-amber-200 pt-3">
+                    <li><span className="text-amber-800 text-base font-black bg-amber-200/50 px-1 rounded">Appassimento</span><br/>全風乾工法，極度濃郁微甜。</li>
+                    <li><span className="text-amber-800 text-base font-black bg-amber-200/50 px-1 rounded">Passito</span><br/>風乾葡萄酒的另一種寫法。</li>
+                    <li><span className="text-amber-800 text-base font-black bg-amber-200/50 px-1 rounded">Amabile</span><br/>半甜型，比一般紅酒明顯更甜。</li>
                 </ul>
             </div>
-            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100 md:col-span-2">
-                <div className="font-black text-emerald-900 text-lg mb-1 flex items-center gap-2"><Wine size={16}/> 實用點酒義大利文</div>
-                <div className="text-sm text-slate-700 font-bold flex flex-col md:flex-row gap-4">
-                    <div className="flex-1">
-                        <span className="text-emerald-800 font-black">單杯酒 (Al Calice)：</span><br/>"Un calice di vino rosso, per favore." (請給我一杯紅酒)
-                    </div>
-                    <div className="flex-1">
-                        <span className="text-emerald-800 font-black">一整瓶 (In Bottiglia)：</span><br/>"Una bottiglia, per favore." (請給我一瓶)
-                    </div>
-                    <div className="flex-1 text-rose-700">
-                        <span className="font-black">⚠️ House Wine 警告：</span><br/>酒單上的 "Vino della Casa" 雖然便宜（常裝在玻璃壺裡），但通常是高酸、酒體輕薄的搭餐酒。若追求厚實感，請直接點整瓶。
-                    </div>
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 flex flex-col h-full">
+                <div className="font-black text-blue-900 text-lg mb-1 flex items-center gap-1">📖 看小字風味介紹</div>
+                <div className="text-[10px] text-blue-700 font-black mb-2 uppercase tracking-wider">若酒單有寫描述，尋找這三個字</div>
+                <ul className="text-sm text-slate-700 font-bold space-y-3 mt-auto border-t border-blue-200 pt-3">
+                    <li><span className="text-blue-800 text-base font-black bg-blue-200/50 px-1 rounded">Morbido</span><br/>口感柔軟順口，暗示單寧極低。</li>
+                    <li><span className="text-blue-800 text-base font-black bg-blue-200/50 px-1 rounded">Fruttato</span><br/>果香豐富，代表加州奔放果味。</li>
+                    <li><span className="text-blue-800 text-base font-black bg-blue-200/50 px-1 rounded">Vellutato</span><br/>如天鵝絨般滑順，不苦不澀。</li>
+                </ul>
+            </div>
+        </div>
+        <div className="mt-4 bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+            <div className="font-black text-emerald-900 text-base mb-2 flex items-center gap-2"><Wine size={16}/> 點杯數的實戰念法</div>
+            <div className="text-sm text-slate-700 font-bold flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                    <span className="text-emerald-800 font-black">單杯 (Al Calice)：</span><br/>"Un calice di vino rosso, per favore."
+                </div>
+                <div className="flex-1">
+                    <span className="text-emerald-800 font-black">整瓶 (In Bottiglia)：</span><br/>"Una bottiglia, per favore."
+                </div>
+                <div className="flex-1 text-rose-700">
+                    <span className="font-black">⚠️ 避開 House Wine：</span><br/>"Vino della Casa" 通常偏酸且酒體單薄。
                 </div>
             </div>
         </div>
