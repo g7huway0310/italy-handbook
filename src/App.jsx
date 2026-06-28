@@ -78,10 +78,13 @@ export default function App() {
         { id: 't3', category: '交通', name: 'Italo 8905 (佛➔羅)', twd: 3078, note: '€86.70', status: 'paid' },
         { id: 'm1', category: '門票', name: '米蘭大教堂 Fast Track', twd: 3408, note: '€96.00', status: 'paid' },
         { id: 'm2', category: '門票', name: '梵蒂岡博物館', twd: 2663, note: '€75.00', status: 'paid' },
-        { id: 'o1', category: '行程', name: 'Trip.com 天空之城包車（包團）', twd: 11151, note: '7人座中文司機，包團/已成行', status: 'paid' }
+        { id: 'o3', category: '行程', name: 'GYG 托斯卡尼一日遊', twd: 12000, note: '含午餐與品酒 (暫估)', status: 'paid' },
+        { id: 'o4', category: '行程', name: 'GYG 阿諾河遊船與音樂會', twd: 3834, note: '€108.00', status: 'paid' },
+        { id: 'o5', category: '行程', name: 'GYG 義大利麵烹飪課程', twd: 3994, note: '€112.50', status: 'paid' }
     ],
       canceled: [
-        { id: 'o2', category: '行程', name: 'Klook 比薩＆五漁村', twd: 13638, note: '中文導覽大巴一日遊 — 已取消，待退款', status: 'cancelled' }
+        { id: 'o2', category: '行程', name: 'Klook 比薩＆五漁村', twd: 13638, note: '中文導覽大巴一日遊 — 已取消，待退款', status: 'cancelled' },
+        { id: 'o1', category: '行程', name: 'Trip.com 天空之城包車（包團）', twd: 11151, note: '改訂 GYG 托斯卡尼一日遊', status: 'cancelled' }
       ],
     payLater: [
         { id: 'c1_mi', category: '住宿', name: '城市稅: 米蘭 (1晚)', eur: 15, note: 'Hotel Midway (估 €5/人/晚)' },
@@ -1021,6 +1024,99 @@ const ReservationListView = () => (
             </div>
 
         </div>
+        
+        <div className="max-w-3xl mx-auto space-y-6 mt-8">
+            <div className="text-center pb-4">
+                <h2 className="text-2xl md:text-3xl font-black text-emerald-900 mb-2 leading-tight">🎟️ 預訂活動憑證</h2>
+                <p className="text-emerald-600/80 text-xs uppercase tracking-[0.2em] font-black">Booked Activities</p>
+                <SectionHeaderNote />
+            </div>
+
+            <div className="flex bg-white border-2 border-emerald-200 rounded-2xl overflow-hidden shadow-sm print-break-inside-avoid">
+                <div className="bg-emerald-50 p-4 flex flex-col justify-center items-center w-20 md:w-28 border-r border-emerald-100">
+                    <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Day 8</div>
+                    <div className="text-xl md:text-2xl font-black text-emerald-800">6/19</div>
+                    <div className="text-[9px] font-black bg-emerald-600 text-white px-2 py-0.5 rounded mt-1 uppercase">GetYourGuide</div>
+                </div>
+                <div className="p-4 md:p-5 flex-1 relative">
+                    <div className="absolute right-5 top-5 opacity-10"><Anchor size={48} className="text-emerald-500"/></div>
+                    <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-black text-lg md:text-xl text-emerald-950">阿諾河遊船和現場音樂會</h3>
+                        <span className="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-[10px] font-black uppercase">Voucher</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Time</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">20:30 <span className="text-emerald-600 ml-1">(50 分鐘)</span></div>
+                        </div>
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Provider</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">ARNOBOAT <span className="text-emerald-600 ml-1">3 成人</span></div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between text-xs">
+                        <span className="font-bold text-slate-500">Booking Ref: <strong className="text-emerald-600 text-sm ml-1">GYG48YQFVZGK</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex bg-white border-2 border-amber-200 rounded-2xl overflow-hidden shadow-sm print-break-inside-avoid">
+                <div className="bg-amber-50 p-4 flex flex-col justify-center items-center w-20 md:w-28 border-r border-amber-100">
+                    <div className="text-[10px] font-black text-amber-500 uppercase tracking-widest">Day 9</div>
+                    <div className="text-xl md:text-2xl font-black text-amber-800">6/20</div>
+                    <div className="text-[9px] font-black bg-amber-600 text-white px-2 py-0.5 rounded mt-1 uppercase">GetYourGuide</div>
+                </div>
+                <div className="p-4 md:p-5 flex-1 relative">
+                    <div className="absolute right-5 top-5 opacity-10"><Utensils size={48} className="text-amber-500"/></div>
+                    <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-black text-lg md:text-xl text-amber-950">義大利麵烹飪課程 (無限紅酒)</h3>
+                        <span className="bg-amber-100 text-amber-800 px-2 py-1 rounded text-[10px] font-black uppercase">Voucher</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Time</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">10:10 <span className="text-amber-600 ml-1">(2.5 小時)</span></div>
+                        </div>
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Provider</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">Florence with Elvis <span className="text-amber-600 ml-1">3 成人</span></div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between text-xs">
+                        <span className="font-bold text-slate-500">Booking Ref: <strong className="text-amber-600 text-sm ml-1">GYGWZAVZF2W5</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex bg-white border-2 border-purple-200 rounded-2xl overflow-hidden shadow-sm print-break-inside-avoid">
+                <div className="bg-purple-50 p-4 flex flex-col justify-center items-center w-20 md:w-28 border-r border-purple-100">
+                    <div className="text-[10px] font-black text-purple-500 uppercase tracking-widest">Day 11</div>
+                    <div className="text-xl md:text-2xl font-black text-purple-800">6/22</div>
+                    <div className="text-[9px] font-black bg-purple-600 text-white px-2 py-0.5 rounded mt-1 uppercase">GetYourGuide</div>
+                </div>
+                <div className="p-4 md:p-5 flex-1 relative">
+                    <div className="absolute right-5 top-5 opacity-10"><Wine size={48} className="text-purple-500"/></div>
+                    <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-black text-lg md:text-xl text-purple-950">托斯卡尼一日行程 (含天空之城)</h3>
+                        <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-[10px] font-black uppercase">Voucher</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Time</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">07:30 <span className="text-purple-600 ml-1">(11 小時)</span></div>
+                        </div>
+                        <div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase">Provider</div>
+                            <div className="font-black text-slate-800 text-xs md:text-sm">the tour guy <span className="text-purple-600 ml-1">3 成人</span></div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between text-xs">
+                        <span className="font-bold text-slate-500">Booking Ref: <strong className="text-purple-600 text-sm ml-1">GYG32L5FG7M8</strong></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 );
 
@@ -1115,20 +1211,23 @@ const ItineraryView = () => {
         ]
       },
       {
-        day: 8, date: "06/19 (五)", city: "佛羅倫斯郊區", title: "奇蹟：比薩半日遊與市區自由", hotel: "佛羅倫斯: Plus Florence",
+        day: 8, date: "06/19 (五)", city: "佛羅倫斯", title: "奇蹟：比薩半日遊與阿諾河遊船", hotel: "佛羅倫斯: Plus Florence",
         events: [
           { time: "07:30", icon: <Bus size={16}/>, desc: "【大巴接送】集合出發前往比薩，車上休息調整", type: "transit" },
           { time: "09:30", icon: <Camera size={16}/>, desc: "抵達奇蹟廣場，拍攝推比薩斜塔借位照", type: "leisure" },
           { time: "12:00", icon: <Utensils size={16}/>, desc: "回佛羅倫斯市區午餐，市區自由活動或休息", type: "leisure" },
           { time: "16:00", icon: <MapPin size={16}/>, desc: "市區慢漫步或補充購物清單（視體力調整）", type: "leisure" },
-          { time: "20:00", icon: <Bed size={16}/>, desc: "回飯店休息，整理行李", type: "info" }
+          { time: "18:30", icon: <Utensils size={16}/>, desc: "遊船前先享用輕便晚餐", type: "leisure" },
+          { time: "20:30", icon: <Anchor size={16}/>, desc: "【預約制】阿諾河日落巡遊與現場音樂會 (50分鐘)", type: "highlight" }
         ]
       },
       {
-        day: 9, date: "06/20 (六)", city: "佛羅倫斯", title: "品味、夕陽與終極牛排", hotel: "佛羅倫斯: Plus Florence",
+        day: 9, date: "06/20 (六)", city: "佛羅倫斯", title: "烹飪課程與魔幻夕陽", hotel: "佛羅倫斯: Plus Florence",
         events: [
-          { time: "09:30", icon: <ShoppingBag size={16}/>, desc: "百年修道院藥妝店，採買頂級香氛 / 中央市場買油醋", type: "leisure" },
-          { time: "15:00", icon: <BookOpen size={16}/>, desc: "【絕美私房】Giunti Odeon 劇院書店喝咖啡", type: "highlight" },
+          { time: "09:00", icon: <Coffee size={16}/>, desc: "飯店早餐，準備前往烹飪教室", type: "info" },
+          { time: "10:10", icon: <Utensils size={16}/>, desc: "【預約制】De Bardi 豪華麵食烹飪課程和無限量葡萄酒 (2.5小時)", type: "highlight" },
+          { time: "13:30", icon: <ShoppingBag size={16}/>, desc: "百年修道院藥妝店，採買頂級香氛 / 中央市場買油醋", type: "leisure" },
+          { time: "16:00", icon: <BookOpen size={16}/>, desc: "【絕美私房】Giunti Odeon 劇院書店喝咖啡", type: "leisure" },
           { time: "18:00", icon: <Car size={16}/>, desc: "搭乘計程車直上米開朗基羅廣場", type: "transit" },
           { time: "18:45", icon: <Camera size={16}/>, desc: "俯瞰阿諾河、老橋與百花大教堂的魔幻夕陽", type: "highlight" },
           { time: "20:00", icon: <Utensils size={16}/>, desc: "【終極饗宴】Trattoria Dall'Oste 1kg 丁骨大牛排", type: "highlight" }
@@ -1145,13 +1244,13 @@ const ItineraryView = () => {
         ]
       },
       {
-        day: 11, date: "06/22 (一)", city: "羅馬郊區", title: "天空之城尊榮包車", hotel: "羅馬: Hotel Milani",
+        day: 11, date: "06/22 (一)", city: "羅馬郊區", title: "托斯卡尼一日遊 (含天空之城)", hotel: "羅馬: Hotel Milani",
         events: [
-          { time: "08:30", icon: <Car size={16}/>, desc: "【尊榮包車】中文司機開 7 人座至飯店接送 (避開羅馬週一人潮)", type: "highlight" },
-          { time: "10:30", icon: <MapPin size={16}/>, desc: "直達天空之城 (Civita) 橋頭，挑戰高架橋入城", type: "highlight" },
-          { time: "13:30", icon: <MapPin size={16}/>, desc: "驅車前往懸崖中世紀小鎮 Orvieto", type: "transit" },
-          { time: "14:30", icon: <Utensils size={16}/>, desc: "當地享用翁布里亞鄉村野味午餐", type: "leisure" },
-          { time: "18:30", icon: <Car size={16}/>, desc: "【無痛送回】司機專車送回羅馬飯店門口", type: "highlight" }
+          { time: "07:30", icon: <Bus size={16}/>, desc: "【預約制】參加托斯卡尼一日行程 (The Tour Guy)", type: "highlight" },
+          { time: "10:30", icon: <MapPin size={16}/>, desc: "皮恩扎和巴尼奧雷焦城堡 (天空之城) 觀光", type: "leisure" },
+          { time: "13:00", icon: <Utensils size={16}/>, desc: "【預約制】葡萄園午餐和葡萄酒品鑑", type: "highlight" },
+          { time: "18:30", icon: <MapPin size={16}/>, desc: "結束 11 小時充實行程，返回羅馬市區", type: "info" },
+          { time: "19:30", icon: <Utensils size={16}/>, desc: "羅馬市區享用晚餐", type: "leisure" }
         ]
       },
       {
