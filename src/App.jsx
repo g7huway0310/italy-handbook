@@ -78,9 +78,11 @@ export default function App() {
         { id: 't3', category: '交通', name: 'Italo 8905 (佛➔羅)', twd: 3078, note: '€86.70', status: 'paid' },
         { id: 'm1', category: '門票', name: '米蘭大教堂 Fast Track', twd: 3408, note: '€96.00', status: 'paid' },
         { id: 'm2', category: '門票', name: '梵蒂岡博物館', twd: 2663, note: '€75.00', status: 'paid' },
-        { id: 'o1', category: '行程', name: 'Trip.com 天空之城包車', twd: 11151, note: '7人座中文司機', status: 'pending' },
-        { id: 'o2', category: '行程', name: 'Klook 比薩＆五漁村', twd: 13638, note: '中文導覽大巴一日遊', status: 'pending' }
+        { id: 'o1', category: '行程', name: 'Trip.com 天空之城包車（包團）', twd: 11151, note: '7人座中文司機，包團/已成行', status: 'paid' }
     ],
+      canceled: [
+        { id: 'o2', category: '行程', name: 'Klook 比薩＆五漁村', twd: 13638, note: '中文導覽大巴一日遊 — 已取消，待退款', status: 'cancelled' }
+      ],
     payLater: [
         { id: 'c1_mi', category: '住宿', name: '城市稅: 米蘭 (1晚)', eur: 15, note: 'Hotel Midway (估 €5/人/晚)' },
         { id: 'c1_ve', category: '住宿', name: '城市稅: 威尼斯 (3晚)', eur: 45, note: 'Hotel Principe (估 €5/人/晚)' },
@@ -1113,14 +1115,13 @@ const ItineraryView = () => {
         ]
       },
       {
-        day: 8, date: "06/19 (五)", city: "佛羅倫斯郊區", title: "奇蹟與海岸：大巴遊", hotel: "佛羅倫斯: Plus Florence",
+        day: 8, date: "06/19 (五)", city: "佛羅倫斯郊區", title: "奇蹟：比薩半日遊與市區自由", hotel: "佛羅倫斯: Plus Florence",
         events: [
-          { time: "07:30", icon: <Bus size={16}/>, desc: "【大巴接送】集合出發前往比薩，車上睡覺回血", type: "transit" },
+          { time: "07:30", icon: <Bus size={16}/>, desc: "【大巴接送】集合出發前往比薩，車上休息調整", type: "transit" },
           { time: "09:30", icon: <Camera size={16}/>, desc: "抵達奇蹟廣場，拍攝推比薩斜塔借位照", type: "leisure" },
-          { time: "12:30", icon: <MapPin size={16}/>, desc: "【海岸絕景】抵達五漁村 (Cinque Terre)，跟著中文導遊探索", type: "highlight" },
-          { time: "13:30", icon: <Train size={16}/>, desc: "搭乘村際火車或遊船，穿梭於彩色懸崖村落間", type: "leisure" },
-          { time: "18:00", icon: <MapPin size={16}/>, desc: "結束五漁村行程，搭乘大巴返回佛羅倫斯市區", type: "info" },
-          { time: "20:00", icon: <Bed size={16}/>, desc: "抵達市區，自由晚餐後回飯店休息", type: "info" }
+          { time: "12:00", icon: <Utensils size={16}/>, desc: "回佛羅倫斯市區午餐，市區自由活動或休息", type: "leisure" },
+          { time: "16:00", icon: <MapPin size={16}/>, desc: "市區慢漫步或補充購物清單（視體力調整）", type: "leisure" },
+          { time: "20:00", icon: <Bed size={16}/>, desc: "回飯店休息，整理行李", type: "info" }
         ]
       },
       {
@@ -1202,7 +1203,7 @@ const ItineraryView = () => {
                 <div>
                   <div className="text-slate-300 text-xs font-black tracking-widest mb-2 uppercase">Time-Blocked Itinerary</div>
                   <h1 className="text-2xl md:text-3xl font-black mb-2 leading-tight">義大利 15 天家族壯遊</h1>
-                  <p className="text-slate-200 text-sm md:text-base font-bold leading-[1.6] tracking-wide md:tracking-normal">2026.06.12 (Fri) - 06.26 (Fri) · 五漁村破解版 · 尊榮長輩版</p>
+                  <p className="text-slate-200 text-sm md:text-base font-bold leading-[1.6] tracking-wide md:tracking-normal">2026.06.12 (Fri) - 06.26 (Fri) · 尊榮長輩版</p>
                   <SectionHeaderNote align="left" tone="light" />
                 </div>
                 <div className="flex flex-wrap gap-2 no-print md:self-start w-full sm:w-auto">
@@ -1294,17 +1295,6 @@ const ItineraryView = () => {
                             </div>
                           </div>
                         );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )})}
-            </div>
-        </div>
-    );
-};
-
-// ==========================================
 // Tab: 待辦與戰略 View 
 // ==========================================
 const TodoGuideView = () => (
@@ -1327,8 +1317,7 @@ const TodoGuideView = () => (
             <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
                 <div className="text-sm font-black text-slate-900 mb-2">🛒 隨時可加入購物車</div>
                 <ul className="text-xs text-slate-700 space-y-2 list-disc pl-4 font-bold">
-                    <li><strong className="text-blue-600">Klook 五漁村大巴遊 (6/19)：</strong> 搜尋佛羅倫斯出發，含中文導覽。</li>
-                    <li><strong className="text-blue-600">Trip.com 天空之城包車 (6/22)：</strong> 7人座舒適車型。</li>
+                    <li><strong className="text-blue-600">Trip.com 天空之城包車 (6/22)：</strong> 7人座舒適車型，包團/已成行。</li>
                     <li><strong className="text-blue-600">The Fork App (6/20)：</strong> 預訂 Trattoria Dall'Oste 丁骨牛排晚餐。</li>
                 </ul>
             </div>
